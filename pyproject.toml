@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biobb_vs_workflows"
+version = "0.0.1"
+requires-python = "==3.11"
+dependencies = [
+    "biobb_common>=5.2.2",
+    "biobb_structure_utils>=5.2.1",
+    "biobb_io>=5.2.3",
+    "biobb_pdb_tools>=5.2.1",
+    "biobb_vs>=5.0.0",
+    "biobb_gromacs>=5.2.0",
+    "biobb_analysis>=5.0.1",
+    "propka>=3.5.1",
+    "mdanalysis",
+    "biopython<=1.81",
+]
+
+[project.scripts]
+cavity_analysis = "biobb_vs_workflows.cavity_analysis.cavity_analysis:main"
+vs_autodock      = "biobb_vs_workflows.vs_autodock.vs_autodock:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["biobb_vs_workflows*"]

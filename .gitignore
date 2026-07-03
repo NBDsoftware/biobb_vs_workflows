@@ -1,0 +1,12 @@
+output*/
+output/
+input*/
+input/
+tmp/
+*.log
+*.err
+*.out
+.vscode/
+traj_comp.xtc
+__pycache__/
+*.egg-info
