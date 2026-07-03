@@ -29,6 +29,12 @@ from biobb_structure_utils.utils.extract_model import extract_model
 from biobb_vs.fpocket.fpocket_run import fpocket_run
 from biobb_vs.fpocket.fpocket_filter import fpocket_filter
 
+# Cluster count limit and retry policy for step4_gmx_cluster
+# (too many clusters -> combined centroid PDB can exceed step5's atom limit, and extraction gets slow)
+MAX_CLUSTERS = 100
+MAX_CLUSTER_RETRIES = 5
+CUTOFF_INCREASE_FACTOR = 2.0
+
 def is_gromacs_format(traj_path: Optional[str]) -> bool:
     """
     Checks if the trajectory is in a GROMACS-compatible format 
@@ -134,7 +140,7 @@ def get_clusters_population(log_path: str, output_path: str, global_log) -> list
     outfile.close()
 
     # If the number of clusters is very large, issue a warning - the user might want to increase the RMSD cutoff
-    if len(cluster_ids)>100:
+    if len(cluster_ids)>MAX_CLUSTERS:
         global_log.warning(f"   Warning: Large number of clusters found. Consider increasing the RMSD cutoff.")
         global_log.warning(f"   Warning: Number of clusters: {len(cluster_ids)}")
         global_log.warning(f"   Warning: Number of clusters with more than 1 member: {len([x for x in populations if x > 1])}")
@@ -821,6 +827,37 @@ def cavity_analysis(traj_path: Optional[str],
         cluster_populations = get_clusters_population(log_path = global_paths["step4_gmx_cluster"]['output_cluster_log_path'],
                                                       output_path = global_prop["step4_gmx_cluster"]['path'],
                                                       global_log = global_log)
+
+        # If too many clusters were found, the combined centroid PDB from step4 can exceed step5's atom
+        # limit and extraction becomes very slow. Increase the cutoff and re-cluster, up to a retry limit.
+        retry = 0
+        while len(cluster_populations) > MAX_CLUSTERS and retry < MAX_CLUSTER_RETRIES:
+            retry += 1
+            old_cutoff = global_prop["step4_gmx_cluster"]["cutoff"]
+            new_cutoff = old_cutoff * CUTOFF_INCREASE_FACTOR
+
+            global_log.warning(
+                f"step4_gmx_cluster: {len(cluster_populations)} clusters found (> {MAX_CLUSTERS} limit). "
+                f"Too many clusters can make step5_extract_models fail (atom count limit on the combined "
+                f"centroid PDB) or become very slow. Increasing clustering cutoff {old_cutoff} -> {new_cutoff} "
+                f"and re-clustering (attempt {retry}/{MAX_CLUSTER_RETRIES})."
+            )
+
+            global_prop["step4_gmx_cluster"]["cutoff"] = new_cutoff
+            # Force re-run: outputs already exist from the previous attempt, bypass the restart-skip
+            global_prop["step4_gmx_cluster"]["restart"] = False
+
+            gmx_cluster(**global_paths["step4_gmx_cluster"], properties=global_prop["step4_gmx_cluster"])
+            cluster_populations = get_clusters_population(log_path = global_paths["step4_gmx_cluster"]['output_cluster_log_path'],
+                                                          output_path = global_prop["step4_gmx_cluster"]['path'],
+                                                          global_log = global_log)
+
+        if len(cluster_populations) > MAX_CLUSTERS:
+            global_log.warning(
+                f"step4_gmx_cluster: still {len(cluster_populations)} clusters after {retry} retries "
+                f"(final cutoff={global_prop['step4_gmx_cluster']['cutoff']}). Proceeding anyway - "
+                f"step5_extract_models may fail or be slow."
+            )
 
         if num_clusters:
             # Number of clusters: minimum between number of clusters requested and number of clusters obtained
