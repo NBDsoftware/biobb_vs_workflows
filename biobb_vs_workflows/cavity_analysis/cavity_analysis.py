@@ -12,8 +12,10 @@ import csv
 import yaml
 import json
 import shutil
+import logging
 import numpy as np
 from pathlib import Path
+from typing import Dict, Tuple, Any, Optional, Literal
 
 import MDAnalysis as mda
 
@@ -21,18 +23,16 @@ from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 
 from biobb_gromacs.gromacs.make_ndx import make_ndx
-from biobb_gromacs.gromacs.gmxselect import gmxselect
 from biobb_analysis.gromacs.gmx_cluster import gmx_cluster
 from biobb_analysis.ambertools.cpptraj_convert import cpptraj_convert
-from biobb_analysis.gromacs.gmx_trjconv_str import gmx_trjconv_str
-from biobb_analysis.gromacs.gmx_trjconv_trj import gmx_trjconv_trj
 from biobb_structure_utils.utils.extract_model import extract_model
 from biobb_vs.fpocket.fpocket_run import fpocket_run
 from biobb_vs.fpocket.fpocket_filter import fpocket_filter
 
-def is_gromacs_format(traj_path: str) -> bool:
+def is_gromacs_format(traj_path: Optional[str]) -> bool:
     """
-    Checks if the trajectory is in a GROMACS-compatible format (xtc, trr, cpt, g96, gro, pdb, tng)
+    Checks if the trajectory is in a GROMACS-compatible format 
+    (xtc, trr, cpt, g96, gro, pdb, tng)
 
     Inputs
     ------
@@ -49,28 +49,14 @@ def is_gromacs_format(traj_path: str) -> bool:
     # List of GROMACS-compatible formats
     gromacs_formats = ['.xtc', '.trr', '.cpt', '.g96', '.gro', '.pdb', '.tng']
 
-    # Check if the trajectory file is in a GROMACS-compatible format
-    if any([traj_path.endswith(format) for format in gromacs_formats]):
-        return True
+    if traj_path:
+        # Check if the trajectory file is in a GROMACS-compatible format
+        if any([traj_path.endswith(format) for format in gromacs_formats]):
+            return True
+        else:
+            return False
     else:
-        return False
-
-def set_gromacs_path(global_prop: dict, binary_path: str) -> None:
-    """
-    Set the path to the GROMACS binary for all steps using GROMACS.
-
-    Inputs
-    ------
-
-        global_prop: Dictionary containing all the properties of the workflow.
-        binary_path: Path to the GROMACS binary.
-    """
-
-    list_of_steps = ['step1A_traj_preparation_ndx', 'step1B_add_selection_group', 'step2A_strip_traj', 'step2B_strip_top',
-                     'step3A_rmsd_calculation_ndx', 'step3B_add_rmsd_group', 'step3C_add_output_group', 'step4_gmx_cluster']
-
-    for step in list_of_steps:
-        global_prop[step]['binary_path'] = binary_path
+        raise ValueError("traj_path is None, please provide a valid trajectory path")
 
 def get_clusters_population(log_path: str, output_path: str, global_log) -> list:
     '''
@@ -328,10 +314,10 @@ def filter_residue_com(input_pockets_zip: str, input_pdb_path: str, output_filte
         pocket_universe = mda.Universe(pocket_pqr_path)
 
         # Select all atoms in pocket
-        pocket_selection = pocket_universe.select_atoms('all')
+        filtering_selection = pocket_universe.select_atoms('all')
 
         # Compute the center of mass of the pocket
-        pocket_com = np.array(pocket_selection.center_of_mass())
+        pocket_com = np.array(filtering_selection.center_of_mass())
 
         # Compute distance between pocket and residue center of mass using numpy
         distance = np.linalg.norm(pocket_com - residue_com)
@@ -490,20 +476,36 @@ def get_pockets_IDs(input_pockets_zip: str, properties: dict, global_log):
 
     return filtered_pocket_IDs
 
-def check_arguments(global_log, traj_path, top_path, clustering_path):
+def check_arguments(global_log: logging.Logger, 
+                    traj_path: Optional[str], 
+                    top_path: Optional[str], 
+                    structures_path: Optional[str]
+    ):
     """
     Check the arguments provided by the user
+    
+    Parameters
+    ----------
+    
+    global_log : logging.Logger
+        Global log object
+    traj_path : Optional[str]
+        Path to the trajectory file
+    top_path : Optional[str]
+        Path to the topology file
+    structures_path : Optional[str]
+        Path to a folder with the representative structures in pdb format
     """
 
-    # If the user doesn't provide traj_path and top_path or clustering_path 
-    if (None in [traj_path, top_path]) and clustering_path is None:
+    # If the user doesn't provide traj_path and top_path or structures_path 
+    if (None in [traj_path, top_path]) and structures_path is None:
 
-        global_log.error("ERROR: traj_path and top_path or clustering_path must be provided")
+        global_log.error("ERROR: traj_path and top_path or structures_path must be provided")
         raise SystemExit
 
-    # If the user provides traj_path and top_path and clustering_path -> exit
-    if (None not in [traj_path, top_path]) and clustering_path is not None:
-        global_log.error("ERROR: traj_path, top_path and clustering_path are provided, provide either traj_path and top_path or clustering_path")
+    # If the user provides traj_path and top_path and structures_path -> exit
+    if (None not in [traj_path, top_path]) and structures_path is not None:
+        global_log.error("ERROR: traj_path, top_path and structures_path are provided, provide either traj_path and top_path or structures_path")
         raise SystemExit
 
     # If the user provides traj_path and not top_path -> exit
@@ -526,103 +528,111 @@ def check_arguments(global_log, traj_path, top_path, clustering_path):
         global_log.error("ERROR: top_path doesn't exist")
         raise SystemExit
     
-    # If the user provides clustering_path and it doesn't exist -> exit
-    if clustering_path is not None and not os.path.exists(clustering_path):
-        global_log.error("ERROR: clustering_path doesn't exist")
+    # If the user provides structures_path and it doesn't exist -> exit
+    if structures_path is not None and not os.path.exists(structures_path):
+        global_log.error("ERROR: structures_path doesn't exist")
         raise SystemExit
 
 # YML construction
 def config_contents(
-    
+    gmx_bin: Optional[str],
+    traj_path: Optional[str],
+    top_path: Optional[str],
+    clustering_method: Optional[Literal['linkage', 
+                                        'jarvis-patrick', 
+                                        'monte-carlo', 
+                                        'diagonalization', 
+                                        'gromos']],
+    clustering_cutoff: Optional[float],
+    filtering_selection: Optional[str],
+    distance_threshold: Optional[float]
+
     ) -> str:
     """
     Returns the contents of the YAML configuration file as a string.
     
     The YAML file contains the configuration for the protein preparation workflow.
     
+    Paramters
+    ---------
+    
+    gmx_bin: str
+        Path to GROMACS binary
+    traj_path: str
+        Path to the trajectory file
+    top_path: str
+        Path to the topology file
+    filtering_selection: str
+        Residue selection to filter pockets by distance to center of mass
+    distance_threshold: float
+        Distance threshold to filter pockets by distance to center of mass
+    clustering_method: str
+        Clustering method to use (linkage, jarvis-patrick, monte-carlo, diagonalization, gromos)
+    clustering_cutoff: float
+        Clustering cutoff to use for the clustering method
     Returns
     -------
     str
         The contents of the YAML configuration file.
     """
     
+    if traj_path:
+        traj_path = os.path.abspath(traj_path)
+        
+    if top_path:
+        top_path = os.path.abspath(top_path)
+        
+    if gmx_bin == None:
+        gmx_bin = "gmx"
+    
     return f""" 
 # Global properties (common for all steps)
-global_properties:                                                                               # Wether to use GPU support or not
-  working_dir_path: output                                                                          # Workflow default output directory
-  can_write_console_log: False                                                                      # Verbose writing of log information
-  restart: True                                                                                     # Skip steps already performed
-  remove_tmp: True                                                                               # Do not execute steps if output files are already created
+global_properties:                                # Wether to use GPU support or not
+  working_dir_path: output                        # Workflow default output directory
+  can_write_console_log: False                    # Verbose writing of log information
+  restart: True                                   # Skip steps already performed
+  remove_tmp: True                                # Do not execute steps if output files are already created
 
 # Step 0: Convert from Amber to Gromacs compatible format
 # Optional step (will be executed if the trajectory is not in a Gromacs-compatible format)
 step0_convert_amber_traj:
   tool: cpptraj_convert
   paths:
-    input_traj_path: /path/to/trajectory.dcd                                        # Amber compatible trajectory file
-    input_top_path: /path/to/topology.pdb                                           # topology file
+    input_traj_path: {traj_path}                                        # Amber compatible trajectory file
+    input_top_path: {top_path}                                          # topology file
     output_cpptraj_path: trajectory.xtc
   properties:
-    mask: "all-atoms"                                                               # Any Amber atom selection syntax
-    format: "xtc" 
-
-step1B_add_selection_group:                                       
-  tool: gmxselect
-  paths:
-    input_structure_path: dependency/step0_convert_amber_traj/input_top_path
-    input_ndx_path: dependency/step1A_traj_preparation_ndx/output_ndx_path
-    output_ndx_path: index_selection.ndx
-  properties:
-    selection: '"Selection" resnr 1 to 196'                                       # Gromacs selection syntax
-    append: True         
+    mask: "all-atoms"
 
 # Step 3: Create index file to select the atoms for the RMSD calculation
 step3A_rmsd_calculation_ndx:
   tool: make_ndx 
   paths:
-    input_structure_path: dependency/step2B_strip_top/output_str_path
+    input_structure_path: {top_path}
     output_ndx_path: index.ndx
   properties:
-    selection: "System"      
-
-step3B_add_rmsd_group:                                       
-  tool: gmxselect
-  paths:
-    input_structure_path: dependency/step2B_strip_top/output_str_path
-    input_ndx_path: dependency/step3A_rmsd_calculation_ndx/output_ndx_path
-    output_ndx_path: index_rmsd.ndx
-  properties:
-    selection: '"RmsdGroup" resnr 181 to 296' 
-    append: True        
-
-step3C_add_output_group:                                       
-  tool: gmxselect
-  paths:
-    input_structure_path: dependency/step2B_strip_top/output_str_path
-    input_ndx_path: dependency/step3B_add_rmsd_group/output_ndx_path
-    output_ndx_path: index_rmsd_output.ndx
-  properties:
-    selection: '"OutputGroup" group "Protein"'
-    append: True
+    selection: "System"
+    binary_path: {gmx_bin}      
 
 # Steps 4-5: Cluster trajectory and extract centroids pdb
 step4_gmx_cluster:
   tool: gmx_cluster
   paths:
-    input_traj_path: dependency/step2A_strip_traj/output_traj_path
-    input_structure_path: dependency/step2B_strip_top/output_str_path
-    input_index_path: dependency/step3C_add_output_group/output_ndx_path
+    input_traj_path: {traj_path}
+    input_structure_path: {top_path}
+    input_index_path: dependency/step3A_rmsd_calculation_ndx/output_ndx_path
     output_pdb_path: output.cluster.pdb
     output_cluster_log_path: output.cluster.log
     output_rmsd_cluster_xpm_path: output.rmsd-clust.xpm
     output_rmsd_dist_xvg_path: output.rmsd-dist.xvg
   properties:
-    fit_selection: RmsdGroup       
-    output_selection: OutputGroup        
+    fit_selection: Protein       
+    output_selection: Protein        
     dista: False
-    method: linkage                      
-    cutoff: 0.10                    # nm (RMSD cut-off)
-    nofit: True                     # Wether to use the RmsdGroups to fit the traj before computing the RMSD or not
+    method: {clustering_method}                      
+    cutoff: {clustering_cutoff}
+    nofit: False
+    binary_path: {gmx_bin} 
 
 step5_extract_models:
   tool: extract_model
@@ -661,9 +671,9 @@ step8_filter_residue_com:
     input_pdb_path: dependency/step5_extract_models/output_structure_path
     output_filter_pockets_zip: filtered_pockets.zip
   properties:
-    residue_selection: "resid 31 or resid 21"      # MDAnalysis selection string
-    distance_threshold: 8                          # Distance threshold in Angstroms (6-8 are reasonable values if the residue/s are part of the pocket)
-    run_step: False                                 # Run step or not
+    residue_selection: "{filtering_selection}"      # MDAnalysis selection string
+    distance_threshold: {distance_threshold}     # Distance threshold in Angstroms (6-8 are reasonable values if the residue/s are part of the pocket)
+    run_step: False                              # Run step or not
 """
 
 def create_config_file(output_path: str, 
@@ -697,17 +707,22 @@ def create_config_file(output_path: str,
     return config_path
         
 # Main workflow   
-def cavity_analysis(configuration_path: str,  
-            traj_path: str, 
-            top_path: str, 
-            clustering_path: str, 
-            distance_threshold: float,  
-            filtering_selection: str, 
-            num_clusters: int,
-            gmx_bin: str,
-            restart: bool,
-            output_path: str
-    ):
+def cavity_analysis(traj_path: Optional[str], 
+                    top_path: Optional[str], 
+                    structures_path: Optional[str], 
+                    distance_threshold: Optional[float],  
+                    filtering_selection: Optional[str], 
+                    num_clusters: Optional[int],
+                    clustering_method: Optional[Literal['linkage', 
+                                                        'jarvis-patrick', 
+                                                        'monte-carlo', 
+                                                        'diagonalization', 
+                                                        'gromos']],
+                    clustering_cutoff: Optional[float],
+                    gmx_bin: Optional[str],
+                    restart: bool,
+                    output_path: Optional[str]
+                    ) -> Tuple[str, Dict[str, Any]]:
     '''
     Main clustering and cavity analysis workflow. This workflow clusters a given trajectory and 
     analyzes the cavities of the most representative structures. Then filters the cavities 
@@ -716,20 +731,22 @@ def cavity_analysis(configuration_path: str,
     Inputs
     ------
 
-        configuration_path: 
-            path to YAML configuration file
         traj_path:  
             path to trajectory file
         top_path:  
             path to topology file
-        clustering_path:  
+        structures_path:  
             path to the folder with the most representative structures in pdb format from an external clustering
         distance_threshold:  
             distance threshold to filter pockets by distance to center of mass 
-        filtering_selection:  # Transform into pocket selection with MDAnalysis syntax
+        filtering_selection:
             residue selection to filter pockets by distance to center of mass 
         num_clusters:
             number of clusters to extract from the trajectory and analyze with fpocket
+        clustering_method:
+            clustering method to use (linkage, jarvis-patrick, monte-carlo, diagonalization, gromos)
+        clustering_cutoff:
+            clustering cutoff to use for the clustering method
         gmx_bin:
             path to GROMACS binary
         restart:
@@ -755,7 +772,19 @@ def cavity_analysis(configuration_path: str,
     global_log, _ = fu.get_logs(path=output_path, light_format=True)
     
     # Check input files
-    check_arguments(global_log, traj_path, top_path, clustering_path)
+    check_arguments(global_log, traj_path, top_path, structures_path)
+
+    # Create and load the configuration
+    config_args = {
+        'gmx_bin': gmx_bin,
+        'traj_path': traj_path,
+        'top_path': top_path,
+        'clustering_method': clustering_method,
+        'clustering_cutoff': clustering_cutoff,
+        'filtering_selection': filtering_selection,
+        'distance_threshold': distance_threshold
+    }
+    configuration_path = create_config_file(output_path, **config_args)
 
     conf = settings.ConfReader(configuration_path)
     conf.working_dir_path = output_path
@@ -765,81 +794,23 @@ def cavity_analysis(configuration_path: str,
     global_prop = conf.get_prop_dic(global_log=global_log)
     global_paths = conf.get_paths_dic()
 
-    # Enforce gromacs binary path for all steps using gromacs
-    if gmx_bin is not None:
-        global_log.info(f"Using GROMACS binary path: {gmx_bin}")
-        set_gromacs_path(global_prop, gmx_bin)
-
     # If clustering is not given externally -> cluster the input trajectory
-    if clustering_path is None:
+    if structures_path is None:
 
         # If the trajectory is not in a GROMACS-compatible format, convert it
         if not is_gromacs_format(traj_path):
-
-            # Enforce traj and top paths
-            global_paths['step0_convert_amber_traj']['input_traj_path'] = traj_path
-            global_paths['step0_convert_amber_traj']['input_top_path'] = top_path
 
             # STEP 0: Convert the trajectory to xtc format
             global_log.info("step0_convert_amber_traj: Converting AMBER trajectory to xtc format")
             cpptraj_convert(**global_paths['step0_convert_amber_traj'], properties=global_prop['step0_convert_amber_traj'])
 
-            # Change the traj path to the converted version of the trajectory
-            traj_path = global_paths['step0_convert_amber_traj']['output_cpptraj_path']
-        
-        # If the trajectory is in a GROMACS-compatible format, pass the path to the next step
-        else:
-
-            # Enforce traj path to next step
-            global_paths['step2A_strip_traj']['input_traj_path'] = traj_path
-
-        # If the user wants to prepare the trajectory before clustering
-        if prepare_traj:
-
-            # Enforce traj and top paths
-            global_paths['step1A_traj_preparation_ndx']['input_structure_path'] = top_path
-            global_paths['step1B_add_selection_group']['input_structure_path'] = top_path
-            global_paths['step2A_strip_traj']['input_top_path'] = top_path
-            global_paths['step2B_strip_top']['input_structure_path'] = top_path
-            global_paths['step2B_strip_top']['input_top_path'] = top_path
-
-            # STEP 1A: Create index file for atoms selection
-            global_log.info("step1A_traj_preparation_ndx: Creation of index file for atoms selection")
-            make_ndx(**global_paths['step1A_traj_preparation_ndx'], properties=global_prop['step1A_traj_preparation_ndx'])
-
-            # STEP 1B: Add selection group to index file
-            global_log.info("step1B_add_selection_group: Adding selection group to index file")
-            gmxselect(**global_paths['step1B_add_selection_group'], properties=global_prop['step1B_add_selection_group'])
-
-            # STEP 2A: Strip trajectory
-            global_log.info("step2A_strip_traj: Stripping trajectory, keeping just selected atoms")
-            gmx_trjconv_trj(**global_paths['step2A_strip_traj'], properties=global_prop['step2A_strip_traj'])
-
-            # STEP 2B: Strip topology
-            global_log.info("step2B_strip_top: Stripping topology, keeping just selected atoms")
-            gmx_trjconv_str(**global_paths['step2B_strip_top'], properties=global_prop['step2B_strip_top'])
-
-        # Trajectory and topology are already prepared (fitted, with no strange atoms and in GROMACS-compatible format)
-        else:
-            
-            # Enforce traj and top paths. 
-            global_paths['step4_gmx_cluster']['input_traj_path'] = traj_path
-            global_paths['step3A_rmsd_calculation_ndx']['input_structure_path'] = top_path
-            global_paths['step3B_add_rmsd_group']['input_structure_path'] = top_path
-            global_paths['step3C_add_output_group']['input_structure_path'] = top_path
-            global_paths['step4_gmx_cluster']['input_structure_path'] = top_path
+            # Change subsequent traj path 
+            global_paths['step4_gmx_cluster']['input_traj_path'] = global_paths['step0_convert_amber_traj']['output_cpptraj_path']
 
         # STEP 3A: Create index file for rmsd calculation
+        global_log.info(f"Paths: {global_paths['step3A_rmsd_calculation_ndx']}")
         global_log.info("step3A_rmsd_calculation_ndx: Creation of index file")
         make_ndx(**global_paths['step3A_rmsd_calculation_ndx'], properties=global_prop['step3A_rmsd_calculation_ndx'])
-
-        # STEP 3B: Add rmsd group to index file
-        global_log.info("step3B_add_rmsd_group: Adding RmsdGroup to index file")
-        gmxselect(**global_paths['step3B_add_rmsd_group'], properties=global_prop['step3B_add_rmsd_group'])
-
-        # STEP 3C: Add output group to index file
-        global_log.info("step3C_add_output_group: Adding OutputGroup to index file")
-        gmxselect(**global_paths['step3C_add_output_group'], properties=global_prop['step3C_add_output_group'])
 
         # STEP 4: Cluster trajectory with gmx_cluster
         global_log.info("step4_gmx_cluster: Clustering structures from the trajectory")
@@ -851,8 +822,12 @@ def cavity_analysis(configuration_path: str,
                                                       output_path = global_prop["step4_gmx_cluster"]['path'],
                                                       global_log = global_log)
 
-        # Number of clusters: minimum between number of clusters requested and number of clusters obtained
-        num_clusters = min(num_clusters, len(cluster_populations))
+        if num_clusters:
+            # Number of clusters: minimum between number of clusters requested and number of clusters obtained
+            num_clusters = min(num_clusters, len(cluster_populations))
+        else:
+            # Number of clusters: number of clusters obtained
+            num_clusters = len(cluster_populations)
 
         # Cluster names are the cluster IDs
         cluster_names = [str(cluster_populations[i][1]) for i in range(num_clusters)]
@@ -862,11 +837,11 @@ def cavity_analysis(configuration_path: str,
 
         # Obtain the full sorted list of pdb files from clustering path
         # If the clustering path is a file, we assume it is a single pdb file
-        if os.path.isfile(clustering_path):
+        if os.path.isfile(structures_path):
             global_log.info("External clustering file provided")
-            pdb_paths = [clustering_path]
+            pdb_paths = [structures_path]
         else:
-            pdb_paths = sorted(glob.glob(os.path.join(clustering_path,"*.pdb")))
+            pdb_paths = sorted(glob.glob(os.path.join(structures_path,"*.pdb")))
 
         # Population information will not be available in this case
         cluster_populations = None
@@ -888,17 +863,14 @@ def cavity_analysis(configuration_path: str,
         # Create sub folder for the model
         cluster_prop = conf.get_prop_dic(prefix=cluster_name)
         cluster_paths = conf.get_paths_dic(prefix=cluster_name)
-
-        # Enforce filtering selection
-        if filtering_selection is not None:
-            cluster_prop['step8_filter_residue_com']['residue_selection'] = filtering_selection 
             
         # If clustering was done here, extract the model from the clustering results
-        if clustering_path is None:
+        if structures_path is None:
 
             # Update input structures path and model index
             cluster_paths['step5_extract_models']['input_structure_path'] = global_paths['step4_gmx_cluster']['output_pdb_path']
-            cluster_prop['step5_extract_models']['models'] = [cluster_populations[cluster_index][1]]
+            if cluster_populations is not None:
+                cluster_prop['step5_extract_models']['models'] = [cluster_populations[cluster_index][1]]
 
             # STEP 5: Extract one model from the input structures path
             extract_model(**cluster_paths['step5_extract_models'], properties=cluster_prop['step5_extract_models'])
@@ -952,12 +924,8 @@ def cavity_analysis(configuration_path: str,
 
 def main():
 
-    parser = argparse.ArgumentParser(description="Simple clustering, cavity analysis and docking pipeline using BioExcel Building Blocks")
-    
-    parser.add_argument('--config', dest='config_path',
-                        help="Configuration file (YAML)", 
-                        required=False)
-    
+    parser = argparse.ArgumentParser(description="Simple clustering and cavity analysis pipeline using BioExcel Building Blocks")
+
     parser.add_argument('--traj_path', dest='traj_path',
                         help="Path to input trajectory (GROMACS or AMBER formats)", 
                         required=False)
@@ -966,12 +934,12 @@ def main():
                         help="Path to input structure (gro, pdb)",
                         required=False) 
 
-    parser.add_argument('--clustering_path', dest='clustering_path',
-                        help="Input path to representative structures (folder with pdb files)", 
+    parser.add_argument('--structures_path', dest='structures_path',
+                        help="Path to folder with structures in PDB format.", 
                         required=False)
 
     parser.add_argument('--filtering_selection', dest='filtering_selection',
-                        help="Residue selection to filter pockets by distance to center of mass",
+                        help="Atom selection to filter pockets by distance to center of mass (MDAnalysis syntax)",
                         required=False)
     
     parser.add_argument('--distance_threshold', dest='distance_threshold', type=float,
@@ -981,6 +949,14 @@ def main():
     parser.add_argument('--num_clusters', dest='num_clusters', type=int, default=20,
                         help="""Number of most populated clusters to extract from the trajectory and analyze with fpocket (default: 20).
                         if representative structures are given instead of a traj, this number is ignored""",
+                        required=False)
+
+    parser.add_argument('--clustering_method', dest='clustering_method', type=str, default='linkage',
+                        help="Clustering method to use (linkage, jarvis-patrick, monte-carlo, diagonalization, gromos). Default: linkage",
+                        required=False)
+    
+    parser.add_argument('--clustering_cutoff', dest='clustering_cutoff', type=float, default=0.1,
+                        help="Clustering cutoff to use for the clustering method. Reduce to increase the number of clusters. Default: 0.1",
                         required=False)
     
     parser.add_argument('--gmx_bin', type=str,
@@ -997,16 +973,17 @@ def main():
     
     args = parser.parse_args()
 
-    cavity_analysis(configuration_path = args.config_path, 
-            traj_path = args.traj_path,
-            top_path = args.top_path,
-            clustering_path = args.clustering_path,
-            distance_threshold = args.distance_threshold,
-            filtering_selection = args.filtering_selection,
-            num_clusters = args.num_clusters,
-            gmx_bin = args.gmx_bin,
-            restart = args.restart,
-            output_path = args.output_path)
+    cavity_analysis(traj_path = args.traj_path,
+                    top_path = args.top_path,
+                    structures_path = args.structures_path,
+                    distance_threshold = args.distance_threshold,
+                    filtering_selection = args.filtering_selection,
+                    num_clusters = args.num_clusters,
+                    clustering_method = args.clustering_method,
+                    clustering_cutoff = args.clustering_cutoff,
+                    gmx_bin = args.gmx_bin,
+                    restart = args.restart,
+                    output_path = args.output_path)
 
 
 if __name__ == '__main__':
