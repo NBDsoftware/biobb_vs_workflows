@@ -31,9 +31,10 @@ from biobb_vs.fpocket.fpocket_filter import fpocket_filter
 
 # Cluster count limit and retry policy for step4_gmx_cluster
 # (too many clusters -> combined centroid PDB can exceed step5's atom limit, and extraction gets slow)
+MAX_CLUSTER_ATOMS = 1000000
 MAX_CLUSTERS = 100
-MAX_CLUSTER_RETRIES = 5
-CUTOFF_INCREASE_FACTOR = 2.0
+MAX_CLUSTER_RETRIES = 10
+CUTOFF_INCREASE_FACTOR = 1.5
 
 def is_gromacs_format(traj_path: Optional[str]) -> bool:
     """
@@ -144,7 +145,6 @@ def get_clusters_population(log_path: str, output_path: str, global_log) -> list
         global_log.warning(f"   Warning: Large number of clusters found. Consider increasing the RMSD cutoff.")
         global_log.warning(f"   Warning: Number of clusters: {len(cluster_ids)}")
         global_log.warning(f"   Warning: Number of clusters with more than 1 member: {len([x for x in populations if x > 1])}")
-        global_log.warning(f"   Warning: Large number of clusters might make model extraction very slow.")
     
     # Return list with cluster population and id sorted by population
     return clusters_population
@@ -756,7 +756,8 @@ def cavity_analysis(traj_path: Optional[str],
         gmx_bin:
             path to GROMACS binary
         restart:
-            whether to restart the workflow from the last completed step or start from the beginning.
+            whether to restart the workflow from the last completed 
+            step or start from the beginning.
         output_path:  
             path to output folder
 
@@ -827,17 +828,21 @@ def cavity_analysis(traj_path: Optional[str],
         cluster_populations = get_clusters_population(log_path = global_paths["step4_gmx_cluster"]['output_cluster_log_path'],
                                                       output_path = global_prop["step4_gmx_cluster"]['path'],
                                                       global_log = global_log)
+        
+        # Find the number of atoms in the combined centroid PDB file
+        combined_centroid_universe = mda.Universe(global_paths["step4_gmx_cluster"]['output_pdb_path'])
+        num_atoms = len(combined_centroid_universe.atoms)
 
         # If too many clusters were found, the combined centroid PDB from step4 can exceed step5's atom
         # limit and extraction becomes very slow. Increase the cutoff and re-cluster, up to a retry limit.
         retry = 0
-        while len(cluster_populations) > MAX_CLUSTERS and retry < MAX_CLUSTER_RETRIES:
+        while num_atoms > MAX_CLUSTER_ATOMS and retry < MAX_CLUSTER_RETRIES:
             retry += 1
             old_cutoff = global_prop["step4_gmx_cluster"]["cutoff"]
             new_cutoff = old_cutoff * CUTOFF_INCREASE_FACTOR
 
             global_log.warning(
-                f"step4_gmx_cluster: {len(cluster_populations)} clusters found (> {MAX_CLUSTERS} limit). "
+                f"step4_gmx_cluster: {num_atoms} atoms found between all cluster (> {MAX_CLUSTER_ATOMS} limit). "
                 f"Too many clusters can make step5_extract_models fail (atom count limit on the combined "
                 f"centroid PDB) or become very slow. Increasing clustering cutoff {old_cutoff} -> {new_cutoff} "
                 f"and re-clustering (attempt {retry}/{MAX_CLUSTER_RETRIES})."
@@ -852,7 +857,11 @@ def cavity_analysis(traj_path: Optional[str],
                                                           output_path = global_prop["step4_gmx_cluster"]['path'],
                                                           global_log = global_log)
 
-        if len(cluster_populations) > MAX_CLUSTERS:
+            # Find the number of atoms in the combined centroid PDB file
+            combined_centroid_universe = mda.Universe(global_paths["step4_gmx_cluster"]['output_pdb_path'])
+            num_atoms = len(combined_centroid_universe.atoms)
+
+        if num_atoms > MAX_CLUSTER_ATOMS:
             global_log.warning(
                 f"step4_gmx_cluster: still {len(cluster_populations)} clusters after {retry} retries "
                 f"(final cutoff={global_prop['step4_gmx_cluster']['cutoff']}). Proceeding anyway - "
