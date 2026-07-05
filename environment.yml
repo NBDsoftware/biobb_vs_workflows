@@ -14,7 +14,7 @@ dependencies:
   - biobb_pdb_tools>=5.2.1
   - biobb_vs>=5.2.1
   - biobb_chemistry>=5.2.1
-  - propka==3.5.1
+  - propka>=3.5.1
   - mdanalysis
   - openbabel==3.1.1
   - biopython<=1.81
