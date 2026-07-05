@@ -1,0 +1,5356 @@
+ZINC000004204034
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 27  0  0  1  0            999 V2000
+    0.1090    0.1484   -0.0217 C   0  0  0  0  0  0
+    1.5582    0.0687    0.1092 N   0  0  1  0  0  0
+    2.0322    0.4563    1.4281 C   0  0  0  0  0  0
+    3.4878   -0.0179    1.4588 C   0  0  2  0  0  0
+    4.4843    1.0511    0.9723 C   0  0  0  0  0  0
+    5.8929    0.4627    0.7862 C   0  0  0  0  0  0
+    5.9140   -0.7536   -0.0334 N   0  0  1  0  0  0
+    4.6338   -1.2947   -0.5043 C   0  0  0  0  0  0
+    3.4988   -1.2751    0.5573 C   0  0  2  0  0  0
+    2.0728   -1.2872   -0.0265 C   0  0  0  0  0  0
+    3.7650   -0.2983    2.4766 H   0  0  0  0  0  0
+    3.6144   -2.1557    1.1916 H   0  0  0  0  0  0
+   -0.2278    1.1768    0.1142 H   0  0  0  0  0  0
+   -0.3987   -0.4767    0.7147 H   0  0  0  0  0  0
+   -0.2014   -0.1754   -1.0157 H   0  0  0  0  0  0
+    1.9168    1.5302    1.5817 H   0  0  0  0  0  0
+    1.4281    0.0018    2.2165 H   0  0  0  0  0  0
+    4.1690    1.4506    0.0065 H   0  0  0  0  0  0
+    4.4785    1.9197    1.6314 H   0  0  0  0  0  0
+    6.5534    1.2019    0.3322 H   0  0  0  0  0  0
+    6.3154    0.2082    1.7587 H   0  0  0  0  0  0
+    6.5965   -0.6950   -0.7758 H   0  0  0  0  0  0
+    4.3290   -0.7003   -1.3669 H   0  0  0  0  0  0
+    4.7705   -2.3047   -0.8914 H   0  0  0  0  0  0
+    1.4249   -1.9784    0.5173 H   0  0  0  0  0  0
+    2.0282   -1.5980   -1.0715 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2 10  1  0  0  0
+  2  3  1  0  0  0
+  3  4  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  4 11  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 18  1  0  0  0
+  5 19  1  0  0  0
+  6  7  1  0  0  0
+  6 20  1  0  0  0
+  6 21  1  0  0  0
+  7  8  1  0  0  0
+  7 22  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 12  1  0  0  0
+  9 10  1  0  0  0
+ 10 25  1  0  0  0
+ 10 26  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+1
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+1
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11OKFtDSDJdMSlbQ0gyXVtDQEhdKFtDQEhdMTIpW0NIMl1bTkhdW0NIMl1bQ0gyXTI=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+7.97156
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+7.97156
+
+> <r_epik_State_Penalty>
+12.2834
+
+> <r_epik_Charging_Adjusted_Penalty>
+12.2834
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+9.18904
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000004204034-1
+
+$$$$
+ZINC000004204034
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 28  0  0  1  0            999 V2000
+   -0.0101    0.0245    0.0397 C   0  0  0  0  0  0
+    1.4455   -0.0146   -0.0246 N   0  0  2  0  0  0
+    1.9813    0.5561   -1.2504 C   0  0  0  0  0  0
+    3.4455    0.0882   -1.3234 C   0  0  2  0  0  0
+    3.9747   -0.1200   -2.7608 C   0  0  0  0  0  0
+    3.3830   -1.3560   -3.4716 C   0  0  0  0  0  0
+    3.4687   -2.6299   -2.6035 N   0  3  0  0  0  0
+    4.0419   -2.4562   -1.1820 C   0  0  0  0  0  0
+    3.4444   -1.2114   -0.4796 C   0  0  2  0  0  0
+    1.9824   -1.3649   -0.0336 C   0  0  0  0  0  0
+    4.0750    0.8295   -0.8269 H   0  0  0  0  0  0
+    4.0394   -1.0365    0.4191 H   0  0  0  0  0  0
+   -0.3643    1.0558    0.0183 H   0  0  0  0  0  0
+   -0.3614   -0.4285    0.9675 H   0  0  0  0  0  0
+   -0.4669   -0.5102   -0.7948 H   0  0  0  0  0  0
+    1.3946    0.2411   -2.1158 H   0  0  0  0  0  0
+    1.8847    1.6426   -1.2387 H   0  0  0  0  0  0
+    3.7574    0.7650   -3.3605 H   0  0  0  0  0  0
+    5.0624   -0.2045   -2.7395 H   0  0  0  0  0  0
+    2.3195   -1.2376   -3.6804 H   0  0  0  0  0  0
+    3.8996   -1.5893   -4.4030 H   0  0  0  0  0  0
+    2.5359   -3.0091   -2.5213 H   0  0  0  0  0  0
+    3.8195   -3.3892   -0.6623 H   0  0  0  0  0  0
+    5.1211   -2.3704   -1.3172 H   0  0  0  0  0  0
+    1.8820   -1.8291    0.9485 H   0  0  0  0  0  0
+    1.4073   -2.0154   -0.6962 H   0  0  0  0  0  0
+    4.0154   -3.3261   -3.0906 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2 10  1  0  0  0
+  2  3  1  0  0  0
+  3  4  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  4 11  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 18  1  0  0  0
+  5 19  1  0  0  0
+  6  7  1  0  0  0
+  6 20  1  0  0  0
+  6 21  1  0  0  0
+  7  8  1  0  0  0
+  7 22  1  0  0  0
+  7 27  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 12  1  0  0  0
+  9 10  1  0  0  0
+ 10 25  1  0  0  0
+ 10 26  1  0  0  0
+M  CHG  1   7   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+1
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+1
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11OKFtDSDJdMSlbQ0gyXVtDQEhdKFtDQEhdMTIpW0NIMl1bTkhdW0NIMl1bQ0gyXTI=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.53022
+
+> <r_epik_Ionization_Penalty_Charging>
+0.000499453
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.52972
+
+> <r_epik_State_Penalty>
+2.75342
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.75392
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+13.215
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000004204034-2
+
+$$$$
+ZINC000004204034
+                    3D
+ Schrodinger Suite 2021-4.
+ 28 29  0  0  1  0            999 V2000
+   -0.0768   -0.0217    0.0735 C   0  0  0  0  0  0
+    1.4623    0.0204    0.0842 N   0  3  1  0  0  0
+    2.0729    0.5662   -1.2168 C   0  0  0  0  0  0
+    3.5010    0.9731   -0.8266 C   0  0  2  0  0  0
+    4.5794   -0.0556   -1.2362 C   0  0  0  0  0  0
+    5.9775    0.3239   -0.7014 C   0  0  0  0  0  0
+    5.9425    0.6406    0.8138 N   0  3  0  0  0  0
+    4.5683    0.4566    1.4932 C   0  0  0  0  0  0
+    3.4802    1.2299    0.7019 C   0  0  2  0  0  0
+    2.0475    0.9361    1.1724 C   0  0  0  0  0  0
+    3.7415    1.9132   -1.3282 H   0  0  0  0  0  0
+    3.6640    2.2945    0.8643 H   0  0  0  0  0  0
+   -0.4474    0.9917   -0.0890 H   0  0  0  0  0  0
+   -0.3888   -0.4137    1.0423 H   0  0  0  0  0  0
+   -0.3688   -0.6918   -0.7362 H   0  0  0  0  0  0
+    1.9853   -0.2089   -1.9802 H   0  0  0  0  0  0
+    1.4592    1.4192   -1.5149 H   0  0  0  0  0  0
+    4.3148   -1.0381   -0.8414 H   0  0  0  0  0  0
+    4.5871   -0.1910   -2.3188 H   0  0  0  0  0  0
+    6.7036   -0.4802   -0.8276 H   0  0  0  0  0  0
+    6.3646    1.2295   -1.1701 H   0  0  0  0  0  0
+    6.6270    0.0684    1.2890 H   0  0  0  0  0  0
+    4.3932   -0.6205    1.5176 H   0  0  0  0  0  0
+    4.6852    0.8160    2.5165 H   0  0  0  0  0  0
+    1.4202    1.8302    1.1895 H   0  0  0  0  0  0
+    1.9500    0.4202    2.1292 H   0  0  0  0  0  0
+    1.7940   -0.9228    0.2326 H   0  0  0  0  0  0
+    6.2344    1.5996    0.9426 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2 10  1  0  0  0
+  2  3  1  0  0  0
+  2 27  1  0  0  0
+  3  4  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  4 11  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 18  1  0  0  0
+  5 19  1  0  0  0
+  6  7  1  0  0  0
+  6 20  1  0  0  0
+  6 21  1  0  0  0
+  7  8  1  0  0  0
+  7 22  1  0  0  0
+  7 28  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 12  1  0  0  0
+  9 10  1  0  0  0
+ 10 25  1  0  0  0
+ 10 26  1  0  0  0
+M  CHG  2   2   1   7   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+1
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+1
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11OKFtDSDJdMSlbQ0gyXVtDQEhdKFtDQEhdMTIpW0NIMl1bTkhdW0NIMl1bQ0gyXTI=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0112728
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0112728
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+0.00795933
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0192321
+
+> <i_epik_Tot_Q>
+2
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+31.6634
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000004204034-3
+
+$$$$
+ZINC000012358771
+                    3D
+ Schrodinger Suite 2021-4.
+  9  8  0  0  1  0            999 V2000
+   -0.6895    0.9899    0.0000 O   0  0  0  0  0  0
+    0.0321   -0.0074   -0.0000 C   0  0  0  0  0  0
+   -0.4487   -1.2837   -0.0000 O   0  0  0  0  0  0
+    1.4736    0.0119    0.0000 C   0  0  0  0  0  0
+    2.1772    1.1586    0.0000 C   0  0  0  0  0  0
+    3.9425    1.1630    0.0000 Cl  0  0  0  0  0  0
+   -1.4081   -1.3107   -0.0000 H   0  0  0  0  0  0
+    1.9761   -0.9454    0.0000 H   0  0  0  0  0  0
+    1.7319    2.1441    0.0000 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  3  7  1  0  0  0
+  4  5  2  0  0  0
+  4  8  1  0  0  0
+  5  6  1  0  0  0
+  5  9  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+2
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+2
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtPSF0pL1tDSF09W0NIXS9DbA==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+4.46823
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+4.46823
+
+> <r_epik_State_Penalty>
+4.76781
+
+> <r_epik_Charging_Adjusted_Penalty>
+4.76781
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-1.59136
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000012358771-1
+
+$$$$
+ZINC000012358771
+                    3D
+ Schrodinger Suite 2021-4.
+  8  7  0  0  1  0            999 V2000
+   -0.5538    1.1551   -0.0000 O   0  0  0  0  0  0
+   -0.0822   -0.0036    0.0000 C   0  0  0  0  0  0
+   -0.6787   -1.1061    0.0000 O   0  5  0  0  0  0
+    1.4672   -0.0436   -0.0000 C   0  0  0  0  0  0
+    2.2170   -1.1637   -0.0000 C   0  0  0  0  0  0
+    3.9818   -1.1030   -0.0000 Cl  0  0  0  0  0  0
+    1.9963    0.8995   -0.0000 H   0  0  0  0  0  0
+    1.8071   -2.1638   -0.0000 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4  5  2  0  0  0
+  4  7  1  0  0  0
+  5  6  1  0  0  0
+  5  8  1  0  0  0
+M  CHG  1   3  -1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+2
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+2
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtPSF0pL1tDSF09W0NIXS9DbA==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.000314458
+
+> <r_epik_Ionization_Penalty_Charging>
+0.000314458
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+0.000189636
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.000504094
+
+> <i_epik_Tot_Q>
+-1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+3.86458
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000012358771-2
+
+$$$$
+ZINC000012650194
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 27  0  0  1  0            999 V2000
+   -0.4772   -0.8050    1.2191 C   0  0  0  0  0  0
+    0.0747   -0.0171    0.0113 C   0  0  2  0  0  0
+    1.6202   -0.0028    0.0465 C   0  0  0  0  0  0
+    2.1770    0.6307   -1.0885 O   0  0  0  0  0  0
+   -0.5115    1.4196   -0.0854 C   0  0  0  0  0  0
+   -1.9762    1.4628   -0.0961 N   0  0  0  0  0  0
+   -2.5858    0.8915   -1.2906 C   0  0  0  0  0  0
+   -4.0294    1.4009   -1.2930 C   0  0  0  0  0  0
+   -3.9762    2.6837   -0.4589 C   0  0  0  0  0  0
+   -2.4998    2.8210   -0.0817 C   0  0  0  0  0  0
+   -0.2026   -0.5620   -0.8926 H   0  0  0  0  0  0
+   -0.2475   -0.3031    2.1599 H   0  0  0  0  0  0
+   -0.0517   -1.8080    1.2658 H   0  0  0  0  0  0
+   -1.5597   -0.9222    1.1630 H   0  0  0  0  0  0
+    1.9652    0.5375    0.9292 H   0  0  0  0  0  0
+    2.0223   -1.0122    0.1448 H   0  0  0  0  0  0
+    3.1336    0.6186   -1.0072 H   0  0  0  0  0  0
+   -0.1432    2.0139    0.7525 H   0  0  0  0  0  0
+   -0.1482    1.9060   -0.9927 H   0  0  0  0  0  0
+   -2.0461    1.1628   -2.2002 H   0  0  0  0  0  0
+   -2.5341   -0.1962   -1.2331 H   0  0  0  0  0  0
+   -4.3728    1.5957   -2.3097 H   0  0  0  0  0  0
+   -4.7056    0.6669   -0.8522 H   0  0  0  0  0  0
+   -4.3190    3.5507   -1.0246 H   0  0  0  0  0  0
+   -4.6009    2.6086    0.4324 H   0  0  0  0  0  0
+   -2.3600    3.2415    0.9151 H   0  0  0  0  0  0
+   -1.9532    3.4839   -0.7559 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  2 11  1  0  0  0
+  2  3  1  0  0  0
+  2  5  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  3 16  1  0  0  0
+  4 17  1  0  0  0
+  5  6  1  0  0  0
+  5 18  1  0  0  0
+  5 19  1  0  0  0
+  6 10  1  0  0  0
+  6  7  1  0  0  0
+  7  8  1  0  0  0
+  7 20  1  0  0  0
+  7 21  1  0  0  0
+  8  9  1  0  0  0
+  8 22  1  0  0  0
+  8 23  1  0  0  0
+  9 10  1  0  0  0
+  9 24  1  0  0  0
+  9 25  1  0  0  0
+ 10 26  1  0  0  0
+ 10 27  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+3
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+3
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NAQEhdKFtDSDNdKVtDSDJdTjFbQ0gyXVtDSDJdW0NIMl1bQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+4.4096
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+4.4096
+
+> <r_epik_State_Penalty>
+4.70523
+
+> <r_epik_Charging_Adjusted_Penalty>
+4.70523
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+2.25041
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000012650194-1
+
+$$$$
+ZINC000012650194
+                    3D
+ Schrodinger Suite 2021-4.
+ 28 28  0  0  1  0            999 V2000
+   -0.4067   -0.7773    1.2949 C   0  0  0  0  0  0
+    0.0963   -0.0262    0.0428 C   0  0  2  0  0  0
+    1.6419   -0.0181    0.0077 C   0  0  0  0  0  0
+    2.1454    0.5894   -1.1656 O   0  0  0  0  0  0
+   -0.4887    1.4077   -0.0740 C   0  0  0  0  0  0
+   -2.0347    1.4127   -0.0550 N   0  3  0  0  0  0
+   -2.6375    2.8272   -0.0368 C   0  0  0  0  0  0
+   -4.0773    2.6391   -0.5176 C   0  0  0  0  0  0
+   -4.1121    1.3299   -1.3111 C   0  0  0  0  0  0
+   -2.6968    0.7490   -1.2758 C   0  0  0  0  0  0
+   -0.2306   -0.5992   -0.8267 H   0  0  0  0  0  0
+   -0.1457   -0.2451    2.2106 H   0  0  0  0  0  0
+    0.0288   -1.7754    1.3590 H   0  0  0  0  0  0
+   -1.4892   -0.9070    1.2838 H   0  0  0  0  0  0
+    2.0296    0.5406    0.8608 H   0  0  0  0  0  0
+    2.0449   -1.0267    0.1095 H   0  0  0  0  0  0
+    3.1052    0.5719   -1.1320 H   0  0  0  0  0  0
+   -0.1974    2.0318    0.7728 H   0  0  0  0  0  0
+   -0.2041    1.9089   -1.0011 H   0  0  0  0  0  0
+   -2.5240    3.2361    0.9679 H   0  0  0  0  0  0
+   -2.0438    3.4215   -0.7342 H   0  0  0  0  0  0
+   -4.7582    2.5926    0.3337 H   0  0  0  0  0  0
+   -4.3907    3.4833   -1.1332 H   0  0  0  0  0  0
+   -4.8213    0.6295   -0.8672 H   0  0  0  0  0  0
+   -4.4322    1.4994   -2.3401 H   0  0  0  0  0  0
+   -2.1056    1.0469   -2.1439 H   0  0  0  0  0  0
+   -2.6391   -0.3333   -1.1552 H   0  0  0  0  0  0
+   -2.3316    0.9267    0.7798 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  2 11  1  0  0  0
+  2  3  1  0  0  0
+  2  5  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  3 16  1  0  0  0
+  4 17  1  0  0  0
+  5  6  1  0  0  0
+  5 18  1  0  0  0
+  5 19  1  0  0  0
+  6 10  1  0  0  0
+  6  7  1  0  0  0
+  6 28  1  0  0  0
+  7  8  1  0  0  0
+  7 20  1  0  0  0
+  7 21  1  0  0  0
+  8  9  1  0  0  0
+  8 22  1  0  0  0
+  8 23  1  0  0  0
+  9 10  1  0  0  0
+  9 24  1  0  0  0
+  9 25  1  0  0  0
+ 10 26  1  0  0  0
+ 10 27  1  0  0  0
+M  CHG  1   6   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+3
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+3
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NAQEhdKFtDSDNdKVtDSDJdTjFbQ0gyXVtDSDJdW0NIMl1bQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.000347245
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00034718
+
+> <r_epik_Ionization_Penalty_Neutral>
+6.52795e-08
+
+> <r_epik_State_Penalty>
+0.000210766
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.000557946
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+15.3769
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000012650194-2
+
+$$$$
+ZINC000013588701
+                    3D
+ Schrodinger Suite 2021-4.
+ 18 18  0  0  1  0            999 V2000
+   -0.5823    1.4447    0.0088 C   0  0  0  0  0  0
+    0.0293    0.0375    0.1094 C   0  0  0  0  0  0
+    1.5725    0.0019   -0.0542 C   0  0  2  0  0  0
+    2.1495   -1.4140   -0.0047 C   0  0  0  0  0  0
+    2.5686   -1.4703    1.3389 O   0  0  0  0  0  0
+    2.6897   -0.1907    1.7902 C   0  0  0  0  0  0
+    3.3412   -0.0538    2.9906 N   0  0  0  0  0  0
+    2.2170    0.7049    1.0275 N   0  0  0  0  0  0
+    1.8486    0.4834   -0.9942 H   0  0  0  0  0  0
+   -1.6696    1.4013    0.0759 H   0  0  0  0  0  0
+   -0.3284    1.9190   -0.9397 H   0  0  0  0  0  0
+   -0.2291    2.0918    0.8125 H   0  0  0  0  0  0
+   -0.2616   -0.4136    1.0598 H   0  0  0  0  0  0
+   -0.4218   -0.5854   -0.6639 H   0  0  0  0  0  0
+    1.4256   -2.1958   -0.2390 H   0  0  0  0  0  0
+    3.0103   -1.5259   -0.6677 H   0  0  0  0  0  0
+    3.4937    0.8617    3.3875 H   0  0  0  0  0  0
+    3.6369   -0.8685    3.5077 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  9  1  0  0  0
+  3  8  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 15  1  0  0  0
+  4 16  1  0  0  0
+  5  6  1  0  0  0
+  6  7  1  0  0  0
+  6  8  2  0  0  0
+  7 17  1  0  0  0
+  7 18  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+4
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+4
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEBIXTFbQ0gyXU9DKD1OMSlbTkgyXQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+3.32276
+
+> <r_epik_Ionization_Penalty_Charging>
+3.32276
+
+> <r_epik_Ionization_Penalty_Neutral>
+4.18882e-13
+
+> <r_epik_State_Penalty>
+3.55077
+
+> <r_epik_Charging_Adjusted_Penalty>
+6.87352
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_epik_Chemistry_Notes>
+This compound has an imine and may undergo hydrolysis.
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-11.6628
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000013588701-1
+
+$$$$
+ZINC000013588701
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 19  0  0  1  0            999 V2000
+   -0.6321    1.4184   -0.0056 C   0  0  0  0  0  0
+    0.0131    0.0250    0.1048 C   0  0  0  0  0  0
+    1.5592    0.0221    0.0003 C   0  0  2  0  0  0
+    2.1935   -1.3663    0.0283 C   0  0  0  0  0  0
+    2.4402   -1.5415    1.4121 O   0  0  0  0  0  0
+    2.6570   -0.4070    1.9687 C   0  0  0  0  0  0
+    3.3059   -0.3879    3.1253 N   0  0  0  0  0  0
+    2.1392    0.5630    1.2228 N   0  3  0  0  0  0
+    1.9011    0.6023   -0.8581 H   0  0  0  0  0  0
+   -1.7198    1.3450    0.0188 H   0  0  0  0  0  0
+   -0.3565    1.9092   -0.9396 H   0  0  0  0  0  0
+   -0.3314    2.0682    0.8165 H   0  0  0  0  0  0
+   -0.3242   -0.4650    1.0213 H   0  0  0  0  0  0
+   -0.3855   -0.5855   -0.7069 H   0  0  0  0  0  0
+    1.5477   -2.1493   -0.3718 H   0  0  0  0  0  0
+    3.1407   -1.3897   -0.5141 H   0  0  0  0  0  0
+    3.4829    0.4898    3.5923 H   0  0  0  0  0  0
+    3.6194   -1.2556    3.5363 H   0  0  0  0  0  0
+    2.1297    1.5439    1.4636 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  9  1  0  0  0
+  3  8  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 15  1  0  0  0
+  4 16  1  0  0  0
+  5  6  1  0  0  0
+  6  7  1  0  0  0
+  6  8  2  0  0  0
+  7 17  1  0  0  0
+  7 18  1  0  0  0
+  8 19  1  0  0  0
+M  CHG  1   8   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+4
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+4
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEBIXTFbQ0gyXU9DKD1OMSlbTkgyXQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00512112
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00294401
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.00217711
+
+> <r_epik_State_Penalty>
+0.00743759
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0103816
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_epik_Chemistry_Notes>
+This compound has an imine and may undergo hydrolysis.
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+1.08814
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000013588701-2
+
+$$$$
+ZINC000013588701
+                    3D
+ Schrodinger Suite 2021-4.
+ 18 18  0  0  1  0            999 V2000
+   -0.0734    0.0650    0.0338 C   0  0  0  0  0  0
+    1.4614   -0.0008    0.0093 C   0  0  0  0  0  0
+    2.0182   -1.4394   -0.0092 C   0  0  2  0  0  0
+    3.5450   -1.5076   -0.0257 C   0  0  0  0  0  0
+    3.8216   -2.6465   -0.8243 O   0  0  0  0  0  0
+    2.7706   -2.9281   -1.6525 C   0  0  0  0  0  0
+    2.8023   -3.7917   -2.5689 N   0  0  0  0  0  0
+    1.7175   -2.1536   -1.2274 N   0  0  0  0  0  0
+    1.6272   -2.0068    0.8374 H   0  0  0  0  0  0
+   -0.4170    1.0992    0.0720 H   0  0  0  0  0  0
+   -0.4778   -0.4508    0.9054 H   0  0  0  0  0  0
+   -0.5066   -0.3915   -0.8567 H   0  0  0  0  0  0
+    1.8300    0.5546   -0.8548 H   0  0  0  0  0  0
+    1.8474    0.5188    0.8873 H   0  0  0  0  0  0
+    3.9946   -0.6288   -0.4935 H   0  0  0  0  0  0
+    3.9656   -1.6112    0.9749 H   0  0  0  0  0  0
+    1.9203   -3.8817   -3.0517 H   0  0  0  0  0  0
+    0.7277   -2.2730   -1.3853 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  9  1  0  0  0
+  3  8  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 15  1  0  0  0
+  4 16  1  0  0  0
+  5  6  1  0  0  0
+  6  7  2  0  0  0
+  6  8  1  0  0  0
+  7 17  1  0  0  0
+  8 18  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+4
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+4
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEBIXTFbQ0gyXU9DKD1OMSlbTkgyXQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.73659
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.73659
+
+> <r_epik_State_Penalty>
+3.14045
+
+> <r_epik_Charging_Adjusted_Penalty>
+3.14045
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_epik_Chemistry_Notes>
+This compound has an imine and may undergo hydrolysis.
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-3.36057
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000013588701-3
+
+$$$$
+ZINC000014988472
+                    3D
+ Schrodinger Suite 2021-4.
+ 23 22  0  0  1  0            999 V2000
+   -2.6839    2.8743    0.0771 C   0  0  0  0  0  0
+   -2.1103    1.4512    0.0528 C   0  0  0  0  0  0
+   -0.5732    1.4273   -0.0009 C   0  0  0  0  0  0
+   -0.0003   -0.0006   -0.0353 C   0  0  0  0  0  0
+    1.8566    0.0192    0.0294 S   0  0  1  0  0  0
+    2.3227   -1.4378    0.0389 O   0  0  0  0  0  0
+    2.1997    0.6928   -1.6673 C   0  0  0  0  0  0
+    3.6939    0.5575   -1.9902 C   0  0  0  0  0  0
+    3.9631    1.1022   -3.2643 O   0  0  0  0  0  0
+   -3.7732    2.8546    0.1211 H   0  0  0  0  0  0
+   -2.3992    3.4302   -0.8167 H   0  0  0  0  0  0
+   -2.3279    3.4307    0.9449 H   0  0  0  0  0  0
+   -2.4551    0.9118    0.9362 H   0  0  0  0  0  0
+   -2.5159    0.9179   -0.8081 H   0  0  0  0  0  0
+   -0.2395    1.9826   -0.8775 H   0  0  0  0  0  0
+   -0.1731    1.9563    0.8655 H   0  0  0  0  0  0
+   -0.3550   -0.5650    0.8276 H   0  0  0  0  0  0
+   -0.3256   -0.5347   -0.9288 H   0  0  0  0  0  0
+    1.6019    0.1463   -2.3979 H   0  0  0  0  0  0
+    1.8947    1.7385   -1.7074 H   0  0  0  0  0  0
+    4.3015    1.0771   -1.2483 H   0  0  0  0  0  0
+    3.9994   -0.4895   -1.9832 H   0  0  0  0  0  0
+    4.9002    1.0018   -3.4476 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  3 16  1  0  0  0
+  4  5  1  0  0  0
+  4 17  1  0  0  0
+  4 18  1  0  0  0
+  5  6  2  0  0  0
+  5  7  1  0  0  0
+  7  8  1  0  0  0
+  7 19  1  0  0  0
+  7 20  1  0  0  0
+  8  9  1  0  0  0
+  8 21  1  0  0  0
+  8 22  1  0  0  0
+  9 23  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+5
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+5
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDSDJdW0NIMl1bU0BAXSg9TylbQ0gyXVtDSDJdW09IXQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+1.05098e-07
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.05098e-07
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-0.472543
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000014988472-1
+
+$$$$
+ZINC000016159864
+                    3D
+ Schrodinger Suite 2021-4.
+ 12 12  0  0  1  0            999 V2000
+   -0.7054    0.5895    0.9068 O   0  0  0  0  0  0
+   -0.0363   -0.1506    0.1865 C   0  0  0  0  0  0
+   -0.5613   -1.0720   -0.6704 O   0  0  0  0  0  0
+    1.5022   -0.1592    0.1207 C   0  0  1  0  0  0
+    2.1767    1.1655    0.4629 C   0  0  0  0  0  0
+    2.2671    0.0252    1.4312 C   0  0  2  0  0  0
+    3.4441   -0.5942    1.5108 F   0  0  0  0  0  0
+    1.5038    0.1306    3.0451 Cl  0  0  0  0  0  0
+    1.9435   -0.7775   -0.6625 H   0  0  0  0  0  0
+   -1.5206   -1.0833   -0.6486 H   0  0  0  0  0  0
+    3.0625    1.4487   -0.1060 H   0  0  0  0  0  0
+    1.5703    2.0345    0.7231 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  3 10  1  0  0  0
+  4  9  1  0  0  0
+  4  6  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 11  1  0  0  0
+  5 12  1  0  0  0
+  6  7  1  0  0  0
+  6  8  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+6
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+6
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtPSF0pW0NAQEhdKFtDSDJdMSlbQ0BdMShGKUNs
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+5.77007
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+5.77007
+
+> <r_epik_State_Penalty>
+6.15711
+
+> <r_epik_Charging_Adjusted_Penalty>
+6.15711
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+13.6746
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000016159864-1
+
+$$$$
+ZINC000016159864
+                    3D
+ Schrodinger Suite 2021-4.
+ 11 11  0  0  1  0            999 V2000
+   -0.7373    0.7278    0.6898 O   0  0  0  0  0  0
+   -0.0727   -0.0536   -0.0301 C   0  0  0  0  0  0
+   -0.5817   -0.8402   -0.8592 O   0  5  0  0  0  0
+    1.4737   -0.0651    0.0556 C   0  0  1  0  0  0
+    2.2255    1.1840    0.5063 C   0  0  0  0  0  0
+    2.2014   -0.0228    1.3996 C   0  0  2  0  0  0
+    3.3347   -0.7198    1.4783 F   0  0  0  0  0  0
+    1.3862    0.0334    2.9891 Cl  0  0  0  0  0  0
+    1.9726   -0.6597   -0.7123 H   0  0  0  0  0  0
+    3.1477    1.4404   -0.0152 H   0  0  0  0  0  0
+    1.6641    2.0725    0.7975 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4  9  1  0  0  0
+  4  6  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 10  1  0  0  0
+  5 11  1  0  0  0
+  6  7  1  0  0  0
+  6  8  1  0  0  0
+M  CHG  1   3  -1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+6
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+6
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtPSF0pW0NAQEhdKFtDSDJdMSlbQ0BdMShGKUNs
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+3.49308e-05
+
+> <r_epik_Ionization_Penalty_Charging>
+3.49308e-05
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+1.81761e-05
+
+> <r_epik_Charging_Adjusted_Penalty>
+5.31069e-05
+
+> <i_epik_Tot_Q>
+-1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+10.2096
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000016159864-2
+
+$$$$
+ZINC000024728264
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 20  0  0  1  0            999 V2000
+    0.0065    0.2533   -0.1158 N   0  0  0  0  0  0
+    1.4080   -0.0668    0.0630 C   0  0  0  0  0  0
+    1.9682    0.6489    1.2697 C   0  0  0  0  0  0
+    2.3597    0.1124    2.5022 C   0  0  0  0  0  0
+    2.8126    0.9908    3.3735 N   0  0  0  0  0  0
+    2.7338    2.1736    2.7318 N   0  0  0  0  0  0
+    3.0945    3.3931    3.2417 C   0  0  0  0  0  0
+    2.9405    4.5098    2.4234 C   0  0  0  0  0  0
+    2.4297    4.3181    1.1380 C   0  0  0  0  0  0
+    2.0707    3.1050    0.6319 N   0  0  0  0  0  0
+    2.2234    2.0371    1.4302 C   0  0  0  0  0  0
+   -0.0841    1.2283   -0.3639 H   0  0  0  0  0  0
+   -0.3635   -0.2723   -0.8947 H   0  0  0  0  0  0
+    1.4932   -1.1473    0.1835 H   0  0  0  0  0  0
+    1.9532    0.1940   -0.8445 H   0  0  0  0  0  0
+    2.3099   -0.9354    2.7606 H   0  0  0  0  0  0
+    3.4796    3.4284    4.2509 H   0  0  0  0  0  0
+    3.2089    5.4960    2.7730 H   0  0  0  0  0  0
+    2.2977    5.1623    0.4769 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3 11  2  0  0  0
+  3  4  1  0  0  0
+  4  5  2  0  0  0
+  4 16  1  0  0  0
+  5  6  1  0  0  0
+  6 11  1  0  0  0
+  6  7  1  0  0  0
+  7  8  2  0  0  0
+  7 17  1  0  0  0
+  8  9  1  0  0  0
+  8 18  1  0  0  0
+  9 10  2  0  0  0
+  9 19  1  0  0  0
+ 10 11  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+7
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+7
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W05IMl1bQ0gyXWMoW2NIXW4xKWMobjEyKW5bY0hdW2NIXVtjSF0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.66525
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.66525
+
+> <r_epik_State_Penalty>
+2.84187
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.84187
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+17.4539
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000024728264-1
+
+$$$$
+ZINC000024728264
+                    3D
+ Schrodinger Suite 2021-4.
+ 20 21  0  0  1  0            999 V2000
+   -0.0198    0.0107    0.0762 N   0  3  0  0  0  0
+    1.5068    0.0187   -0.0414 C   0  0  0  0  0  0
+    1.9951   -1.4133   -0.0452 C   0  0  0  0  0  0
+    2.3175   -2.2309   -1.1369 C   0  0  0  0  0  0
+    2.7308   -3.4416   -0.8230 N   0  0  0  0  0  0
+    2.7062   -3.4692    0.5242 N   0  0  0  0  0  0
+    3.0607   -4.5289    1.3168 C   0  0  0  0  0  0
+    2.9700   -4.3648    2.6974 C   0  0  0  0  0  0
+    2.5248   -3.1349    3.1865 C   0  0  0  0  0  0
+    2.1710   -2.0821    2.3964 N   0  0  0  0  0  0
+    2.2647   -2.2527    1.0694 C   0  0  0  0  0  0
+   -0.3741    0.9566    0.0782 H   0  0  0  0  0  0
+   -0.2973   -0.4415    0.9358 H   0  0  0  0  0  0
+    1.7002    0.5580   -0.9696 H   0  0  0  0  0  0
+    1.8548    0.6118    0.8056 H   0  0  0  0  0  0
+    2.2473   -1.9324   -2.1731 H   0  0  0  0  0  0
+    3.3930   -5.4367    0.8332 H   0  0  0  0  0  0
+    3.2373   -5.1660    3.3710 H   0  0  0  0  0  0
+    2.4435   -2.9734    4.2518 H   0  0  0  0  0  0
+   -0.4259   -0.4878   -0.7026 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  1 20  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3 11  2  0  0  0
+  3  4  1  0  0  0
+  4  5  2  0  0  0
+  4 16  1  0  0  0
+  5  6  1  0  0  0
+  6 11  1  0  0  0
+  6  7  1  0  0  0
+  7  8  2  0  0  0
+  7 17  1  0  0  0
+  8  9  1  0  0  0
+  8 18  1  0  0  0
+  9 10  2  0  0  0
+  9 19  1  0  0  0
+ 10 11  1  0  0  0
+M  CHG  1   1   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+7
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+7
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W05IMl1bQ0gyXWMoW2NIXW4xKWMobjEyKW5bY0hdW2NIXVtjSF0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00662929
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00662929
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.63179e-10
+
+> <r_epik_State_Penalty>
+0.00491329
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0115426
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+15.1374
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000024728264-2
+
+$$$$
+ZINC000031773431
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 27  0  0  1  0            999 V2000
+   -0.5651   -1.8804   -1.5428 O   0  0  0  0  0  0
+   -0.6608   -0.6657   -1.3658 C   0  0  0  0  0  0
+   -1.2882    0.2085   -2.2059 O   0  0  0  0  0  0
+   -0.0536    0.0571   -0.1470 C   0  0  2  0  0  0
+    1.3952    0.1466   -0.4430 N   0  0  2  0  0  0
+    2.0810    1.0976    0.4265 C   0  0  0  0  0  0
+    3.6031    1.0776    0.2015 C   0  0  0  0  0  0
+    4.1697   -0.1515    0.6122 O   0  0  0  0  0  0
+   -0.4990   -0.6042    1.1419 C   0  0  0  0  0  0
+    0.3287   -1.5079    1.8229 C   0  0  0  0  0  0
+   -0.1045   -2.1045    3.0037 C   0  0  0  0  0  0
+   -1.3665   -1.8009    3.5080 C   0  0  0  0  0  0
+   -2.1997   -0.9066    2.8408 C   0  0  0  0  0  0
+   -1.7663   -0.3105    1.6595 C   0  0  0  0  0  0
+   -0.4457    1.0768   -0.1365 H   0  0  0  0  0  0
+   -1.6655   -0.2318   -2.9708 H   0  0  0  0  0  0
+    1.5055    0.4724   -1.3928 H   0  0  0  0  0  0
+    1.7151    2.0930    0.1713 H   0  0  0  0  0  0
+    1.8431    0.9591    1.4823 H   0  0  0  0  0  0
+    3.8447    1.2472   -0.8487 H   0  0  0  0  0  0
+    4.0750    1.8824    0.7656 H   0  0  0  0  0  0
+    5.1148   -0.1242    0.4462 H   0  0  0  0  0  0
+    1.3077   -1.7545    1.4382 H   0  0  0  0  0  0
+    0.5352   -2.8013    3.5250 H   0  0  0  0  0  0
+   -1.7026   -2.2644    4.4238 H   0  0  0  0  0  0
+   -3.1777   -0.6772    3.2370 H   0  0  0  0  0  0
+   -2.4178    0.3809    1.1448 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  3 16  1  0  0  0
+  4 15  1  0  0  0
+  4  5  1  0  0  0
+  4  9  1  0  0  0
+  5  6  1  0  0  0
+  5 17  1  0  0  0
+  6  7  1  0  0  0
+  6 18  1  0  0  0
+  6 19  1  0  0  0
+  7  8  1  0  0  0
+  7 20  1  0  0  0
+  7 21  1  0  0  0
+  8 22  1  0  0  0
+  9 14  1  0  0  0
+  9 10  2  0  0  0
+ 10 11  1  0  0  0
+ 10 23  1  0  0  0
+ 11 12  2  0  0  0
+ 11 24  1  0  0  0
+ 12 13  1  0  0  0
+ 12 25  1  0  0  0
+ 13 14  2  0  0  0
+ 13 26  1  0  0  0
+ 14 27  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+8
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+8
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NIMl1bTkhdW0NAQEhdKEMoPU8pW09IXSljMVtjSF1bY0hdW2NIXVtjSF1bY0hdMQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+3.57813
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+3.57813
+
+> <r_epik_State_Penalty>
+7.29699
+
+> <r_epik_Charging_Adjusted_Penalty>
+7.29699
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+19.2455
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031773431-1
+
+$$$$
+ZINC000031773431
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 27  0  0  1  0            999 V2000
+   -1.5052   -1.8686   -1.4127 O   0  0  0  0  0  0
+   -0.4385   -1.2173   -1.4974 C   0  0  0  0  0  0
+    0.1766   -1.0822   -2.5829 O   0  5  0  0  0  0
+   -0.0739   -0.2838   -0.2944 C   0  0  2  0  0  0
+    1.4235    0.1017   -0.3747 N   0  3  0  0  0  0
+    1.8894    1.1471    0.6564 C   0  0  0  0  0  0
+    3.3679    1.5148    0.4332 C   0  0  0  0  0  0
+    4.2185    0.3890    0.5324 O   0  0  0  0  0  0
+   -0.5299   -0.7904    1.0857 C   0  0  0  0  0  0
+   -0.2092   -2.0833    1.5204 C   0  0  0  0  0  0
+   -0.6154   -2.5198    2.7784 C   0  0  0  0  0  0
+   -1.3383   -1.6635    3.6053 C   0  0  0  0  0  0
+   -1.6570   -0.3740    3.1863 C   0  0  0  0  0  0
+   -1.2517    0.0625    1.9280 C   0  0  0  0  0  0
+   -0.5529    0.6760   -0.4989 H   0  0  0  0  0  0
+    1.9792   -0.7348   -0.2652 H   0  0  0  0  0  0
+    1.2320    2.0051    0.5104 H   0  0  0  0  0  0
+    1.7133    0.7168    1.6432 H   0  0  0  0  0  0
+    3.5070    1.9998   -0.5339 H   0  0  0  0  0  0
+    3.6803    2.2415    1.1838 H   0  0  0  0  0  0
+    5.1259    0.6780    0.4079 H   0  0  0  0  0  0
+    0.3549   -2.7500    0.8843 H   0  0  0  0  0  0
+   -0.3706   -3.5177    3.1114 H   0  0  0  0  0  0
+   -1.6540   -2.0025    4.5810 H   0  0  0  0  0  0
+   -2.2161    0.2842    3.8348 H   0  0  0  0  0  0
+   -1.5006    1.0644    1.6096 H   0  0  0  0  0  0
+    1.5969    0.4704   -1.2992 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4 15  1  0  0  0
+  4  5  1  0  0  0
+  4  9  1  0  0  0
+  5  6  1  0  0  0
+  5 16  1  0  0  0
+  5 27  1  0  0  0
+  6  7  1  0  0  0
+  6 17  1  0  0  0
+  6 18  1  0  0  0
+  7  8  1  0  0  0
+  7 19  1  0  0  0
+  7 20  1  0  0  0
+  8 21  1  0  0  0
+  9 14  1  0  0  0
+  9 10  2  0  0  0
+ 10 11  1  0  0  0
+ 10 22  1  0  0  0
+ 11 12  2  0  0  0
+ 11 23  1  0  0  0
+ 12 13  1  0  0  0
+ 12 24  1  0  0  0
+ 13 14  2  0  0  0
+ 13 25  1  0  0  0
+ 14 26  1  0  0  0
+M  CHG  2   3  -1   5   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+8
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+8
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NIMl1bTkhdW0NAQEhdKEMoPU8pW09IXSljMVtjSF1bY0hdW2NIXVtjSF1bY0hdMQ==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0013893
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00138826
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.03531e-06
+
+> <r_epik_State_Penalty>
+2.65432e-06
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.00139092
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+29.2197
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031773431-2
+
+$$$$
+ZINC000031996782
+                    3D
+ Schrodinger Suite 2021-4.
+ 28 28  0  0  1  0            999 V2000
+   -0.6653    1.4772   -0.0446 C   0  0  0  0  0  0
+   -0.0427    0.0716    0.0135 C   0  0  0  0  0  0
+    1.5130    0.0428   -0.0135 C   0  0  2  0  0  0
+    2.0621    0.7137   -1.2982 C   0  0  0  0  0  0
+    2.0211   -1.3399    0.1061 N   0  0  1  0  0  0
+    3.4798   -1.4506    0.1591 C   0  0  0  0  0  0
+    3.8167   -2.8441    0.7064 C   0  0  0  0  0  0
+    2.5110   -3.2852    1.3692 C   0  0  1  0  0  0
+    2.6434   -3.8744    2.6886 N   0  0  0  0  0  0
+    1.6289   -2.0380    1.3277 C   0  0  0  0  0  0
+    1.8772    0.6082    0.8465 H   0  0  0  0  0  0
+    2.0549   -4.0421    0.7288 H   0  0  0  0  0  0
+   -1.7444    1.4270    0.1039 H   0  0  0  0  0  0
+   -0.4979    1.9565   -1.0089 H   0  0  0  0  0  0
+   -0.2569    2.1246    0.7321 H   0  0  0  0  0  0
+   -0.4098   -0.3846    0.9326 H   0  0  0  0  0  0
+   -0.4413   -0.5316   -0.8040 H   0  0  0  0  0  0
+    1.7425    1.7523   -1.3746 H   0  0  0  0  0  0
+    1.7195    0.1969   -2.1955 H   0  0  0  0  0  0
+    3.1511    0.7385   -1.3237 H   0  0  0  0  0  0
+    3.8877   -1.3138   -0.8428 H   0  0  0  0  0  0
+    3.9277   -0.6585    0.7626 H   0  0  0  0  0  0
+    4.0824   -3.4966   -0.1266 H   0  0  0  0  0  0
+    4.6480   -2.7625    1.4086 H   0  0  0  0  0  0
+    1.7458   -4.2128    3.0047 H   0  0  0  0  0  0
+    3.2603   -4.6730    2.6460 H   0  0  0  0  0  0
+    1.7253   -1.4015    2.2102 H   0  0  0  0  0  0
+    0.5742   -2.3051    1.2611 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2 16  1  0  0  0
+  2 17  1  0  0  0
+  3 11  1  0  0  0
+  3  4  1  0  0  0
+  3  5  1  0  0  0
+  4 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  5 10  1  0  0  0
+  5  6  1  0  0  0
+  6  7  1  0  0  0
+  6 21  1  0  0  0
+  6 22  1  0  0  0
+  7  8  1  0  0  0
+  7 23  1  0  0  0
+  7 24  1  0  0  0
+  8 12  1  0  0  0
+  8  9  1  0  0  0
+  8 10  1  0  0  0
+  9 25  1  0  0  0
+  9 26  1  0  0  0
+ 10 27  1  0  0  0
+ 10 28  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+9
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+9
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdKFtDSDNdKU4xW0NIMl1bQ0gyXVtDQEBIXShbTkgyXSlbQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+8.10014
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+8.10014
+
+> <r_epik_State_Penalty>
+14.7894
+
+> <r_epik_Charging_Adjusted_Penalty>
+14.7894
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+6.35583
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031996782-1
+
+$$$$
+ZINC000031996782
+                    3D
+ Schrodinger Suite 2021-4.
+ 29 29  0  0  1  0            999 V2000
+   -0.6708    1.4831    0.0444 C   0  0  0  0  0  0
+   -0.0451    0.0793   -0.0027 C   0  0  0  0  0  0
+    1.5067    0.0649   -0.0350 C   0  0  2  0  0  0
+    2.0849    0.7925   -1.2705 C   0  0  0  0  0  0
+    2.0179   -1.4041   -0.0169 N   0  3  2  0  0  0
+    1.5725   -2.2344    1.2025 C   0  0  0  0  0  0
+    2.5577   -3.4023    1.2835 C   0  0  0  0  0  0
+    3.8178   -2.9861    0.5116 C   0  0  1  0  0  0
+    4.0900   -3.8879   -0.5955 N   0  0  0  0  0  0
+    3.5523   -1.5585    0.0118 C   0  0  0  0  0  0
+    1.9067    0.5039    0.8812 H   0  0  0  0  0  0
+    4.6822   -2.9654    1.1770 H   0  0  0  0  0  0
+   -1.7520    1.4194    0.1714 H   0  0  0  0  0  0
+   -0.4883    2.0397   -0.8747 H   0  0  0  0  0  0
+   -0.2761    2.0660    0.8774 H   0  0  0  0  0  0
+   -0.4063   -0.4554    0.8758 H   0  0  0  0  0  0
+   -0.4407   -0.4600   -0.8647 H   0  0  0  0  0  0
+    1.7600    1.8318   -1.3094 H   0  0  0  0  0  0
+    1.7714    0.3157   -2.2002 H   0  0  0  0  0  0
+    3.1741    0.8219   -1.2598 H   0  0  0  0  0  0
+    1.6474   -1.5704    2.0658 H   0  0  0  0  0  0
+    0.5320   -2.5287    1.0625 H   0  0  0  0  0  0
+    2.7934   -3.5768    2.3342 H   0  0  0  0  0  0
+    2.0886   -4.3046    0.8856 H   0  0  0  0  0  0
+    4.9356   -3.6043   -1.0703 H   0  0  0  0  0  0
+    4.2605   -4.8199   -0.2440 H   0  0  0  0  0  0
+    3.9450   -1.3215   -0.9782 H   0  0  0  0  0  0
+    3.9148   -0.8063    0.7151 H   0  0  0  0  0  0
+    1.6709   -1.8534   -0.8529 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2 16  1  0  0  0
+  2 17  1  0  0  0
+  3 11  1  0  0  0
+  3  4  1  0  0  0
+  3  5  1  0  0  0
+  4 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  5 10  1  0  0  0
+  5  6  1  0  0  0
+  5 29  1  0  0  0
+  6  7  1  0  0  0
+  6 21  1  0  0  0
+  6 22  1  0  0  0
+  7  8  1  0  0  0
+  7 23  1  0  0  0
+  7 24  1  0  0  0
+  8 12  1  0  0  0
+  8  9  1  0  0  0
+  8 10  1  0  0  0
+  9 25  1  0  0  0
+  9 26  1  0  0  0
+ 10 27  1  0  0  0
+ 10 28  1  0  0  0
+M  CHG  1   5   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+9
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+9
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdKFtDSDNdKU4xW0NIMl1bQ0gyXVtDQEBIXShbTkgyXSlbQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0986765
+
+> <r_epik_Ionization_Penalty_Charging>
+0.000343995
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.0983325
+
+> <r_epik_State_Penalty>
+0.31691
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.317254
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+15.3229
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031996782-2
+
+$$$$
+ZINC000031996782
+                    3D
+ Schrodinger Suite 2021-4.
+ 29 29  0  0  1  0            999 V2000
+   -0.6759    1.4644   -0.0601 C   0  0  0  0  0  0
+   -0.0453    0.0616   -0.0900 C   0  0  0  0  0  0
+    1.5079    0.0401    0.0066 C   0  0  2  0  0  0
+    2.1529    0.8203   -1.1667 C   0  0  0  0  0  0
+    2.0119   -1.3486    0.0477 N   0  0  1  0  0  0
+    3.4589   -1.4921    0.1725 C   0  0  0  0  0  0
+    3.6601   -2.9760    0.4602 C   0  0  0  0  0  0
+    2.4855   -3.3317    1.3781 C   0  0  1  0  0  0
+    2.8408   -3.5804    2.8515 N   0  3  0  0  0  0
+    1.5060   -2.1622    1.1554 C   0  0  0  0  0  0
+    1.7980    0.5293    0.9385 H   0  0  0  0  0  0
+    2.0477   -4.2868    1.0838 H   0  0  0  0  0  0
+   -1.7629    1.3968   -0.0050 H   0  0  0  0  0  0
+   -0.4377    2.0374   -0.9560 H   0  0  0  0  0  0
+   -0.3371    2.0336    0.8060 H   0  0  0  0  0  0
+   -0.4806   -0.4860    0.7459 H   0  0  0  0  0  0
+   -0.3705   -0.4579   -0.9929 H   0  0  0  0  0  0
+    1.8140    1.8551   -1.1948 H   0  0  0  0  0  0
+    1.9086    0.3687   -2.1292 H   0  0  0  0  0  0
+    3.2383    0.8703   -1.0866 H   0  0  0  0  0  0
+    3.9392   -1.1950   -0.7601 H   0  0  0  0  0  0
+    3.8667   -0.8356    0.9441 H   0  0  0  0  0  0
+    3.6481   -3.5518   -0.4671 H   0  0  0  0  0  0
+    4.6374   -3.1475    0.9149 H   0  0  0  0  0  0
+    3.2662   -2.7557    3.2504 H   0  0  0  0  0  0
+    3.4903   -4.3504    2.9276 H   0  0  0  0  0  0
+    1.4226   -1.5417    2.0511 H   0  0  0  0  0  0
+    0.4878   -2.5097    0.9765 H   0  0  0  0  0  0
+    2.0081   -3.8038    3.3778 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2 16  1  0  0  0
+  2 17  1  0  0  0
+  3 11  1  0  0  0
+  3  4  1  0  0  0
+  3  5  1  0  0  0
+  4 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  5 10  1  0  0  0
+  5  6  1  0  0  0
+  6  7  1  0  0  0
+  6 21  1  0  0  0
+  6 22  1  0  0  0
+  7  8  1  0  0  0
+  7 23  1  0  0  0
+  7 24  1  0  0  0
+  8 12  1  0  0  0
+  8  9  1  0  0  0
+  8 10  1  0  0  0
+  9 25  1  0  0  0
+  9 26  1  0  0  0
+  9 29  1  0  0  0
+ 10 27  1  0  0  0
+ 10 28  1  0  0  0
+M  CHG  1   9   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+9
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+9
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdKFtDSDNdKU4xW0NIMl1bQ0gyXVtDQEBIXShbTkgyXSlbQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0773301
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00118013
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.07615
+
+> <r_epik_State_Penalty>
+0.619947
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.621127
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+9.34237
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031996782-3
+
+$$$$
+ZINC000031996782
+                    3D
+ Schrodinger Suite 2021-4.
+ 30 30  0  0  1  0            999 V2000
+   -0.7006    1.4335    0.0431 C   0  0  0  0  0  0
+   -0.0415    0.0516   -0.1001 C   0  0  0  0  0  0
+    1.5083    0.0698   -0.0184 C   0  0  2  0  0  0
+    2.1530    0.8724   -1.1720 C   0  0  0  0  0  0
+    2.0444   -1.3901   -0.0338 N   0  3  2  0  0  0
+    1.5428   -2.2760    1.1315 C   0  0  0  0  0  0
+    2.6982   -3.2266    1.4784 C   0  0  0  0  0  0
+    3.8205   -2.9730    0.4689 C   0  0  1  0  0  0
+    3.9016   -3.9817   -0.6904 N   0  3  0  0  0  0
+    3.5811   -1.5252    0.0285 C   0  0  0  0  0  0
+    1.8347    0.4670    0.9451 H   0  0  0  0  0  0
+    4.8052   -3.1124    0.9192 H   0  0  0  0  0  0
+   -1.7868    1.3419    0.0781 H   0  0  0  0  0  0
+   -0.4620    2.0870   -0.7958 H   0  0  0  0  0  0
+   -0.3843    1.9320    0.9601 H   0  0  0  0  0  0
+   -0.4553   -0.5802    0.6861 H   0  0  0  0  0  0
+   -0.3595   -0.4008   -1.0409 H   0  0  0  0  0  0
+    1.7941    1.9011   -1.1904 H   0  0  0  0  0  0
+    1.9292    0.4312   -2.1442 H   0  0  0  0  0  0
+    3.2365    0.9376   -1.0742 H   0  0  0  0  0  0
+    1.3181   -1.6243    1.9780 H   0  0  0  0  0  0
+    0.6450   -2.7835    0.7759 H   0  0  0  0  0  0
+    3.0521   -3.0038    2.4868 H   0  0  0  0  0  0
+    2.3645   -4.2660    1.4943 H   0  0  0  0  0  0
+    3.0454   -3.9727   -1.2263 H   0  0  0  0  0  0
+    4.0481   -4.9151   -0.3318 H   0  0  0  0  0  0
+    3.9960   -1.2486   -0.9424 H   0  0  0  0  0  0
+    3.9205   -0.8003    0.7720 H   0  0  0  0  0  0
+    1.7493   -1.8123   -0.9031 H   0  0  0  0  0  0
+    4.6705   -3.7498   -1.3036 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2 16  1  0  0  0
+  2 17  1  0  0  0
+  3 11  1  0  0  0
+  3  4  1  0  0  0
+  3  5  1  0  0  0
+  4 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  5 10  1  0  0  0
+  5  6  1  0  0  0
+  5 29  1  0  0  0
+  6  7  1  0  0  0
+  6 21  1  0  0  0
+  6 22  1  0  0  0
+  7  8  1  0  0  0
+  7 23  1  0  0  0
+  7 24  1  0  0  0
+  8 12  1  0  0  0
+  8  9  1  0  0  0
+  8 10  1  0  0  0
+  9 25  1  0  0  0
+  9 26  1  0  0  0
+  9 30  1  0  0  0
+ 10 27  1  0  0  0
+ 10 28  1  0  0  0
+M  CHG  2   5   1   9   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+9
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+9
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdKFtDSDNdKU4xW0NIMl1bQ0gyXVtDQEBIXShbTkgyXSlbQ0gyXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.3658
+
+> <r_epik_Ionization_Penalty_Charging>
+2.3658
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+1.63758
+
+> <r_epik_Charging_Adjusted_Penalty>
+4.00338
+
+> <i_epik_Tot_Q>
+2
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+25.9458
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000031996782-4
+
+$$$$
+ZINC000034189684
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 27  0  0  1  0            999 V2000
+   -0.7041    1.2048   -0.0215 C   0  0  0  0  0  0
+    0.0420   -0.0077   -0.0183 O   0  0  0  0  0  0
+    1.4252    0.0408   -0.0160 C   0  0  0  0  0  0
+    2.1573    1.2416   -0.0250 C   0  0  0  0  0  0
+    3.5492    1.2272   -0.0079 C   0  0  0  0  0  0
+    4.2307    0.0157    0.0110 C   0  0  0  0  0  0
+    3.5185   -1.1815    0.0215 C   0  0  0  0  0  0
+    2.1089   -1.1877    0.0084 C   0  0  0  0  0  0
+    1.3717   -2.5243    0.0603 C   0  0  0  0  0  0
+    2.2745   -3.6836   -0.3975 C   0  0  2  0  0  0
+    1.6529   -4.9841   -0.2280 N   0  0  0  0  0  0
+    3.6433   -3.5546    0.3015 C   0  0  0  0  0  0
+    4.2907   -2.3272   -0.0453 O   0  0  0  0  0  0
+    2.4455   -3.5702   -1.4691 H   0  0  0  0  0  0
+   -1.7688    0.9718   -0.0180 H   0  0  0  0  0  0
+   -0.5001    1.7987   -0.9136 H   0  0  0  0  0  0
+   -0.4954    1.8050    0.8654 H   0  0  0  0  0  0
+    1.6626    2.2006   -0.0427 H   0  0  0  0  0  0
+    4.0997    2.1563   -0.0174 H   0  0  0  0  0  0
+    5.3110    0.0066    0.0055 H   0  0  0  0  0  0
+    1.0876   -2.6851    1.1018 H   0  0  0  0  0  0
+    0.4445   -2.5039   -0.5142 H   0  0  0  0  0  0
+    0.7949   -5.0227   -0.7597 H   0  0  0  0  0  0
+    2.2567   -5.7011   -0.6046 H   0  0  0  0  0  0
+    3.5086   -3.5925    1.3844 H   0  0  0  0  0  0
+    4.2984   -4.3819    0.0260 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 15  1  0  0  0
+  1 16  1  0  0  0
+  1 17  1  0  0  0
+  2  3  1  0  0  0
+  3  8  1  0  0  0
+  3  4  2  0  0  0
+  4  5  1  0  0  0
+  4 18  1  0  0  0
+  5  6  2  0  0  0
+  5 19  1  0  0  0
+  6  7  1  0  0  0
+  6 20  1  0  0  0
+  7 13  1  0  0  0
+  7  8  2  0  0  0
+  8  9  1  0  0  0
+  9 10  1  0  0  0
+  9 21  1  0  0  0
+  9 22  1  0  0  0
+ 10 14  1  0  0  0
+ 10 11  1  0  0  0
+ 10 12  1  0  0  0
+ 11 23  1  0  0  0
+ 11 24  1  0  0  0
+ 12 13  1  0  0  0
+ 12 25  1  0  0  0
+ 12 26  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+10
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+10
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFbY0hdW2NIXWMoT1tDSDNdKWMoYzEyKVtDSDJdW0NASF0oW05IMl0pW0NIMl1PMg==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+2.17206
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.17206
+
+> <r_epik_State_Penalty>
+2.31344
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.31344
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+18.5855
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000034189684-1
+
+$$$$
+ZINC000034189684
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 28  0  0  1  0            999 V2000
+   -0.7036    1.2082   -0.0160 C   0  0  0  0  0  0
+    0.0442   -0.0033   -0.0267 O   0  0  0  0  0  0
+    1.4272    0.0470   -0.0151 C   0  0  0  0  0  0
+    2.1587    1.2478    0.0083 C   0  0  0  0  0  0
+    3.5506    1.2337    0.0320 C   0  0  0  0  0  0
+    4.2333    0.0227    0.0261 C   0  0  0  0  0  0
+    3.5226   -1.1754    0.0040 C   0  0  0  0  0  0
+    2.1104   -1.1820   -0.0173 C   0  0  0  0  0  0
+    1.3691   -2.5196   -0.0062 C   0  0  0  0  0  0
+    2.3034   -3.6437   -0.4938 C   0  0  2  0  0  0
+    1.6597   -4.9935   -0.1369 N   0  3  0  0  0  0
+    3.6507   -3.5499    0.2530 C   0  0  0  0  0  0
+    4.2975   -2.3206   -0.0867 O   0  0  0  0  0  0
+    2.4304   -3.6377   -1.5779 H   0  0  0  0  0  0
+   -1.7679    0.9735   -0.0257 H   0  0  0  0  0  0
+   -0.4926    1.8171   -0.8963 H   0  0  0  0  0  0
+   -0.5035    1.7942    0.8823 H   0  0  0  0  0  0
+    1.6633    2.2068    0.0106 H   0  0  0  0  0  0
+    4.1003    2.1635    0.0469 H   0  0  0  0  0  0
+    5.3137    0.0161    0.0257 H   0  0  0  0  0  0
+    1.0194   -2.6997    1.0133 H   0  0  0  0  0  0
+    0.4822   -2.4640   -0.6404 H   0  0  0  0  0  0
+    1.5185   -5.0582    0.8612 H   0  0  0  0  0  0
+    2.2569   -5.7532   -0.4311 H   0  0  0  0  0  0
+    3.5006   -3.5813    1.3352 H   0  0  0  0  0  0
+    4.3175   -4.3712   -0.0153 H   0  0  0  0  0  0
+    0.7658   -5.0854   -0.5984 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 15  1  0  0  0
+  1 16  1  0  0  0
+  1 17  1  0  0  0
+  2  3  1  0  0  0
+  3  8  1  0  0  0
+  3  4  2  0  0  0
+  4  5  1  0  0  0
+  4 18  1  0  0  0
+  5  6  2  0  0  0
+  5 19  1  0  0  0
+  6  7  1  0  0  0
+  6 20  1  0  0  0
+  7 13  1  0  0  0
+  7  8  2  0  0  0
+  8  9  1  0  0  0
+  9 10  1  0  0  0
+  9 21  1  0  0  0
+  9 22  1  0  0  0
+ 10 14  1  0  0  0
+ 10 11  1  0  0  0
+ 10 12  1  0  0  0
+ 11 23  1  0  0  0
+ 11 24  1  0  0  0
+ 11 27  1  0  0  0
+ 12 13  1  0  0  0
+ 12 25  1  0  0  0
+ 12 26  1  0  0  0
+M  CHG  1  11   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+10
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+10
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFbY0hdW2NIXWMoT1tDSDNdKWMoYzEyKVtDSDJdW0NASF0oW05IMl0pW0NIMl1PMg==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0153518
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0153518
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+0.0120594
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0274113
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+21.4602
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000034189684-2
+
+$$$$
+ZINC000034545809
+                    3D
+ Schrodinger Suite 2021-4.
+ 24 25  0  0  1  0            999 V2000
+    0.2769   -1.4039    1.9499 O   0  0  0  0  0  0
+   -0.4747   -0.9463    1.0884 C   0  0  0  0  0  0
+   -1.7912   -1.2467    1.0402 N   0  0  0  0  0  0
+   -2.8279   -0.7816    0.2093 C   0  0  0  0  0  0
+   -3.7473   -1.6954   -0.3179 C   0  0  0  0  0  0
+   -4.7751   -1.2829   -1.1620 C   0  0  0  0  0  0
+   -4.8972    0.0608   -1.4968 C   0  0  0  0  0  0
+   -3.9922    0.9863   -0.9845 C   0  0  0  0  0  0
+   -2.9553    0.5893   -0.1309 C   0  0  0  0  0  0
+   -1.9721    1.6236    0.4126 C   0  0  0  0  0  0
+   -0.5064    1.4305   -0.0252 C   0  0  0  0  0  0
+    0.0030   -0.0287   -0.0633 C   0  0  1  0  0  0
+    1.4205   -0.0127   -0.1022 O   0  0  0  0  0  0
+   -0.3201   -0.4890   -0.9992 H   0  0  0  0  0  0
+   -2.0776   -1.9059    1.7492 H   0  0  0  0  0  0
+   -3.6637   -2.7445   -0.0724 H   0  0  0  0  0  0
+   -5.4736   -2.0052   -1.5579 H   0  0  0  0  0  0
+   -5.6909    0.3857   -2.1534 H   0  0  0  0  0  0
+   -4.0998    2.0264   -1.2563 H   0  0  0  0  0  0
+   -2.2910    2.6280    0.1290 H   0  0  0  0  0  0
+   -2.0460    1.6077    1.5012 H   0  0  0  0  0  0
+   -0.3754    1.8637   -1.0182 H   0  0  0  0  0  0
+    0.1198    2.0319    0.6368 H   0  0  0  0  0  0
+    1.7451   -0.7734    0.3866 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2 12  1  0  0  0
+  2  3  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  4  9  2  0  0  0
+  4  5  1  0  0  0
+  5  6  2  0  0  0
+  5 16  1  0  0  0
+  6  7  1  0  0  0
+  6 17  1  0  0  0
+  7  8  2  0  0  0
+  7 18  1  0  0  0
+  8  9  1  0  0  0
+  8 19  1  0  0  0
+  9 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 20  1  0  0  0
+ 10 21  1  0  0  0
+ 11 12  1  0  0  0
+ 11 22  1  0  0  0
+ 11 23  1  0  0  0
+ 12 14  1  0  0  0
+ 12 13  1  0  0  0
+ 13 24  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+11
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+11
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtOSF0xKVtDQEhdKFtPSF0pW0NIMl1bQ0gyXWMoYzEyKVtjSF1bY0hdW2NIXVtjSF0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+4.39329e-06
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+4.39329e-06
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+30.7965
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000034545809-1
+
+$$$$
+ZINC000034616047
+                    3D
+ Schrodinger Suite 2021-4.
+ 16 16  0  0  1  0            999 V2000
+   -0.8373    0.0395    0.8277 O   0  0  0  0  0  0
+   -0.0303    0.0320   -0.1005 C   0  0  0  0  0  0
+    1.4614    0.0137    0.0263 C   0  0  0  0  0  0
+    2.1868   -0.0778   -1.1718 C   0  0  0  0  0  0
+    3.5797   -0.1370   -1.1539 C   0  0  0  0  0  0
+    4.2286   -0.1063    0.0765 C   0  0  0  0  0  0
+    3.5645   -0.0149    1.2533 N   0  0  0  0  0  0
+    2.2045    0.0499    1.2361 C   0  0  0  0  0  0
+    1.5936    0.1799    2.6055 C   0  0  0  0  0  0
+    1.7232   -0.6879    3.4675 O   0  0  0  0  0  0
+    0.9371    1.3593    2.8071 O   0  0  0  0  0  0
+   -0.3935    0.0328   -1.1289 H   0  0  0  0  0  0
+    1.6835   -0.1115   -2.1284 H   0  0  0  0  0  0
+    4.1418   -0.2102   -2.0733 H   0  0  0  0  0  0
+    5.3062   -0.1538    0.1334 H   0  0  0  0  0  0
+    0.5694    1.4235    3.6912 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2 12  1  0  0  0
+  3  8  1  0  0  0
+  3  4  2  0  0  0
+  4  5  1  0  0  0
+  4 13  1  0  0  0
+  5  6  2  0  0  0
+  5 14  1  0  0  0
+  6  7  1  0  0  0
+  6 15  1  0  0  0
+  7  8  2  0  0  0
+  8  9  1  0  0  0
+  9 10  2  0  0  0
+  9 11  1  0  0  0
+ 11 16  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+12
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+12
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1bQ0hdYzFbY0hdW2NIXVtjSF1uYzFDKD1PKVtPSF0=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+6.10063
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+6.10063
+
+> <r_epik_State_Penalty>
+6.50985
+
+> <r_epik_Charging_Adjusted_Penalty>
+6.50985
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+16.4079
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000034616047-1
+
+$$$$
+ZINC000034616047
+                    3D
+ Schrodinger Suite 2021-4.
+ 15 15  0  0  1  0            999 V2000
+   -0.6662    0.4990   -1.0592 O   0  0  0  0  0  0
+   -0.0231    0.2808   -0.0319 C   0  0  0  0  0  0
+    1.4642    0.1112    0.0278 C   0  0  0  0  0  0
+    2.1978    0.2050   -1.1665 C   0  0  0  0  0  0
+    3.5829    0.0538   -1.1581 C   0  0  0  0  0  0
+    4.2148   -0.1906    0.0565 C   0  0  0  0  0  0
+    3.5412   -0.2870    1.2270 N   0  0  0  0  0  0
+    2.1842   -0.1403    1.2272 C   0  0  0  0  0  0
+    1.5232   -0.2630    2.5640 C   0  0  0  0  0  0
+    1.1427   -1.4046    2.9118 O   0  0  0  0  0  0
+    1.3849    0.7871    3.2329 O   0  5  0  0  0  0
+   -0.5381    0.1989    0.9249 H   0  0  0  0  0  0
+    1.7059    0.3949   -2.1102 H   0  0  0  0  0  0
+    4.1520    0.1250   -2.0732 H   0  0  0  0  0  0
+    5.2867   -0.3135    0.1056 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2 12  1  0  0  0
+  3  8  1  0  0  0
+  3  4  2  0  0  0
+  4  5  1  0  0  0
+  4 13  1  0  0  0
+  5  6  2  0  0  0
+  5 14  1  0  0  0
+  6  7  1  0  0  0
+  6 15  1  0  0  0
+  7  8  2  0  0  0
+  8  9  1  0  0  0
+  9 10  2  0  0  0
+  9 11  1  0  0  0
+M  CHG  1  11  -1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+12
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+12
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1bQ0hdYzFbY0hdW2NIXVtjSF1uYzFDKD1PKVtPSF0=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.000274434
+
+> <r_epik_Ionization_Penalty_Charging>
+1.99941e-05
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.00025444
+
+> <r_epik_State_Penalty>
+1.00216e-05
+
+> <r_epik_Charging_Adjusted_Penalty>
+3.00157e-05
+
+> <i_epik_Tot_Q>
+-1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+23.2236
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000034616047-2
+
+$$$$
+ZINC000035119608
+                    3D
+ Schrodinger Suite 2021-4.
+ 17 17  0  0  1  0            999 V2000
+   -1.9131   -1.3774   -0.0000 C   0  0  0  0  0  0
+   -0.5070   -1.1770   -0.0000 O   0  0  0  0  0  0
+    0.0117    0.0735   -0.0000 C   0  0  0  0  0  0
+   -0.6467    1.1158    0.0000 O   0  0  0  0  0  0
+    1.4732    0.0384   -0.0000 C   0  0  0  0  0  0
+    2.3183   -1.0777   -0.0000 C   0  0  0  0  0  0
+    3.5933   -0.7709   -0.0000 N   0  0  0  0  0  0
+    3.6317    0.6221    0.0000 O   0  0  0  0  0  0
+    2.3622    1.1058   -0.0000 C   0  0  0  0  0  0
+    2.2368    2.6131    0.0000 C   0  0  0  0  0  0
+   -2.1349   -2.4447   -0.0000 H   0  0  0  0  0  0
+   -2.3716   -0.9355   -0.8858 H   0  0  0  0  0  0
+   -2.3716   -0.9355    0.8858 H   0  0  0  0  0  0
+    2.0021   -2.1109   -0.0000 H   0  0  0  0  0  0
+    1.2011    2.9500    0.0000 H   0  0  0  0  0  0
+    2.7132    3.0512   -0.8771 H   0  0  0  0  0  0
+    2.7132    3.0512    0.8771 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  3  4  2  0  0  0
+  3  5  1  0  0  0
+  5  9  2  0  0  0
+  5  6  1  0  0  0
+  6  7  2  0  0  0
+  6 14  1  0  0  0
+  7  8  1  0  0  0
+  8  9  1  0  0  0
+  9 10  1  0  0  0
+ 10 15  1  0  0  0
+ 10 16  1  0  0  0
+ 10 17  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+13
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+13
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11PQyg9TyljMVtjSF1ub2MxW0NIM10=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+1.12895e-11
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.12895e-11
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_epik_Chemistry_Notes>
+This compound has an ester and may undergo hydrolysis at high or low pH.
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+0.25253
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000035119608-1
+
+$$$$
+ZINC000035388769
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 18  0  0  1  0            999 V2000
+   -2.1450    1.3257   -0.1301 C   0  0  0  0  0  0
+   -0.6286    1.3870    0.0873 C   0  0  0  0  0  0
+   -0.0314    0.1025   -0.2623 N   0  0  1  0  0  0
+    1.4479    0.0925   -0.1603 C   0  0  1  0  0  0
+    2.0064   -1.3377   -0.0494 C   0  0  0  0  0  0
+    2.0717    0.8203   -1.3746 C   0  0  0  0  0  0
+    1.5628    0.8393   -2.4959 O   0  0  0  0  0  0
+    3.2684    1.3860   -1.0427 O   0  0  0  0  0  0
+    1.7538    0.6036    0.7550 H   0  0  0  0  0  0
+   -2.6106    2.2746    0.1365 H   0  0  0  0  0  0
+   -2.6066    0.5492    0.4812 H   0  0  0  0  0  0
+   -2.3896    1.1207   -1.1733 H   0  0  0  0  0  0
+   -0.2008    2.1889   -0.5158 H   0  0  0  0  0  0
+   -0.4172    1.6132    1.1333 H   0  0  0  0  0  0
+   -0.3921   -0.5610    0.4081 H   0  0  0  0  0  0
+    3.0941   -1.3401    0.0387 H   0  0  0  0  0  0
+    1.7435   -1.9443   -0.9177 H   0  0  0  0  0  0
+    1.6130   -1.8419    0.8340 H   0  0  0  0  0  0
+    3.6790    1.8297   -1.7881 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  4  6  1  0  0  0
+  5 16  1  0  0  0
+  5 17  1  0  0  0
+  5 18  1  0  0  0
+  6  7  2  0  0  0
+  6  8  1  0  0  0
+  8 19  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+14
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+14
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtOSF1bQ0BASF0oW0NIM10pQyg9TylbT0hd
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.98366
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.98366
+
+> <r_epik_State_Penalty>
+7.39732
+
+> <r_epik_Charging_Adjusted_Penalty>
+7.39732
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+2.11038
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000035388769-1
+
+$$$$
+ZINC000035388769
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 18  0  0  1  0            999 V2000
+   -2.1493    1.3862    0.0477 C   0  0  0  0  0  0
+   -0.6219    1.4573    0.1661 C   0  0  0  0  0  0
+   -0.0185    0.0789   -0.1569 N   0  3  0  0  0  0
+    1.5286    0.0103   -0.1207 C   0  0  1  0  0  0
+    2.0926   -1.3799    0.1708 C   0  0  0  0  0  0
+    2.1045    0.5248   -1.4770 C   0  0  0  0  0  0
+    3.2835    0.9438   -1.4466 O   0  0  0  0  0  0
+    1.4138    0.4804   -2.5243 O   0  5  0  0  0  0
+    1.7937    0.7035    0.6803 H   0  0  0  0  0  0
+   -2.5959    2.3552    0.2721 H   0  0  0  0  0  0
+   -2.5737    0.6610    0.7435 H   0  0  0  0  0  0
+   -2.4607    1.1089   -0.9605 H   0  0  0  0  0  0
+   -0.1823    2.1535   -0.5497 H   0  0  0  0  0  0
+   -0.2923    1.6973    1.1779 H   0  0  0  0  0  0
+   -0.3826   -0.5923    0.5039 H   0  0  0  0  0  0
+    3.1810   -1.3478    0.2461 H   0  0  0  0  0  0
+    1.8122   -2.0865   -0.6125 H   0  0  0  0  0  0
+    1.7003   -1.7435    1.1212 H   0  0  0  0  0  0
+   -0.3195   -0.1979   -1.0811 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  2  3  1  0  0  0
+  2 13  1  0  0  0
+  2 14  1  0  0  0
+  3  4  1  0  0  0
+  3 15  1  0  0  0
+  3 19  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  4  6  1  0  0  0
+  5 16  1  0  0  0
+  5 17  1  0  0  0
+  5 18  1  0  0  0
+  6  7  2  0  0  0
+  6  8  1  0  0  0
+M  CHG  2   3   1   8  -1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+14
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+14
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtOSF1bQ0BASF0oW0NIM10pQyg9TylbT0hd
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.000570253
+
+> <r_epik_Ionization_Penalty_Charging>
+0.000570253
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+2.24086e-06
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.000572494
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+7.86073
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000035388769-2
+
+$$$$
+ZINC000036474304
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 20  0  0  1  0            999 V2000
+   -0.6668    1.0050   -0.0774 O   0  0  0  0  0  0
+    0.0343   -0.0066   -0.0565 C   0  0  0  0  0  0
+    1.4870    0.0143   -0.0042 C   0  0  0  0  0  0
+    2.3074   -1.1248    0.0244 C   0  0  0  0  0  0
+    3.5964   -0.6377    0.0684 C   0  0  0  0  0  0
+    3.4857    0.7324    0.0795 N   0  0  0  0  0  0
+    2.2046    1.1238    0.0127 N   0  0  0  0  0  0
+    4.6181    1.6557    0.0217 C   0  0  0  0  0  0
+    5.9044    0.8623    0.3641 C   0  0  0  0  0  0
+    5.9238   -0.5373   -0.2965 C   0  0  0  0  0  0
+    4.7903   -1.3167    0.1030 O   0  0  0  0  0  0
+   -0.4013   -1.0059   -0.0765 H   0  0  0  0  0  0
+    2.0026   -2.1611    0.0120 H   0  0  0  0  0  0
+    4.6768    2.0510   -0.9934 H   0  0  0  0  0  0
+    4.4526    2.4940    0.6999 H   0  0  0  0  0  0
+    6.7828    1.4335    0.0620 H   0  0  0  0  0  0
+    5.9804    0.7436    1.4461 H   0  0  0  0  0  0
+    5.9233   -0.4321   -1.3830 H   0  0  0  0  0  0
+    6.8339   -1.0754   -0.0299 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2 12  1  0  0  0
+  3  7  2  0  0  0
+  3  4  1  0  0  0
+  4  5  2  0  0  0
+  4 13  1  0  0  0
+  5 11  1  0  0  0
+  5  6  1  0  0  0
+  6  7  1  0  0  0
+  6  8  1  0  0  0
+  8  9  1  0  0  0
+  8 14  1  0  0  0
+  8 15  1  0  0  0
+  9 10  1  0  0  0
+  9 16  1  0  0  0
+  9 17  1  0  0  0
+ 10 11  1  0  0  0
+ 10 18  1  0  0  0
+ 10 19  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+15
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+15
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1bQ0hdYyhbY0hdMSlubihjMTIpW0NIMl1bQ0gyXVtDSDJdTzI=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+1.76533e-10
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.76533e-10
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+10.6233
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000036474304-1
+
+$$$$
+ZINC000039246820
+                    3D
+ Schrodinger Suite 2021-4.
+ 22 22  0  0  1  0            999 V2000
+   -0.0742   -0.0387   -0.0852 C   0  0  0  0  0  0
+    1.4642    0.0446   -0.0003 C   0  0  1  0  0  0
+    2.1142    0.7178   -1.2003 C   0  0  0  0  0  0
+    3.4117    1.3194   -0.6733 C   0  0  0  0  0  0
+    4.3459    1.7427   -1.3494 O   0  0  0  0  0  0
+    3.3096    1.2916    0.6681 N   0  0  0  0  0  0
+    2.0641    0.7658    1.2296 C   0  0  0  0  0  0
+    1.2049    1.9546    1.7251 C   0  0  0  0  0  0
+    2.3743   -0.2316    2.3662 C   0  0  0  0  0  0
+    1.8235   -0.9877   -0.0028 H   0  0  0  0  0  0
+   -0.5330    0.9455   -0.1819 H   0  0  0  0  0  0
+   -0.4917   -0.5172    0.8011 H   0  0  0  0  0  0
+   -0.3839   -0.6260   -0.9502 H   0  0  0  0  0  0
+    2.2942    0.0212   -2.0202 H   0  0  0  0  0  0
+    1.4989    1.5335   -1.5837 H   0  0  0  0  0  0
+    4.0086    1.7092    1.2649 H   0  0  0  0  0  0
+    0.2709    1.6129    2.1722 H   0  0  0  0  0  0
+    0.9519    2.6399    0.9147 H   0  0  0  0  0  0
+    1.7310    2.5326    2.4861 H   0  0  0  0  0  0
+    1.4595   -0.6758    2.7599 H   0  0  0  0  0  0
+    2.8819    0.2600    3.1973 H   0  0  0  0  0  0
+    3.0175   -1.0468    2.0311 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2 10  1  0  0  0
+  2  7  1  0  0  0
+  2  3  1  0  0  0
+  3  4  1  0  0  0
+  3 14  1  0  0  0
+  3 15  1  0  0  0
+  4  5  2  0  0  0
+  4  6  1  0  0  0
+  6  7  1  0  0  0
+  6 16  1  0  0  0
+  7  8  1  0  0  0
+  7  9  1  0  0  0
+  8 17  1  0  0  0
+  8 18  1  0  0  0
+  8 19  1  0  0  0
+  9 20  1  0  0  0
+  9 21  1  0  0  0
+  9 22  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+16
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+16
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11DMShbQ0gzXSlbQ0BASF0oW0NIM10pW0NIMl1DKD1PKVtOSF0x
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+1.6684e-07
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.6684e-07
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-3.71895
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000039246820-1
+
+$$$$
+ZINC000039596444
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 26  0  0  1  0            999 V2000
+   -0.6216    1.4353    0.0011 C   0  0  0  0  0  0
+   -0.0104    0.0066   -0.0125 C   0  0  0  0  0  0
+   -0.5549   -0.7378    1.2376 C   0  0  0  0  0  0
+   -0.5886   -0.7379   -1.2526 C   0  0  0  0  0  0
+    1.5855    0.0169    0.0140 C   0  0  1  0  0  0
+    2.1967    0.8646    1.1664 C   0  0  0  0  0  0
+    2.1563   -1.3097    0.0011 N   0  0  0  0  0  0
+    2.8921   -1.5951   -1.0802 C   0  0  0  0  0  0
+    3.5937   -2.5864   -1.2645 O   0  0  0  0  0  0
+    2.8464   -0.4829   -1.8387 N   0  0  0  0  0  0
+    2.1802    0.5464   -1.2936 C   0  0  0  0  0  0
+    2.0513    1.6758   -1.7649 O   0  0  0  0  0  0
+   -1.7121    1.4008    0.0082 H   0  0  0  0  0  0
+   -0.3374    2.0174   -0.8750 H   0  0  0  0  0  0
+   -0.3244    2.0025    0.8831 H   0  0  0  0  0  0
+   -0.2825   -0.2369    2.1663 H   0  0  0  0  0  0
+   -0.1835   -1.7614    1.2986 H   0  0  0  0  0  0
+   -1.6444   -0.7983    1.2271 H   0  0  0  0  0  0
+   -1.6780   -0.7904   -1.2189 H   0  0  0  0  0  0
+   -0.2246   -1.7639   -1.3181 H   0  0  0  0  0  0
+   -0.3314   -0.2405   -2.1883 H   0  0  0  0  0  0
+    1.9637    1.9264    1.0745 H   0  0  0  0  0  0
+    3.2852    0.7836    1.2023 H   0  0  0  0  0  0
+    1.8349    0.5394    2.1410 H   0  0  0  0  0  0
+    1.7583   -2.0283    0.5880 H   0  0  0  0  0  0
+    3.3475   -0.4019   -2.7111 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  2  5  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  3 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  4 21  1  0  0  0
+  5 11  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 22  1  0  0  0
+  6 23  1  0  0  0
+  6 24  1  0  0  0
+  7  8  1  0  0  0
+  7 25  1  0  0  0
+  8  9  2  0  0  0
+  8 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 26  1  0  0  0
+ 11 12  2  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+17
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+17
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11DKFtDSDNdKShbQ0gzXSlbQ0BAXTEoW0NIM10pW05IXUMoPU8pW05IXUMxPU8=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00343796
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.00343796
+
+> <r_epik_State_Penalty>
+0.00240733
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.00240733
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+7.45274
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000039596444-1
+
+$$$$
+ZINC000040543573
+                    3D
+ Schrodinger Suite 2021-4.
+ 28 27  0  0  1  0            999 V2000
+   -0.1502    2.3096    1.2747 C   0  0  0  0  0  0
+   -0.5462    1.4721    0.0317 C   0  0  0  0  0  0
+   -2.0946    1.4315   -0.0643 C   0  0  0  0  0  0
+   -0.0285    2.1955   -1.2367 C   0  0  0  0  0  0
+    0.0362    0.0139    0.0971 C   0  0  2  0  0  0
+   -0.5242   -0.7430    1.2077 N   0  0  0  0  0  0
+    1.5833   -0.0807    0.1524 C   0  0  0  0  0  0
+    2.2033   -1.8700    0.0314 S   0  0  0  0  0  0
+    4.0680   -1.6724   -0.1586 C   0  0  0  0  0  0
+    1.9566   -2.5419    1.3116 O   0  0  0  0  0  0
+    1.6858   -2.4515   -1.2117 O   0  0  0  0  0  0
+   -0.2847   -0.5085   -0.8056 H   0  0  0  0  0  0
+   -0.5768    3.3128    1.2313 H   0  0  0  0  0  0
+    0.9304    2.4288    1.3573 H   0  0  0  0  0  0
+   -0.5000    1.8529    2.2011 H   0  0  0  0  0  0
+   -2.5502    1.0087    0.8319 H   0  0  0  0  0  0
+   -2.4264    0.8307   -0.9123 H   0  0  0  0  0  0
+   -2.5178    2.4293   -0.1898 H   0  0  0  0  0  0
+   -0.5165    3.1613   -1.3762 H   0  0  0  0  0  0
+   -0.2139    1.6073   -2.1367 H   0  0  0  0  0  0
+    1.0421    2.3951   -1.1903 H   0  0  0  0  0  0
+   -0.2416   -0.3242    2.0819 H   0  0  0  0  0  0
+   -1.5324   -0.6897    1.1785 H   0  0  0  0  0  0
+    2.0416    0.4493   -0.6806 H   0  0  0  0  0  0
+    1.9926    0.3461    1.0677 H   0  0  0  0  0  0
+    4.5199   -2.6604   -0.2407 H   0  0  0  0  0  0
+    4.4600   -1.1544    0.7162 H   0  0  0  0  0  0
+    4.2725   -1.0926   -1.0581 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  2  5  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  3 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  4 21  1  0  0  0
+  5 12  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 22  1  0  0  0
+  6 23  1  0  0  0
+  7  8  1  0  0  0
+  7 24  1  0  0  0
+  7 25  1  0  0  0
+  8  9  1  0  0  0
+  8 10  2  0  0  0
+  8 11  2  0  0  0
+  9 26  1  0  0  0
+  9 27  1  0  0  0
+  9 28  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+18
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+18
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11DKFtDSDNdKShbQ0gzXSlbQ0BIXShbTkgyXSlbQ0gyXVMoPU8pKD1PKVtDSDNd
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+1.13395
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.13395
+
+> <r_epik_State_Penalty>
+1.19389
+
+> <r_epik_Charging_Adjusted_Penalty>
+1.19389
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-9.06853
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000040543573-1
+
+$$$$
+ZINC000040543573
+                    3D
+ Schrodinger Suite 2021-4.
+ 29 28  0  0  1  0            999 V2000
+   -0.1431    2.3538    1.2414 C   0  0  0  0  0  0
+   -0.5447    1.4738    0.0285 C   0  0  0  0  0  0
+   -2.0956    1.4582   -0.0775 C   0  0  0  0  0  0
+   -0.0172    2.1540   -1.2609 C   0  0  0  0  0  0
+    0.0440    0.0144    0.1367 C   0  0  2  0  0  0
+   -0.5700   -0.7675    1.3168 N   0  3  0  0  0  0
+    1.5940   -0.0867    0.2195 C   0  0  0  0  0  0
+    2.2225   -1.8562   -0.0638 S   0  0  0  0  0  0
+    4.0913   -1.6495   -0.1843 C   0  0  0  0  0  0
+    1.9335   -2.6469    1.1371 O   0  0  0  0  0  0
+    1.7319   -2.3081   -1.3695 O   0  0  0  0  0  0
+   -0.3054   -0.5698   -0.7169 H   0  0  0  0  0  0
+   -0.5360    3.3672    1.1455 H   0  0  0  0  0  0
+    0.9394    2.4417    1.3377 H   0  0  0  0  0  0
+   -0.5230    1.9541    2.1821 H   0  0  0  0  0  0
+   -2.5715    1.0910    0.8322 H   0  0  0  0  0  0
+   -2.4344    0.8278   -0.9010 H   0  0  0  0  0  0
+   -2.4974    2.4576   -0.2530 H   0  0  0  0  0  0
+   -0.5062    3.1131   -1.4396 H   0  0  0  0  0  0
+   -0.1932    1.5352   -2.1421 H   0  0  0  0  0  0
+    1.0517    2.3618   -1.2146 H   0  0  0  0  0  0
+   -0.3293   -0.3227    2.1909 H   0  0  0  0  0  0
+   -0.2174   -1.7145    1.3268 H   0  0  0  0  0  0
+    2.0725    0.5111   -0.5542 H   0  0  0  0  0  0
+    1.9908    0.2540    1.1768 H   0  0  0  0  0  0
+    4.5433   -2.6267   -0.3522 H   0  0  0  0  0  0
+    4.4623   -1.2224    0.7470 H   0  0  0  0  0  0
+    4.3215   -0.9856   -1.0170 H   0  0  0  0  0  0
+   -1.5759   -0.7954    1.2307 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  2  5  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  3 18  1  0  0  0
+  4 19  1  0  0  0
+  4 20  1  0  0  0
+  4 21  1  0  0  0
+  5 12  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 22  1  0  0  0
+  6 23  1  0  0  0
+  6 29  1  0  0  0
+  7  8  1  0  0  0
+  7 24  1  0  0  0
+  7 25  1  0  0  0
+  8  9  1  0  0  0
+  8 10  2  0  0  0
+  8 11  2  0  0  0
+  9 26  1  0  0  0
+  9 27  1  0  0  0
+  9 28  1  0  0  0
+M  CHG  1   6   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+18
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+18
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11DKFtDSDNdKShbQ0gzXSlbQ0BIXShbTkgyXSlbQ0gyXVMoPU8pKD1PKVtDSDNd
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0945549
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0945549
+
+> <r_epik_Ionization_Penalty_Neutral>
+0
+
+> <r_epik_State_Penalty>
+0.084772
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.179327
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+-5.52554
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000040543573-2
+
+$$$$
+ZINC000044463914
+                    3D
+ Schrodinger Suite 2021-4.
+ 24 24  0  0  1  0            999 V2000
+   -0.3958   -0.8349    1.2112 N   0  0  0  0  0  0
+    0.0492   -0.0574    0.0634 C   0  0  2  0  0  0
+    1.5932   -0.0432    0.0133 C   0  0  0  0  0  0
+    2.1053   -1.3031   -0.3758 O   0  0  0  0  0  0
+   -0.5427    1.3714    0.1295 C   0  0  0  0  0  0
+   -2.0693    1.4187    0.0665 C   0  0  0  0  0  0
+   -2.7253    1.3058   -1.1669 C   0  0  0  0  0  0
+   -2.0156    1.1556   -2.3094 F   0  0  0  0  0  0
+   -4.1186    1.3457   -1.2288 C   0  0  0  0  0  0
+   -4.8669    1.4988   -0.0625 C   0  0  0  0  0  0
+   -4.2213    1.6125    1.1681 C   0  0  0  0  0  0
+   -2.8280    1.5727    1.2354 C   0  0  0  0  0  0
+   -2.2212    1.6811    2.4402 F   0  0  0  0  0  0
+   -0.3293   -0.5423   -0.8379 H   0  0  0  0  0  0
+    0.0411   -1.7456    1.1842 H   0  0  0  0  0  0
+   -0.0810   -0.3934    2.0632 H   0  0  0  0  0  0
+    1.9393    0.6829   -0.7233 H   0  0  0  0  0  0
+    2.0271    0.2531    0.9697 H   0  0  0  0  0  0
+    3.0619   -1.2419   -0.4285 H   0  0  0  0  0  0
+   -0.1893    1.8869    1.0244 H   0  0  0  0  0  0
+   -0.1561    1.9628   -0.7020 H   0  0  0  0  0  0
+   -4.6188    1.2566   -2.1820 H   0  0  0  0  0  0
+   -5.9453    1.5284   -0.1121 H   0  0  0  0  0  0
+   -4.8013    1.7302    2.0716 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 15  1  0  0  0
+  1 16  1  0  0  0
+  2 14  1  0  0  0
+  2  3  1  0  0  0
+  2  5  1  0  0  0
+  3  4  1  0  0  0
+  3 17  1  0  0  0
+  3 18  1  0  0  0
+  4 19  1  0  0  0
+  5  6  1  0  0  0
+  5 20  1  0  0  0
+  5 21  1  0  0  0
+  6 12  1  0  0  0
+  6  7  2  0  0  0
+  7  8  1  0  0  0
+  7  9  1  0  0  0
+  9 10  2  0  0  0
+  9 22  1  0  0  0
+ 10 11  1  0  0  0
+ 10 23  1  0  0  0
+ 11 12  2  0  0  0
+ 11 24  1  0  0  0
+ 12 13  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+19
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+19
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NAQEhdKFtOSDJdKVtDSDJdYzFjKEYpW2NIXVtjSF1bY0hdYzFG
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.16143
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.16143
+
+> <r_epik_State_Penalty>
+2.30204
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.30204
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+9.45031
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000044463914-1
+
+$$$$
+ZINC000044463914
+                    3D
+ Schrodinger Suite 2021-4.
+ 25 25  0  0  1  0            999 V2000
+   -0.3971   -0.9012    1.2314 N   0  3  0  0  0  0
+    0.0626   -0.0343    0.0418 C   0  0  2  0  0  0
+    1.6092   -0.0112   -0.0291 C   0  0  0  0  0  0
+    2.1580   -1.2936   -0.2755 O   0  0  0  0  0  0
+   -0.5533    1.3859    0.1421 C   0  0  0  0  0  0
+   -2.0814    1.4345    0.0726 C   0  0  0  0  0  0
+   -2.7323    1.3101   -1.1624 C   0  0  0  0  0  0
+   -2.0174    1.1376   -2.2983 F   0  0  0  0  0  0
+   -4.1249    1.3597   -1.2322 C   0  0  0  0  0  0
+   -4.8777    1.5340   -0.0717 C   0  0  0  0  0  0
+   -4.2377    1.6581    1.1607 C   0  0  0  0  0  0
+   -2.8451    1.6091    1.2353 C   0  0  0  0  0  0
+   -2.2427    1.7239    2.4415 F   0  0  0  0  0  0
+   -0.3435   -0.5582   -0.8258 H   0  0  0  0  0  0
+   -0.0751   -0.5004    2.1007 H   0  0  0  0  0  0
+   -0.0189   -1.8340    1.1437 H   0  0  0  0  0  0
+    1.9307    0.6389   -0.8440 H   0  0  0  0  0  0
+    2.0463    0.4027    0.8815 H   0  0  0  0  0  0
+    3.1105   -1.2092   -0.3686 H   0  0  0  0  0  0
+   -0.1985    1.8946    1.0408 H   0  0  0  0  0  0
+   -0.1719    1.9953   -0.6792 H   0  0  0  0  0  0
+   -4.6211    1.2635   -2.1869 H   0  0  0  0  0  0
+   -5.9557    1.5726   -0.1273 H   0  0  0  0  0  0
+   -4.8218    1.7921    2.0594 H   0  0  0  0  0  0
+   -1.4053   -0.9577    1.2526 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 15  1  0  0  0
+  1 16  1  0  0  0
+  1 25  1  0  0  0
+  2 14  1  0  0  0
+  2  3  1  0  0  0
+  2  5  1  0  0  0
+  3  4  1  0  0  0
+  3 17  1  0  0  0
+  3 18  1  0  0  0
+  4 19  1  0  0  0
+  5  6  1  0  0  0
+  5 20  1  0  0  0
+  5 21  1  0  0  0
+  6 12  1  0  0  0
+  6  7  2  0  0  0
+  7  8  1  0  0  0
+  7  9  1  0  0  0
+  9 10  2  0  0  0
+  9 22  1  0  0  0
+ 10 11  1  0  0  0
+ 10 23  1  0  0  0
+ 11 12  2  0  0  0
+ 11 24  1  0  0  0
+ 12 13  1  0  0  0
+M  CHG  1   1   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+19
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+19
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NAQEhdKFtOSDJdKVtDSDJdYzFjKEYpW2NIXVtjSF1bY0hdYzFG
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0156344
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0156335
+
+> <r_epik_Ionization_Penalty_Neutral>
+9.20046e-07
+
+> <r_epik_State_Penalty>
+0.0122963
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0279299
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+13.0892
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000044463914-2
+
+$$$$
+ZINC000050974714
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 27  0  0  1  0            999 V2000
+   -1.9813   -1.3489    0.0563 C   0  0  0  0  0  0
+   -0.5723   -1.1844   -0.0078 O   0  0  0  0  0  0
+   -0.0193    0.0554   -0.0015 C   0  0  0  0  0  0
+   -0.6558    1.1103    0.0782 O   0  0  0  0  0  0
+    1.5319    0.0279   -0.0790 C   0  0  0  0  0  0
+    1.8544   -0.6633   -1.2787 O   0  0  0  0  0  0
+    2.1850    1.4303   -0.0760 C   0  0  0  0  0  0
+    3.4857    1.2196    0.6688 C   0  0  0  0  0  0
+    4.5678    2.0887    0.8209 C   0  0  0  0  0  0
+    5.6373    1.7287    1.6422 C   0  0  0  0  0  0
+    5.6102    0.5185    2.3371 C   0  0  0  0  0  0
+    4.5135   -0.3359    2.2123 C   0  0  0  0  0  0
+    3.4593    0.0066    1.3633 C   0  0  0  0  0  0
+    2.1392   -0.7003    1.1401 C   0  0  0  0  0  0
+   -2.2305   -2.4098    0.0387 H   0  0  0  0  0  0
+   -2.4695   -0.8716   -0.7945 H   0  0  0  0  0  0
+   -2.3856   -0.9192    0.9741 H   0  0  0  0  0  0
+    2.8079   -0.7642   -1.3253 H   0  0  0  0  0  0
+    2.3332    1.8200   -1.0846 H   0  0  0  0  0  0
+    1.5906    2.1677    0.4661 H   0  0  0  0  0  0
+    4.5867    3.0417    0.3129 H   0  0  0  0  0  0
+    6.4794    2.3957    1.7538 H   0  0  0  0  0  0
+    6.4315    0.2508    2.9856 H   0  0  0  0  0  0
+    4.4910   -1.2555    2.7783 H   0  0  0  0  0  0
+    1.5176   -0.5917    2.0316 H   0  0  0  0  0  0
+    2.2594   -1.7710    0.9653 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 15  1  0  0  0
+  1 16  1  0  0  0
+  1 17  1  0  0  0
+  2  3  1  0  0  0
+  3  4  2  0  0  0
+  3  5  1  0  0  0
+  5 14  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 18  1  0  0  0
+  7  8  1  0  0  0
+  7 19  1  0  0  0
+  7 20  1  0  0  0
+  8 13  2  0  0  0
+  8  9  1  0  0  0
+  9 10  2  0  0  0
+  9 21  1  0  0  0
+ 10 11  1  0  0  0
+ 10 22  1  0  0  0
+ 11 12  2  0  0  0
+ 11 23  1  0  0  0
+ 12 13  1  0  0  0
+ 12 24  1  0  0  0
+ 13 14  1  0  0  0
+ 14 25  1  0  0  0
+ 14 26  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+20
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+20
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11PQyg9TylDKFtPSF0pKFtDSDJdMSlbQ0gyXWMoYzEyKVtjSF1bY0hdW2NIXVtjSF0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+9.54251e-08
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+9.54251e-08
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_epik_Chemistry_Notes>
+This compound has an ester and may undergo hydrolysis at high or low pH.
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+21.1733
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000050974714-1
+
+$$$$
+ZINC000058825083
+                    3D
+ Schrodinger Suite 2021-4.
+ 19 20  0  0  1  0            999 V2000
+    0.1000    0.0230   -0.4452 N   0  0  0  0  0  0
+    1.4660    0.0097   -0.1796 C   0  0  0  0  0  0
+    2.0613    1.2030    0.0671 N   0  0  0  0  0  0
+    3.3956    1.1782    0.3255 C   0  0  0  0  0  0
+    4.2048    2.6677    0.6463 Cl  0  0  0  0  0  0
+    4.1265   -0.0135    0.3382 C   0  0  0  0  0  0
+    3.4269   -1.2010    0.0711 C   0  0  0  0  0  0
+    4.0814   -2.4582    0.0578 N   0  0  0  0  0  0
+    5.4080   -2.7418    0.2995 C   0  0  0  0  0  0
+    5.5463   -4.1135    0.1652 C   0  0  0  0  0  0
+    4.4024   -4.6922   -0.1412 N   0  0  0  0  0  0
+    3.5424   -3.7040   -0.2023 C   0  0  0  0  0  0
+    2.0878   -1.1955   -0.1899 N   0  0  0  0  0  0
+   -0.3945    0.9033   -0.4495 H   0  0  0  0  0  0
+   -0.3770   -0.8469   -0.6326 H   0  0  0  0  0  0
+    5.1856    0.0008    0.5463 H   0  0  0  0  0  0
+    6.1252   -1.9717    0.5401 H   0  0  0  0  0  0
+    6.4580   -4.6798    0.2872 H   0  0  0  0  0  0
+    2.4915   -3.8030   -0.4328 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 14  1  0  0  0
+  1 15  1  0  0  0
+  2 13  1  0  0  0
+  2  3  2  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4  6  2  0  0  0
+  6  7  1  0  0  0
+  6 16  1  0  0  0
+  7  8  1  0  0  0
+  7 13  2  0  0  0
+  8 12  1  0  0  0
+  8  9  1  0  0  0
+  9 10  2  0  0  0
+  9 17  1  0  0  0
+ 10 11  1  0  0  0
+ 10 18  1  0  0  0
+ 11 12  2  0  0  0
+ 12 19  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+21
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+21
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W05IMl1jMW5jKENsKVtjSF1jKG4xKS1uMltjSF1bY0hdbltjSF0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00411186
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00410179
+
+> <r_epik_Ionization_Penalty_Neutral>
+1.00655e-05
+
+> <r_epik_State_Penalty>
+0.00294189
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.00704368
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+13.3868
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000058825083-1
+
+$$$$
+ZINC000072339551
+                    3D
+ Schrodinger Suite 2021-4.
+ 17 17  0  0  1  0            999 V2000
+   -0.5010    1.3933    0.0873 N   0  0  0  0  0  0
+   -0.0197    0.0258    0.1261 C   0  0  0  0  0  0
+    1.4959   -0.0084   -0.1486 C   0  0  0  0  0  0
+    2.0005   -1.3769   -0.1293 N   0  0  0  0  0  0
+    2.5055   -2.0979   -1.1804 C   0  0  0  0  0  0
+    2.8249   -3.3330   -0.6507 C   0  0  0  0  0  0
+    2.4764   -3.2601    0.7033 C   0  0  0  0  0  0
+    2.6619   -4.6371    2.0029 Br  0  0  0  0  0  0
+    1.9777   -2.0828    1.0128 N   0  0  0  0  0  0
+   -0.3637    1.7787   -0.8362 H   0  0  0  0  0  0
+   -1.4965    1.4084    0.2584 H   0  0  0  0  0  0
+   -0.2476   -0.3944    1.1067 H   0  0  0  0  0  0
+   -0.5610   -0.5581   -0.6193 H   0  0  0  0  0  0
+    1.7245    0.4269   -1.1232 H   0  0  0  0  0  0
+    2.0466    0.5623    0.6016 H   0  0  0  0  0  0
+    2.5867   -1.6780   -2.1724 H   0  0  0  0  0  0
+    3.2514   -4.1782   -1.1704 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  2  3  1  0  0  0
+  2 12  1  0  0  0
+  2 13  1  0  0  0
+  3  4  1  0  0  0
+  3 14  1  0  0  0
+  3 15  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  5  6  2  0  0  0
+  5 16  1  0  0  0
+  6  7  1  0  0  0
+  6 17  1  0  0  0
+  7  8  1  0  0  0
+  7  9  2  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+22
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+22
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W05IMl1bQ0gyXVtDSDJdbjFbY0hdW2NIXWMoQnIpbjE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+2.58639
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.58639
+
+> <r_epik_State_Penalty>
+2.75747
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.75747
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+1.97153
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000072339551-1
+
+$$$$
+ZINC000072339551
+                    3D
+ Schrodinger Suite 2021-4.
+ 18 18  0  0  1  0            999 V2000
+   -0.5525    1.4252   -0.1010 N   0  3  0  0  0  0
+   -0.0293   -0.0151   -0.1378 C   0  0  0  0  0  0
+    1.4827   -0.0405    0.1720 C   0  0  0  0  0  0
+    1.9971   -1.4054    0.1445 N   0  0  0  0  0  0
+    2.5595   -2.1101    1.1772 C   0  0  0  0  0  0
+    2.8752   -3.3438    0.6425 C   0  0  0  0  0  0
+    2.4711   -3.2854   -0.6966 C   0  0  0  0  0  0
+    2.6255   -4.6679   -1.9945 Br  0  0  0  0  0  0
+    1.9424   -2.1177   -0.9922 N   0  0  0  0  0  0
+   -1.5419    1.4402   -0.3044 H   0  0  0  0  0  0
+   -0.0718    1.9884   -0.7880 H   0  0  0  0  0  0
+   -0.6283   -0.5478    0.6019 H   0  0  0  0  0  0
+   -0.2717   -0.3674   -1.1415 H   0  0  0  0  0  0
+    2.0520    0.5413   -0.5560 H   0  0  0  0  0  0
+    1.6905    0.3814    1.1577 H   0  0  0  0  0  0
+    2.6782   -1.6824    2.1623 H   0  0  0  0  0  0
+    3.3367   -4.1788    1.1488 H   0  0  0  0  0  0
+   -0.4029    1.8279    0.8132 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 10  1  0  0  0
+  1 11  1  0  0  0
+  1 18  1  0  0  0
+  2  3  1  0  0  0
+  2 12  1  0  0  0
+  2 13  1  0  0  0
+  3  4  1  0  0  0
+  3 14  1  0  0  0
+  3 15  1  0  0  0
+  4  9  1  0  0  0
+  4  5  1  0  0  0
+  5  6  2  0  0  0
+  5 16  1  0  0  0
+  6  7  1  0  0  0
+  6 17  1  0  0  0
+  7  8  1  0  0  0
+  7  9  2  0  0  0
+M  CHG  1   1   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+22
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+22
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W05IMl1bQ0gyXVtDSDJdbjFbY0hdW2NIXWMoQnIpbjE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00757912
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00757911
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.38055e-09
+
+> <r_epik_State_Penalty>
+0.00566917
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0132483
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+6.56932
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000072339551-2
+
+$$$$
+ZINC000082221073
+                    3D
+ Schrodinger Suite 2021-4.
+ 18 18  0  0  1  0            999 V2000
+   -0.6067    1.2521    0.0846 O   0  0  0  0  0  0
+   -0.0417   -0.0405    0.1192 C   0  0  0  0  0  0
+    1.4732    0.0216   -0.1545 C   0  0  0  0  0  0
+    2.0484   -1.3198   -0.1442 N   0  0  0  0  0  0
+    2.6277   -2.0224   -1.1627 C   0  0  0  0  0  0
+    3.0069   -3.1988   -0.7364 N   0  0  0  0  0  0
+    2.6392   -3.1771    0.5407 C   0  0  0  0  0  0
+    2.8867   -4.3665    1.4559 C   0  0  0  0  0  0
+    2.4118   -4.1642    2.6867 F   0  0  0  0  0  0
+    2.3014   -5.4657    0.9801 F   0  0  0  0  0  0
+    4.1909   -4.6185    1.5690 F   0  0  0  0  0  0
+    2.0555   -2.0696    0.9619 N   0  0  0  0  0  0
+   -1.5468    1.1804    0.2669 H   0  0  0  0  0  0
+   -0.2466   -0.5145    1.0802 H   0  0  0  0  0  0
+   -0.5351   -0.6850   -0.6099 H   0  0  0  0  0  0
+    1.6756    0.4446   -1.1402 H   0  0  0  0  0  0
+    1.9962    0.5859    0.6196 H   0  0  0  0  0  0
+    2.7249   -1.6052   -2.1544 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3  4  1  0  0  0
+  3 16  1  0  0  0
+  3 17  1  0  0  0
+  4 12  1  0  0  0
+  4  5  1  0  0  0
+  5  6  2  0  0  0
+  5 18  1  0  0  0
+  6  7  1  0  0  0
+  7  8  1  0  0  0
+  7 12  2  0  0  0
+  8  9  1  0  0  0
+  8 10  1  0  0  0
+  8 11  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+23
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+23
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W09IXVtDSDJdW0NIMl1uMVtjSF1uYyhuMSlDKEYpKEYpRg==
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_lp_tautomer_probability>
+1
+
+> <r_epik_Ionization_Penalty>
+5.07225e-08
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+5.07225e-08
+
+> <r_epik_State_Penalty>
+-0
+
+> <r_epik_Charging_Adjusted_Penalty>
+0
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+5.35662
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082221073-1
+
+$$$$
+ZINC000082237728
+                    3D
+ Schrodinger Suite 2021-4.
+ 23 24  0  0  1  0            999 V2000
+   -0.6088    0.5869    1.0149 O   0  0  0  0  0  0
+   -0.0000   -0.0630    0.1660 C   0  0  0  0  0  0
+   -0.6187   -0.9179   -0.6992 O   0  0  0  0  0  0
+    1.5056   -0.0230    0.0577 C   0  0  0  0  0  0
+    2.2530    0.0683    1.2387 C   0  0  0  0  0  0
+    3.6037    0.1049    1.2704 N   0  0  0  0  0  0
+    4.2547    0.0695    0.0869 C   0  0  0  0  0  0
+    3.6143    0.0041   -1.1526 C   0  0  0  0  0  0
+    2.2005   -0.0434   -1.1782 C   0  0  0  0  0  0
+    1.5031   -0.1157   -2.5484 C   0  0  0  0  0  0
+    2.4286    0.2271   -3.7379 C   0  0  0  0  0  0
+    3.6983   -0.4737   -3.6004 N   0  0  2  0  0  0
+    4.4221    0.0514   -2.4485 C   0  0  0  0  0  0
+   -1.5703   -0.9341   -0.5753 H   0  0  0  0  0  0
+    1.7708    0.0987    2.2059 H   0  0  0  0  0  0
+    5.3325    0.1180    0.1434 H   0  0  0  0  0  0
+    1.1273   -1.1299   -2.6902 H   0  0  0  0  0  0
+    0.6326    0.5404   -2.5776 H   0  0  0  0  0  0
+    1.9592   -0.0847   -4.6714 H   0  0  0  0  0  0
+    2.5778    1.3051   -3.8196 H   0  0  0  0  0  0
+    4.2589   -0.3420   -4.4304 H   0  0  0  0  0  0
+    4.7446    1.0756   -2.6413 H   0  0  0  0  0  0
+    5.3265   -0.5492   -2.3435 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  3 14  1  0  0  0
+  4  9  1  0  0  0
+  4  5  2  0  0  0
+  5  6  1  0  0  0
+  5 15  1  0  0  0
+  6  7  2  0  0  0
+  7  8  1  0  0  0
+  7 16  1  0  0  0
+  8 13  1  0  0  0
+  8  9  2  0  0  0
+  9 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 17  1  0  0  0
+ 10 18  1  0  0  0
+ 11 12  1  0  0  0
+ 11 19  1  0  0  0
+ 11 20  1  0  0  0
+ 12 13  1  0  0  0
+ 12 21  1  0  0  0
+ 13 22  1  0  0  0
+ 13 23  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+24
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+24
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFuW2NIXWMoQyg9TylbT0hdKWMoYzEyKVtDSDJdW0NIMl1bTkhdW0NIMl0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+7.64709
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+7.64709
+
+> <r_epik_State_Penalty>
+8.23518
+
+> <r_epik_Charging_Adjusted_Penalty>
+8.23518
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+19.5442
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082237728-1
+
+$$$$
+ZINC000082237728
+                    3D
+ Schrodinger Suite 2021-4.
+ 22 23  0  0  1  0            999 V2000
+   -0.5754    0.5562   -0.9977 O   0  0  0  0  0  0
+   -0.0315    0.0519    0.0116 C   0  0  0  0  0  0
+   -0.6389   -0.4024    1.0083 O   0  5  0  0  0  0
+    1.4631    0.0014    0.0316 C   0  0  0  0  0  0
+    2.1851    1.2013    0.0846 C   0  0  0  0  0  0
+    3.5357    1.2603    0.1212 N   0  0  0  0  0  0
+    4.2110    0.0892    0.0962 C   0  0  0  0  0  0
+    3.5965   -1.1642    0.0386 C   0  0  0  0  0  0
+    2.1843   -1.2174    0.0098 C   0  0  0  0  0  0
+    1.5039   -2.5965   -0.0273 C   0  0  0  0  0  0
+    2.4647   -3.7501   -0.3950 C   0  0  0  0  0  0
+    3.7022   -3.6363    0.3664 N   0  0  2  0  0  0
+    4.4281   -2.4424   -0.0530 C   0  0  0  0  0  0
+    1.6780    2.1559    0.1070 H   0  0  0  0  0  0
+    5.2881    0.1691    0.1081 H   0  0  0  0  0  0
+    1.0829   -2.7960    0.9592 H   0  0  0  0  0  0
+    0.6613   -2.5972   -0.7194 H   0  0  0  0  0  0
+    1.9982   -4.7070   -0.1598 H   0  0  0  0  0  0
+    2.6624   -3.7662   -1.4682 H   0  0  0  0  0  0
+    4.2823   -4.4477    0.2084 H   0  0  0  0  0  0
+    4.7993   -2.5656   -1.0716 H   0  0  0  0  0  0
+    5.3027   -2.3617    0.5934 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4  9  1  0  0  0
+  4  5  2  0  0  0
+  5  6  1  0  0  0
+  5 14  1  0  0  0
+  6  7  2  0  0  0
+  7  8  1  0  0  0
+  7 15  1  0  0  0
+  8 13  1  0  0  0
+  8  9  2  0  0  0
+  9 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 16  1  0  0  0
+ 10 17  1  0  0  0
+ 11 12  1  0  0  0
+ 11 18  1  0  0  0
+ 11 19  1  0  0  0
+ 12 13  1  0  0  0
+ 12 20  1  0  0  0
+ 13 21  1  0  0  0
+ 13 22  1  0  0  0
+M  CHG  1   3  -1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+24
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+24
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFuW2NIXWMoQyg9TylbT0hdKWMoYzEyKVtDSDJdW0NIMl1bTkhdW0NIMl0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+2.25189
+
+> <r_epik_Ionization_Penalty_Charging>
+3.247e-05
+
+> <r_epik_Ionization_Penalty_Neutral>
+2.25186
+
+> <r_epik_State_Penalty>
+2.03191
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.03194
+
+> <i_epik_Tot_Q>
+-1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+24.7303
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082237728-2
+
+$$$$
+ZINC000082237728
+                    3D
+ Schrodinger Suite 2021-4.
+ 23 24  0  0  1  0            999 V2000
+   -0.5891    0.4968   -1.0322 O   0  0  0  0  0  0
+   -0.0380    0.0631    0.0052 C   0  0  0  0  0  0
+   -0.6351   -0.3267    1.0348 O   0  5  0  0  0  0
+    1.4563    0.0109    0.0161 C   0  0  0  0  0  0
+    2.1738    1.2132    0.0052 C   0  0  0  0  0  0
+    3.5224    1.2773    0.0410 N   0  0  0  0  0  0
+    4.1992    0.1087    0.0784 C   0  0  0  0  0  0
+    3.5951   -1.1523    0.0791 C   0  0  0  0  0  0
+    2.1780   -1.2088    0.0549 C   0  0  0  0  0  0
+    1.4759   -2.5772    0.0949 C   0  0  0  0  0  0
+    2.3764   -3.7532   -0.3204 C   0  0  0  0  0  0
+    3.6877   -3.6551    0.4673 N   0  3  0  0  0  0
+    4.4825   -2.4014    0.0676 C   0  0  0  0  0  0
+    1.6638    2.1662   -0.0204 H   0  0  0  0  0  0
+    5.2758    0.1978    0.0927 H   0  0  0  0  0  0
+    1.1118   -2.7473    1.1096 H   0  0  0  0  0  0
+    0.5903   -2.5778   -0.5418 H   0  0  0  0  0  0
+    1.9372   -4.7190   -0.0683 H   0  0  0  0  0  0
+    2.6347   -3.7470   -1.3809 H   0  0  0  0  0  0
+    3.4767   -3.6199    1.4547 H   0  0  0  0  0  0
+    4.8741   -2.6023   -0.9306 H   0  0  0  0  0  0
+    5.3038   -2.3478    0.7833 H   0  0  0  0  0  0
+    4.2506   -4.4778    0.3047 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4  9  1  0  0  0
+  4  5  2  0  0  0
+  5  6  1  0  0  0
+  5 14  1  0  0  0
+  6  7  2  0  0  0
+  7  8  1  0  0  0
+  7 15  1  0  0  0
+  8 13  1  0  0  0
+  8  9  2  0  0  0
+  9 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 16  1  0  0  0
+ 10 17  1  0  0  0
+ 11 12  1  0  0  0
+ 11 18  1  0  0  0
+ 11 19  1  0  0  0
+ 12 13  1  0  0  0
+ 12 20  1  0  0  0
+ 12 23  1  0  0  0
+ 13 21  1  0  0  0
+ 13 22  1  0  0  0
+M  CHG  2   3  -1  12   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+24
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+24
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFuW2NIXWMoQyg9TylbT0hdKWMoYzEyKVtDSDJdW0NIMl1bTkhdW0NIMl0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0255233
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0247024
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.000820922
+
+> <r_epik_State_Penalty>
+0.0359173
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.0606197
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+25.3921
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082237728-3
+
+$$$$
+ZINC000082237728
+                    3D
+ Schrodinger Suite 2021-4.
+ 23 24  0  0  1  0            999 V2000
+   -0.5745    0.5505    1.0069 O   0  0  0  0  0  0
+   -0.0305    0.0594   -0.0083 C   0  0  0  0  0  0
+   -0.6336   -0.3767   -1.0152 O   0  5  0  0  0  0
+    1.4628    0.0035   -0.0233 C   0  0  0  0  0  0
+    2.1783    1.2081   -0.0693 C   0  0  0  0  0  0
+    3.5194    1.1896   -0.1003 N   0  3  0  0  0  0
+    4.2351    0.0544   -0.0820 C   0  0  0  0  0  0
+    3.5903   -1.1851   -0.0281 C   0  0  0  0  0  0
+    2.1747   -1.2233   -0.0026 C   0  0  0  0  0  0
+    1.4786   -2.5953    0.0292 C   0  0  0  0  0  0
+    2.4252   -3.7625    0.3893 C   0  0  0  0  0  0
+    3.6633   -3.6554   -0.3717 N   0  0  1  0  0  0
+    4.4033   -2.4754    0.0615 C   0  0  0  0  0  0
+    1.7255    2.1896   -0.0894 H   0  0  0  0  0  0
+    5.3081    0.1797   -0.0953 H   0  0  0  0  0  0
+    0.6372   -2.5898    0.7228 H   0  0  0  0  0  0
+    1.0532   -2.7853   -0.9574 H   0  0  0  0  0  0
+    2.6220   -3.7892    1.4625 H   0  0  0  0  0  0
+    1.9476   -4.7122    0.1465 H   0  0  0  0  0  0
+    4.2331   -4.4766   -0.2242 H   0  0  0  0  0  0
+    5.2832   -2.4032   -0.5788 H   0  0  0  0  0  0
+    4.7667   -2.6108    1.0813 H   0  0  0  0  0  0
+    4.0127    2.0705   -0.1336 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  4  9  1  0  0  0
+  4  5  2  0  0  0
+  5  6  1  0  0  0
+  5 14  1  0  0  0
+  6  7  2  0  0  0
+  6 23  1  0  0  0
+  7  8  1  0  0  0
+  7 15  1  0  0  0
+  8 13  1  0  0  0
+  8  9  2  0  0  0
+  9 10  1  0  0  0
+ 10 11  1  0  0  0
+ 10 16  1  0  0  0
+ 10 17  1  0  0  0
+ 11 12  1  0  0  0
+ 11 18  1  0  0  0
+ 11 19  1  0  0  0
+ 12 13  1  0  0  0
+ 12 20  1  0  0  0
+ 13 21  1  0  0  0
+ 13 22  1  0  0  0
+M  CHG  2   3  -1   6   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+24
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+24
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W2NIXTFuW2NIXWMoQyg9TylbT0hdKWMoYzEyKVtDSDJdW0NIMl1bTkhdW0NIMl0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+1.44677
+
+> <r_epik_Ionization_Penalty_Charging>
+0.470129
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.976636
+
+> <r_epik_State_Penalty>
+2.15299
+
+> <r_epik_Charging_Adjusted_Penalty>
+2.62312
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+2
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+23.4842
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082237728-4
+
+$$$$
+ZINC000082411194
+                    3D
+ Schrodinger Suite 2021-4.
+ 25 25  0  0  1  0            999 V2000
+   -0.7383    1.4023    0.0488 C   0  0  0  0  0  0
+   -0.0400    0.0312    0.0015 C   0  0  0  0  0  0
+    1.5049    0.0722   -0.0098 C   0  0  1  0  0  0
+    2.0702    0.8041   -1.2626 C   0  0  0  0  0  0
+    3.5372    0.7473   -1.2799 N   0  0  1  0  0  0
+    4.0565    1.4259   -2.4625 C   0  0  0  0  0  0
+    4.0611    1.3749   -0.0634 C   0  0  0  0  0  0
+    3.5322    0.6218    1.1779 C   0  0  0  0  0  0
+    2.0709    0.6460    1.2163 N   0  0  2  0  0  0
+    1.8265   -0.9705   -0.0514 H   0  0  0  0  0  0
+   -1.8199    1.2815    0.1133 H   0  0  0  0  0  0
+   -0.5304    1.9909   -0.8449 H   0  0  0  0  0  0
+   -0.4209    1.9834    0.9153 H   0  0  0  0  0  0
+   -0.3717   -0.5592    0.8570 H   0  0  0  0  0  0
+   -0.3894   -0.5141   -0.8763 H   0  0  0  0  0  0
+    1.7102    0.3041   -2.1631 H   0  0  0  0  0  0
+    1.7375    1.8435   -1.2941 H   0  0  0  0  0  0
+    5.1457    1.3744   -2.4874 H   0  0  0  0  0  0
+    3.7647    2.4774   -2.4864 H   0  0  0  0  0  0
+    3.6861    0.9496   -3.3713 H   0  0  0  0  0  0
+    5.1513    1.3350   -0.0722 H   0  0  0  0  0  0
+    3.7819    2.4297   -0.0176 H   0  0  0  0  0  0
+    3.8818   -0.4120    1.1863 H   0  0  0  0  0  0
+    3.9132    1.0713    2.0951 H   0  0  0  0  0  0
+    1.7526    0.1157    2.0147 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3 10  1  0  0  0
+  3  9  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 16  1  0  0  0
+  4 17  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 18  1  0  0  0
+  6 19  1  0  0  0
+  6 20  1  0  0  0
+  7  8  1  0  0  0
+  7 21  1  0  0  0
+  7 22  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 25  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+25
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+25
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdMVtDSDJdTihbQ0gzXSlbQ0gyXVtDSDJdW05IXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+5.21005
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+5.21005
+
+> <r_epik_State_Penalty>
+3.63425
+
+> <r_epik_Charging_Adjusted_Penalty>
+3.63425
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+16.2478
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082411194-1
+
+$$$$
+ZINC000082411194
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 26  0  0  1  0            999 V2000
+   -0.6251    1.4516    0.1229 C   0  0  0  0  0  0
+   -0.0430    0.0401   -0.0603 C   0  0  0  0  0  0
+    1.4987   -0.0014   -0.1080 C   0  0  1  0  0  0
+    2.0253   -1.4633   -0.0782 C   0  0  0  0  0  0
+    3.5713   -1.4734   -0.1116 N   0  3  1  0  0  0
+    4.1058   -2.9189   -0.1239 C   0  0  0  0  0  0
+    4.0740   -0.6948   -1.3437 C   0  0  0  0  0  0
+    3.5333    0.7463   -1.2609 C   0  0  0  0  0  0
+    2.0730    0.7567   -1.2256 N   0  0  1  0  0  0
+    1.8649    0.4927    0.7941 H   0  0  0  0  0  0
+   -1.7128    1.4175    0.1883 H   0  0  0  0  0  0
+   -0.3676    2.1037   -0.7124 H   0  0  0  0  0  0
+   -0.2543    1.9168    1.0368 H   0  0  0  0  0  0
+   -0.3957   -0.5830    0.7631 H   0  0  0  0  0  0
+   -0.4526   -0.4001   -0.9707 H   0  0  0  0  0  0
+    1.7609   -1.9674    0.8528 H   0  0  0  0  0  0
+    1.6854   -2.0516   -0.9332 H   0  0  0  0  0  0
+    3.7356   -3.4124   -1.0242 H   0  0  0  0  0  0
+    3.7386   -3.4045    0.7812 H   0  0  0  0  0  0
+    5.1949   -2.8591   -0.1164 H   0  0  0  0  0  0
+    5.1638   -0.7172   -1.3009 H   0  0  0  0  0  0
+    3.7341   -1.2259   -2.2355 H   0  0  0  0  0  0
+    3.9268    1.2484   -0.3754 H   0  0  0  0  0  0
+    3.8662    1.3086   -2.1338 H   0  0  0  0  0  0
+    1.6518    0.5369   -2.1176 H   0  0  0  0  0  0
+    3.9077   -1.0003    0.7157 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3 10  1  0  0  0
+  3  9  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 16  1  0  0  0
+  4 17  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  5 26  1  0  0  0
+  6 18  1  0  0  0
+  6 19  1  0  0  0
+  6 20  1  0  0  0
+  7  8  1  0  0  0
+  7 21  1  0  0  0
+  7 22  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 25  1  0  0  0
+M  CHG  1   5   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+25
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+25
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdMVtDSDJdTihbQ0gzXSlbQ0gyXVtDSDJdW05IXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.0626335
+
+> <r_epik_Ionization_Penalty_Charging>
+0.0227362
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.0398973
+
+> <r_epik_State_Penalty>
+1.69794
+
+> <r_epik_Charging_Adjusted_Penalty>
+1.72067
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+19.4813
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082411194-2
+
+$$$$
+ZINC000082411194
+                    3D
+ Schrodinger Suite 2021-4.
+ 26 26  0  0  1  0            999 V2000
+   -0.6794    1.3901   -0.0506 C   0  0  0  0  0  0
+   -0.0438   -0.0045    0.0598 C   0  0  0  0  0  0
+    1.5003    0.0133    0.0094 C   0  0  1  0  0  0
+    2.1736    0.7454    1.2095 C   0  0  0  0  0  0
+    3.6274    0.5621    1.2985 N   0  0  2  0  0  0
+    4.3640    1.3396    0.3041 C   0  0  0  0  0  0
+    3.9839   -0.8597    1.3231 C   0  0  0  0  0  0
+    3.4859   -1.6110    0.0682 C   0  0  0  0  0  0
+    1.9578   -1.4629   -0.0324 N   0  3  0  0  0  0
+    1.8386    0.4201   -0.9452 H   0  0  0  0  0  0
+   -1.7677    1.3197   -0.0639 H   0  0  0  0  0  0
+   -0.3717    1.8958   -0.9666 H   0  0  0  0  0  0
+   -0.4059    2.0256    0.7922 H   0  0  0  0  0  0
+   -0.3853   -0.4772    0.9828 H   0  0  0  0  0  0
+   -0.4358   -0.6160   -0.7555 H   0  0  0  0  0  0
+    1.9224    1.8071    1.2034 H   0  0  0  0  0  0
+    1.7572    0.3561    2.1403 H   0  0  0  0  0  0
+    5.4391    1.2184    0.4427 H   0  0  0  0  0  0
+    4.1387    2.4015    0.4104 H   0  0  0  0  0  0
+    4.1186    1.0461   -0.7167 H   0  0  0  0  0  0
+    5.0675   -0.9577    1.4052 H   0  0  0  0  0  0
+    3.5758   -1.3165    2.2264 H   0  0  0  0  0  0
+    3.9003   -1.2306   -0.8661 H   0  0  0  0  0  0
+    3.6697   -2.6840    0.1282 H   0  0  0  0  0  0
+    1.5227   -1.9606    0.7316 H   0  0  0  0  0  0
+    1.6316   -1.8930   -0.8864 H   0  0  0  0  0  0
+  1  2  1  0  0  0
+  1 11  1  0  0  0
+  1 12  1  0  0  0
+  1 13  1  0  0  0
+  2  3  1  0  0  0
+  2 14  1  0  0  0
+  2 15  1  0  0  0
+  3 10  1  0  0  0
+  3  9  1  0  0  0
+  3  4  1  0  0  0
+  4  5  1  0  0  0
+  4 16  1  0  0  0
+  4 17  1  0  0  0
+  5  6  1  0  0  0
+  5  7  1  0  0  0
+  6 18  1  0  0  0
+  6 19  1  0  0  0
+  6 20  1  0  0  0
+  7  8  1  0  0  0
+  7 21  1  0  0  0
+  7 22  1  0  0  0
+  8  9  1  0  0  0
+  8 23  1  0  0  0
+  8 24  1  0  0  0
+  9 25  1  0  0  0
+  9 26  1  0  0  0
+M  CHG  1   9   1
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+25
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+25
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+W0NIM11bQ0gyXVtDQEhdMVtDSDJdTihbQ0gzXSlbQ0gyXVtDSDJdW05IXTE=
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+0.00447934
+
+> <r_epik_Ionization_Penalty_Charging>
+0.00239238
+
+> <r_epik_Ionization_Penalty_Neutral>
+0.00208695
+
+> <r_epik_State_Penalty>
+0.0378267
+
+> <r_epik_Charging_Adjusted_Penalty>
+0.040219
+
+> <i_epik_Tot_Q>
+1
+
+> <i_epik_Tot_abs_Q>
+1
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+21.6459
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000082411194-3
+
+$$$$
+ZINC000107331759
+                    3D
+ Schrodinger Suite 2021-4.
+ 27 28  0  0  1  0            999 V2000
+   -0.7670    0.8586    0.3551 O   0  0  0  0  0  0
+   -0.0160   -0.0748    0.0742 C   0  0  0  0  0  0
+   -0.4386   -1.3340   -0.2406 O   0  0  0  0  0  0
+    1.5226    0.0307    0.0353 C   0  0  2  0  0  0
+    2.0164    1.3147    0.7368 C   0  0  0  0  0  0
+    3.5539    1.3929    0.6426 C   0  0  0  0  0  0
+    4.0307    1.3248   -0.7409 N   0  0  2  0  0  0
+    3.5523    0.1570   -1.4894 C   0  0  2  0  0  0
+    4.0580    0.1588   -2.9436 C   0  0  0  0  0  0
+    4.2683   -1.1423   -3.6752 C   0  0  0  0  0  0
+    5.4606   -0.2984   -3.2548 C   0  0  0  0  0  0
+    2.0074    0.0235   -1.4308 C   0  0  0  0  0  0
+    1.8887   -0.8490    0.5690 H   0  0  0  0  0  0
+    3.9979   -0.7031   -0.9855 H   0  0  0  0  0  0
+   -1.3948   -1.4119   -0.2182 H   0  0  0  0  0  0
+    1.6368    2.2262    0.2698 H   0  0  0  0  0  0
+    1.7769    1.3003    1.8012 H   0  0  0  0  0  0
+    3.9103    2.3227    1.0866 H   0  0  0  0  0  0
+    4.0085    0.5745    1.2032 H   0  0  0  0  0  0
+    5.0407    1.3340   -0.7426 H   0  0  0  0  0  0
+    3.6778    1.0076   -3.5140 H   0  0  0  0  0  0
+    4.0667   -2.0767   -3.1505 H   0  0  0  0  0  0
+    3.9953   -1.1909   -4.7295 H   0  0  0  0  0  0
+    6.0233    0.2430   -4.0157 H   0  0  0  0  0  0
+    6.0935   -0.6423   -2.4363 H   0  0  0  0  0  0
+    1.7541   -0.9164   -1.9252 H   0  0  0  0  0  0
+    1.6053    0.8843   -1.9703 H   0  0  0  0  0  0
+  1  2  2  0  0  0
+  2  3  1  0  0  0
+  2  4  1  0  0  0
+  3 15  1  0  0  0
+  4 13  1  0  0  0
+  4 12  1  0  0  0
+  4  5  1  0  0  0
+  5  6  1  0  0  0
+  5 16  1  0  0  0
+  5 17  1  0  0  0
+  6  7  1  0  0  0
+  6 18  1  0  0  0
+  6 19  1  0  0  0
+  7  8  1  0  0  0
+  7 20  1  0  0  0
+  8 14  1  0  0  0
+  8  9  1  0  0  0
+  8 12  1  0  0  0
+  9 11  1  0  0  0
+  9 10  1  0  0  0
+  9 21  1  0  0  0
+ 10 11  1  0  0  0
+ 10 22  1  0  0  0
+ 10 23  1  0  0  0
+ 11 24  1  0  0  0
+ 11 25  1  0  0  0
+ 12 26  1  0  0  0
+ 12 27  1  0  0  0
+M  END
+> <s_m_source_file>
+zinc_200_425_001.smi
+
+> <i_m_source_file_index>
+26
+
+> <i_lp_mmshare_version>
+56137
+
+> <s_lp_label>
+26
+
+> <i_f3d_flags>
+0
+
+> <s_epik_input>
+Tz1DKFtPSF0pW0NAQEhdMVtDSDJdW0NIMl1bTkhdW0NAQEhdKFtDSDJdMSlbQ0hdMltDSDJdW0NIMl0y
+
+> <s_epik_cmdline>
+J2VwaWtfcHl0aG9uJywgJy1waHQnLCAnMi4wJywgJy1waCcsICc3LjAnLCAnLXJldGFpbl9pX2xhYicsICctcmV0YWluX3RfbGFiJywgJy10bicsICc4JywgJy1tYScsICcyMDAnLCAnLWltYWUnLCAnPGluZmlsZS5tYWU+JywgJy1vbWFlJywgJzxvdXRmaWxlLm1hZT4n
+
+> <i_lp_orig_ion_str>
+1
+
+> <r_epik_Ionization_Penalty>
+6.25561
+
+> <r_epik_Ionization_Penalty_Charging>
+0
+
+> <r_epik_Ionization_Penalty_Neutral>
+6.25561
+
+> <r_epik_State_Penalty>
+8.7815
+
+> <r_epik_Charging_Adjusted_Penalty>
+8.7815
+
+> <i_epik_Tot_Q>
+0
+
+> <i_epik_Tot_abs_Q>
+0
+
+> <s_lp_Force_Field>
+S-OPLS
+
+> <r_lp_Energy>
+16.0167
+
+> <b_lp_Chiralities_Consistent>
+1
+
+> <s_lp_Variant>
+ZINC000107331759-1
+
+$$$$
