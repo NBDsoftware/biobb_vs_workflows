@@ -12,6 +12,8 @@ from typing import Dict, List, Pattern, Tuple, Union, Optional
 # Load pdb parser from biopython
 from Bio.PDB import PDBParser
 
+import MDAnalysis as mda
+
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_structure_utils.utils.str_check_add_hydrogens import str_check_add_hydrogens
@@ -23,7 +25,9 @@ from biobb_vs.vina.autodock_vina_run import autodock_vina_run
 from biobb_chemistry.babelm.babel_convert import babel_convert
 
 
-def find_matching_str(pattern: Union[str, Pattern[str]], filepath: str) -> Optional[str]:
+def find_matching_str(pattern: Union[str, Pattern[str]], 
+                      filepath: str
+    ) -> Optional[str]:
     '''
     Finds the first match of a regular expression pattern in a file.
     Returns the matching string or None if there is no match.
@@ -53,7 +57,7 @@ def find_matching_str(pattern: Union[str, Pattern[str]], filepath: str) -> Optio
     
     return None
 
-def get_affinity(pdbqt_path: str) -> float:
+def get_affinity(pdbqt_path: str) -> Optional[float]:
     '''
     Find best binding affinity from pdbqt file from AutoDock Vina. 
 
@@ -83,7 +87,10 @@ def get_affinity(pdbqt_path: str) -> float:
     else:
         return None
 
-def save_ranking(ranking: List[Tuple], num_top_ligands: Union[int, None], ranking_path: str) -> List[str]:
+def save_ranking(ranking: List[Tuple], 
+                 num_top_ligands: Union[int, None], 
+                 ranking_path: str
+    ) -> List[str]:
     '''
     Create file with ranking of ligands according to affinity
 
@@ -307,7 +314,14 @@ def clean_output(ligand_names: List, output_path: str):
         if os.path.exists(ligand_path):
             shutil.rmtree(ligand_path)
     
-def check_arguments(global_log, ligand_lib_path, structure_path, input_pockets_zip, pocket, dock_to_residues):
+def check_arguments(global_log,
+                    ligand_lib_path,
+                    structure_path,
+                    input_pockets_zip,
+                    pocket_num,
+                    pocket_selection: Optional[str],
+                    box_offset
+    ) -> None:
     """
     Check the arguments provided by the user and values of configuration file
     """
@@ -326,7 +340,7 @@ def check_arguments(global_log, ligand_lib_path, structure_path, input_pockets_z
         global_log.error(f"Structure path {structure_path} is not a file")
         sys.exit(1)
 
-    if not dock_to_residues:
+    if pocket_selection is None:
         # Check we have a pocket selection file
         if not os.path.exists(input_pockets_zip):
             global_log.error(f"Pocket selection file {input_pockets_zip} does not exist")
@@ -336,12 +350,18 @@ def check_arguments(global_log, ligand_lib_path, structure_path, input_pockets_z
             sys.exit(1)
             
         # Check we have a pocket number
-        if pocket is None:
+        if pocket_num is None:
             global_log.warning(f"Pocket number not provided. Using the first pocket in the pocket selection file")
     else:
         if input_pockets_zip is not None:
             global_log.error(f"Cannot provide both pocket selection file and residues to dock to")
             sys.exit(1)
+    
+    if box_offset < 0:
+        global_log.error(f"Box offset must be a positive number. Provided value: {box_offset}")
+        sys.exit(1)
+    elif box_offset > 5:
+        global_log.warning(f"Box offset is {box_offset} angstroms. This may be unnecessarily large when docking to a selection of residues surrounding the binding site. Consider using a smaller value to improve performance.")
 
 def check_pdb(residues_path: str, global_log):
     """
@@ -368,23 +388,19 @@ def check_pdb(residues_path: str, global_log):
         sys.exit(1)
     
     return residues
-    
-def catch_model_0(residue_selection: list, global_log):
-    """
-    Catch the selection of model 0 in the residue list
-    """
-    
-    for residue_dict in residue_selection:
-        
-        if residue_dict['model'] == '0':
-            
-            global_log.error(f"ERROR: Residue selection contains model 0. This is not a valid model for the BioBBs. Please use model 1.")
-            
-            return True
-        
+
 
 # YML construction
-def config_contents() -> str:
+def config_contents(
+        structure_path: str,
+        input_pockets_zip: Optional[str],
+        pocket_num: Optional[int],
+        pocket_selection: Optional[str],
+        box_offset: float,
+        vina_bin: str,
+        cpus: int,
+        exhaustiveness: int
+    ) -> str:
     """
     Returns the contents of the YAML configuration file as a string.
     
@@ -396,8 +412,24 @@ def config_contents() -> str:
         The contents of the YAML configuration file.
     """
     
-    return f""" 
+    if structure_path:
+        structure_path = os.path.abspath(structure_path)
+    
+    if input_pockets_zip:
+        input_pockets_zip = os.path.abspath(input_pockets_zip)
+    
+    pocket_residues = []
+    if pocket_selection is not None:
+        # Create an MDAnalysis universe with the input structure
+        u = mda.Universe(structure_path)
 
+        # Find the list of unique residue ids from atoms in the pocket selection given by the user
+        unique_residues = set(atom.resid for atom in u.select_atoms(pocket_selection))
+
+        # Construct a dict to extract the residues from the PDB
+        pocket_residues = [{'res_id': str(res_id), 'model':'1'} for res_id in unique_residues]
+
+    return f""" 
 # Global properties (common for all steps)
 global_properties:
   working_dir_path: output
@@ -410,19 +442,19 @@ global_properties:
 step1_fpocket_select:
   tool: fpocket_select
   paths:
-    input_pockets_zip: /path/to/input_pockets.zip       # Will be set by the workflow
+    input_pockets_zip: {input_pockets_zip}
     output_pocket_pdb: fpocket_cavity.pdb
     output_pocket_pqr: fpocket_pocket.pqr
   properties:
-    pocket: 1                                           # Will be set by the workflow
+    pocket: {pocket_num}
 
 step1b_extract_residues:
   tool: extract_residues
   paths:
-    input_structure_path: /path/to/input_structure.pdb  # Will be set by the workflow
+    input_structure_path: {structure_path}
     output_residues_path: pocket_residues.pdb
   properties:
-    residues: [{'res_id': '37', 'model':'0'}, {'res_id': '49', 'model':'0'}, {'res_id': '112', 'model':'0'}]
+    residues: {pocket_residues}
 
 step2_box:
   tool: box
@@ -430,17 +462,17 @@ step2_box:
     input_pdb_path: dependency/step1_fpocket_select/output_pocket_pqr
     output_pdb_path: box.pdb 
   properties:
-    offset: 12                                         # change - Extra distance (Angstroms) between the last residue atom and the box boundary
+    offset: {box_offset}
     box_coordinates: True
 
 step3_str_check_add_hydrogens:
   tool: str_check_add_hydrogens
   paths:
-    input_structure_path: /path/to/input_structure.pdb   # Will be set by the workflow
+    input_structure_path: {structure_path}
     output_structure_path: prep_receptor.pdbqt
   properties:
-    charges: False
-    mode: null                                          # change - auto, list, ph or null to avoid adding any Hs                      
+    charges: True
+    mode: 'auto'                
 
 # Section 2: Source each ligand and dock it to receptor
 
@@ -469,9 +501,9 @@ step5_autodock_vina_run:
     output_pdbqt_path: output_vina.pdbqt
     output_log_path: output_vina.log
   properties:
-    exhaustiveness: 8                                    # Will be set by the workflow
-    cpu: 1                                               # Will be set by the workflow
-    binary_path: vina                                    # change - path to the vina binary
+    exhaustiveness: {int(exhaustiveness)}
+    cpu: {int(cpus)}
+    binary_path: {vina_bin}
 
 step6_babel_prepare_pose:
   tool: babel_convert
@@ -481,42 +513,51 @@ step6_babel_prepare_pose:
   properties:
 """
 
-def create_config_file(config_path: str) -> None:
+def create_config_file(output_path: str, 
+                       **config_args) -> str:
     """
-    Create a YAML configuration file for the workflow if needed.
+    Create a YAML configuration file for the workflow in the output path.
+    Return the path to the configuration file.
     
     Parameters
     ----------
-    config_path : str
-        Path to the configuration file to be created.
+    output_path : str
+        Path to the output folder
+    config_args : dict
+        Arguments to be used in the configuration file.
     
     Returns
     -------
-    None
+    
+    str
+        Path to configuration file
     """
     
-    # Check if the file already exists
-    if os.path.exists(config_path):
-        print(f"Configuration file already exists at {config_path}.")
-        return
+    config_path = os.path.join(output_path, 'config.yml')
     
     # Write the contents to the file
     with open(config_path, 'w') as f:
-        f.write(config_contents())
+        f.write(config_contents(**config_args))
+
+    print(f"Configuration file created at {config_path}.")
+    
+    return config_path
         
-def main_wf(configuration_path: str, 
-            ligand_lib_path: str, 
-            structure_path: str, 
-            input_pockets_zip: str, 
-            pocket: str, 
-            output_path: str, 
-            num_top_ligands: int, 
-            keep_poses: bool, 
-            dock_to_residues: bool, 
-            cpus: int, 
-            exhaustiveness: int, 
-            debug: bool
-    ) -> Tuple[Dict, Dict]:
+def vs_autodock(ligand_lib_path: str, 
+                structure_path: str, 
+                input_pockets_zip: str,
+                pocket_num: int = 1, 
+                num_top_ligands: Optional[int] = None, 
+                keep_poses: bool = False, 
+                pocket_selection: Optional[str] = None, 
+                box_offset: float = 5.0,
+                vina_bin: str = "vina",
+                cpus: int = 1, 
+                exhaustiveness: int = 8, 
+                debug: bool = False,
+                restart: bool = True,
+                output_path: str = "output"
+                ) -> Tuple[Dict, Dict]:
     '''
     Main VS workflow. This workflow takes a ligand library, a pocket (defined by the output of a cavity analysis or some residues) 
     and a receptor to screen the cavity using the ligand library (with AutoDock).
@@ -524,30 +565,35 @@ def main_wf(configuration_path: str,
     Inputs
     ------
 
-        configuration_path:
-            path to YAML configuration file
         ligand_lib_path: 
             path to ligand library. Either a SMILES file or a SDF file
         structure_path: 
             path to receptor structure
         input_pockets_zip: 
             path to input pockets zip file
-        pocket: 
-            pocket name
-        output_path: 
-            path to output directory
+        pocket_num: 
+            pocket number to be used from the input_pockets_zip. Default: 1
         num_top_ligands: 
             number of top ligands to be saved
         keep_poses: 
             keep poses of top ligands
-        dock_to_residues: 
-            dock to residues instead of cavity
+        pocket_selection:
+            list of residues to dock to. If provided, the input_pockets_zip and pocket_num will be ignored
+        box_offset:
+            extra distance (Angstroms) between the last residue atom and the box boundary. Default: 5.0
+        vina_bin:
+            path to AutoDock Vina binary
         cpus: 
             number of cpus to use for each docking
         exhaustiveness: 
             exhaustiveness of the docking
         debug: 
             keep intermediate files for debugging
+        restart:
+            whether to restart the workflow from the last completed 
+            step or start from the beginning.
+        output_path:  
+            path to output folder
 
     Outputs
     -------
@@ -557,65 +603,60 @@ def main_wf(configuration_path: str,
     '''
 
     start_time = time.time()
-
-    # Default configuration file
-    default_config = False
-    if configuration_path is None:
-        default_config = True
-        configuration_path = "config.yml"
-        create_config_file(configuration_path)
-
-    # Receiving the input configuration file (YAML)
-    conf = settings.ConfReader(configuration_path)
     
-    if configuration_path is None:
-        # Create a default configuration file
-        configuration_path = "config.yml"
-        create_config_file(configuration_path)
-    
-    # Enforce output_path if provided
-    if output_path is not None:
-        output_path = fu.get_working_dir_path(output_path, restart = conf.properties.get('restart', 'False'))
-        conf.working_dir_path = output_path
-    else:
-        output_path = conf.get_working_dir_path()
+    # Determine final output path
+    output_path = fu.get_working_dir_path(output_path, restart=restart)
 
     # Initializing a global log file
     global_log, _ = fu.get_logs(path=output_path, light_format=True)
     
+    # Check input files TODO: review input checking
+    check_arguments(global_log, 
+                    ligand_lib_path, 
+                    structure_path, 
+                    input_pockets_zip, 
+                    pocket_num, 
+                    pocket_selection,
+                    box_offset)  
+    
+    # Create and load the configuration
+    config_args = {
+        'structure_path': structure_path,
+        'input_pockets_zip': input_pockets_zip,
+        'pocket_num': pocket_num,
+        'pocket_selection' : pocket_selection,
+        'box_offset' : box_offset,
+        'vina_bin': vina_bin,
+        'cpus' : cpus,
+        'exhaustiveness' : exhaustiveness}
+    configuration_path = create_config_file(output_path, **config_args)
+    
+    conf = settings.ConfReader(configuration_path)
+    conf.working_dir_path = output_path
+
     # Parsing the input configuration file (YAML);
     # Dividing it in global properties and global paths
     global_prop  = conf.get_prop_dic(global_log=global_log)
     global_paths = conf.get_paths_dic()
 
-    # Check arguments
-    check_arguments(global_log, ligand_lib_path, structure_path, input_pockets_zip, pocket, dock_to_residues)
-
-    # Enforce structure_path if provided
-    global_paths['step1b_extract_residues']['input_structure_path'] = structure_path
-    global_paths['step3_str_check_add_hydrogens']['input_structure_path'] = structure_path
-
     # STEP 1: Select pocket or extract residues
-    if dock_to_residues:
+    if pocket_selection is not None:
         
         # Extract residues from structure
-        catch_model_0(global_prop['step1b_extract_residues']['residues'], global_log)
         global_log.info("step1b_extract_residues: Extracting residues from structure")
         extract_residues(**global_paths["step1b_extract_residues"], properties=global_prop["step1b_extract_residues"])
         
+        output_residues_path = global_paths["step1b_extract_residues"]['output_residues_path']
+        
         # Check the output residues file exists and is not empty
-        check_pdb(global_paths["step1b_extract_residues"]['output_residues_path'], global_log)
+        check_pdb(output_residues_path, global_log)
 
         # Modify step2_box paths to use residues
-        global_paths['step2_box']['input_pdb_path'] = global_paths['step1b_extract_residues']['output_residues_path']
-        
-        if global_prop['step2_box']['offset'] > 5:
-            global_log.warning(f"WARNING: box offset is {global_prop['step2_box']['offset']} angstroms. This may be unnecessarily large when docking to residues surrounding the binding site. Consider using a smaller value to improve performance.")
-        
+        global_paths['step2_box']['input_pdb_path'] = output_residues_path
     else:
 
         global_paths['step1_fpocket_select']['input_pockets_zip'] = input_pockets_zip
-        global_prop['step1_fpocket_select']['pocket'] = pocket
+        global_prop['step1_fpocket_select']['pocket'] = pocket_num
         
         # Pocket selection from filtered list 
         global_log.info("step1_fpocket_select: Extract pocket cavity")
@@ -625,7 +666,7 @@ def main_wf(configuration_path: str,
     global_log.info("step2_box: Generating cavity box")
     box(**global_paths["step2_box"], properties=global_prop["step2_box"])
 
-    # STEP 3: Prepare target protein for docking 
+    # STEP 3: Prepare target protein for docking
     global_log.info("step3_str_check_add_hydrogens: Preparing target protein for docking")
     str_check_add_hydrogens(**global_paths["step3_str_check_add_hydrogens"], properties=global_prop["step3_str_check_add_hydrogens"]) 
 
@@ -653,6 +694,11 @@ def main_wf(configuration_path: str,
             # Add ligand name to properties and paths
             ligand_prop = conf.get_prop_dic(prefix=ligand_name)
             ligand_paths = conf.get_paths_dic(prefix=ligand_name)
+            
+            # Update common paths
+            ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
+            ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
+            ligand_paths['step5_autodock_vina_run']['input_ligand_pdbqt_path'] = ligand_paths['step4b_babel_convert']['output_path']
 
             ligand_names.append(ligand_name)
             ligand_ids.append(ligand_id)
@@ -674,27 +720,18 @@ def main_wf(configuration_path: str,
             try:
                 babel_convert(**ligand_paths['step4b_babel_convert'], properties = ligand_prop["step4b_babel_convert"])
                 lastStep_successful = validate_step(ligand_paths['step4b_babel_convert']['output_path'])
-            except:
+            except Exception:
                 global_log.info(f"step4b_babel_convert: Open Babel failed to convert ligand {ligand_name} to pdbqt format")
                 lastStep_successful = False
 
             # STEP 5: AutoDock vina
             if lastStep_successful:
-            
-                ligand_prop['step5_autodock_vina_run']['cpu'] = int(cpus)
-                ligand_prop['step5_autodock_vina_run']['exhaustiveness'] = int(exhaustiveness)
-                
-                # Update common paths
-                ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
-                ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
-                ligand_paths['step5_autodock_vina_run']['input_ligand_pdbqt_path'] = ligand_paths['step4b_babel_convert']['output_path']
-
                 try:
                     global_log.info("step5_autodock_vina_run: Docking the ligand")
                     autodock_vina_run(**ligand_paths['step5_autodock_vina_run'], properties=ligand_prop["step5_autodock_vina_run"])
                     lastStep_successful = validate_step(ligand_paths['step5_autodock_vina_run']['output_log_path'],
                                                         ligand_paths['step5_autodock_vina_run']['output_pdbqt_path'])
-                except:
+                except Exception:
                     global_log.info(f"step5_autodock_vina_run: Autodock Vina failed to dock ligand {ligand_name}")
 
     # Option 2: SMILES library with ligands to be prepared
@@ -708,6 +745,10 @@ def main_wf(configuration_path: str,
             # Add ligand name to properties and paths
             ligand_prop = conf.get_prop_dic(prefix=ligand_name)
             ligand_paths = conf.get_paths_dic(prefix=ligand_name)
+            
+            # Update common paths
+            ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
+            ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
 
             # Create ligand subfolder
             ligand_folder = os.path.join(output_path, ligand_name)
@@ -726,26 +767,18 @@ def main_wf(configuration_path: str,
             try:
                 babel_convert(**ligand_paths['step4_babel_protonate'], properties = ligand_prop["step4_babel_protonate"])
                 lastStep_successful = validate_step(ligand_paths['step4_babel_protonate']['output_path'])
-            except:
+            except Exception:
                 global_log.info(f"step4_babel_protonate: Open Babel failed to convert ligand {ligand_name} to pdbqt format")
                 lastStep_successful = False
         
             # STEP 5: AutoDock vina
             if lastStep_successful:
-
-                ligand_prop['step5_autodock_vina_run']['cpu'] = int(cpus)
-                ligand_prop['step5_autodock_vina_run']['exhaustiveness'] = int(exhaustiveness)
-
-                # Update common paths
-                ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
-                ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
-
                 try:
                     global_log.info("step5_autodock_vina_run: Docking the ligand")            
                     autodock_vina_run(**ligand_paths['step5_autodock_vina_run'], properties=ligand_prop["step5_autodock_vina_run"])
                     lastStep_successful = validate_step(ligand_paths['step5_autodock_vina_run']['output_log_path'], 
                                                         ligand_paths['step5_autodock_vina_run']['output_pdbqt_path'])
-                except:
+                except Exception:
                     global_log.info(f"step5_autodock_vina_run: Autodock Vina failed to dock ligand {ligand_name}")
 
     else:
@@ -791,7 +824,7 @@ def main_wf(configuration_path: str,
                 # Move pose to new location 
                 shutil.move(pose_path, new_pose_path)
 
-            except:
+            except Exception:
                 global_log.info(f"step6_babel_prepare_pose: Open Babel failed to convert pose for ligand {ligand_name} to PDB format")
     
     # Show success rate of screening
@@ -804,11 +837,6 @@ def main_wf(configuration_path: str,
 
     # Save structure path in output_path
     shutil.copy(structure_path, os.path.join(output_path, 'receptor.pdb'))
-    
-    if default_config:
-        # Move the default configuration file to the output path
-        shutil.move(configuration_path, os.path.join(output_path, 'config.yml'))
-        configuration_path = os.path.join(output_path, 'config.yml')
 
     # Save absolute path to ligand library in a text file
     with open(os.path.join(output_path, 'ligand_library.txt'), 'w') as file:
@@ -834,48 +862,52 @@ def main_wf(configuration_path: str,
 def main():
     
     parser = argparse.ArgumentParser(description="Simple High-throughput virtual screening (HTVS) pipeline using BioExcel Building Blocks")
-    
-    parser.add_argument('-c', '--config', dest='config_path', type=str,
-                        help="Configuration file (YAML)",
-                        required=False)
 
-    parser.add_argument('-lib', '--ligand_lib', dest='ligand_lib', type=str,
-                        help="Path to file with the ligand library. The format should be SMILES (.smi) or SDF (.sdf). For .smi files, one ligand per line is expected: 'smiles name'. For sdf files, the file may contain one or more ligands.",
+    parser.add_argument('--ligand_lib', dest='ligand_lib', type=str,
+                        help="""Path to file with the ligand library. The format should be SMILES (.smi) or SDF (.sdf). For .smi files, 
+                        one ligand per line is expected: 'smiles name'. For sdf files, the file may contain one or more ligands.""",
                         required=True)
     
-    parser.add_argument('-s', '--structure_path', dest='structure_path', type=str,
-                        help="Path to file with target structure (PDB format)",
+    parser.add_argument('--structure_path', dest='structure_path', type=str,
+                        help="""Path to file with target structure (PDB format). Make sure to remove ligands, ions or cofactors that are not needed first.
+                                Beware that hydrogens will be added to the target structure using biobb_structure_checking tool and a pH of 7""",
                         required=True)
     
-    parser.add_argument('-pz', '--input_pockets_zip', dest='input_pockets_zip', type=str,
+    parser.add_argument('--input_pockets_zip', dest='input_pockets_zip', type=str,
                         help="Path to file with pockets in a zip file. Provide this path or a list of residues in the configuration file.",
                         required=False)
 
-    parser.add_argument('-p', '--pocket', dest='pocket', type=int,
+    parser.add_argument('--pocket_num', dest='pocket_num', type=int,
                         help="Pocket number to be used from the input_pockets_zip. Default: 1",
                         required=False)
 
-    parser.add_argument('-o', '--output', dest='output_path', type=str,
-                        help="Output path (default: working_dir_path in YAML config file)",
-                        required=False)
-    
-    parser.add_argument('-nl', '--num_top_ligands', dest='num_top_ligands', type=int,
+    parser.add_argument('--num_top_ligands', dest='num_top_ligands', type=int,
                         help="Number of top ligands to be saved. Default: all successfully docked ligands",
                         required=False)
 
-    parser.add_argument('-kp', '--keep_poses', dest='keep_poses', action='store_true',
+    parser.add_argument('--keep_poses', dest='keep_poses', action='store_true',
                         help="Save docking poses for top ligands. Default: False",  
                         required=False)
 
-    parser.add_argument('-dr', '--dock_to_residues', dest='dock_to_residues', action='store_true',
-                        help="Dock to residues instead of pocket. Define the docking box using a set of residues instead of a pocket. See input.yml to define the residue selection. Default: False",
+    parser.add_argument('--pocket_selection', dest='pocket_selection', type=str, default=None,
+                        help="""Residue selection to define the pocket to give as an alternative to the pocket selection file.
+                                The residue selection should be provided as a string following the MDAnalysis syntax, e.g. 'resid 37 49 112'.
+                                This option is mutually exclusive with the pocket selection file.""",
                         required=False)
     
-    parser.add_argument('-cpus', '--cpus', dest='cpus', type=int, 
+    parser.add_argument('--box_offset', dest='box_offset', type=float,
+                        help="Extra distance (Angstroms) between the last residue atom and the box boundary. Default: 12",
+                        required=False, default=5.0)
+
+    parser.add_argument('--vina_bin', dest='vina_bin', type=str,
+                        help="Path to AutoDock Vina binary. Default: vina",
+                        required=False, default='vina')
+    
+    parser.add_argument('--cpus', dest='cpus', type=int, 
                         help="Number of CPUs to use for each docking. Default: 1",
                         required=False, default=1)
     
-    parser.add_argument('-ex', '--exhaustiveness', dest='exhaustiveness', type=int,
+    parser.add_argument('--exhaustiveness', dest='exhaustiveness', type=int,
                         help="Exhaustiveness of the docking. Number of runs for the sampling algorithm. Choose 4 to optimize speed and 8 to optimize accuracy. Default: 8",
                         required=False, default=8)
     
@@ -883,21 +915,35 @@ def main():
                         help="Keep intermediate files for debugging. Default: False",
                         required=False)
     
+    parser.add_argument('--restart', action='store_true',
+                        help="Restart the workflow from the last completed step. Default: False",
+                        required=False, default=False)
+
+    parser.add_argument('--output', dest='output_path',
+                        help="Output path (default: working_dir_path in YAML config file)",
+                        required=False)
+    
     args = parser.parse_args()
 
-    main_wf(configuration_path = args.config_path, 
-            ligand_lib_path = args.ligand_lib,
-            structure_path = args.structure_path,
-            input_pockets_zip = args.input_pockets_zip,
-            pocket = args.pocket,
-            output_path = args.output_path,
-            num_top_ligands = args.num_top_ligands,
-            keep_poses = args.keep_poses,
-            dock_to_residues = args.dock_to_residues,
-            cpus = args.cpus,
-            exhaustiveness = args.exhaustiveness,
-            debug = args.debug)
+    vs_autodock(ligand_lib_path = args.ligand_lib,
+                structure_path = args.structure_path,
+                input_pockets_zip = args.input_pockets_zip,
+                pocket_num = args.pocket_num,
+                num_top_ligands = args.num_top_ligands,
+                keep_poses = args.keep_poses,
+                pocket_selection = args.pocket_selection,
+                box_offset = args.box_offset, 
+                vina_bin = args.vina_bin,  
+                cpus = args.cpus,
+                exhaustiveness = args.exhaustiveness,
+                debug = args.debug,
+                restart = args.restart,
+                output_path = args.output_path)
 
 
 if __name__ == '__main__':
     main()
+    
+# TODO: include all CLI options in config
+# TODO: test
+# TODO: check target hydrogens are respected - 

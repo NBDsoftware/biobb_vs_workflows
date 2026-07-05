@@ -12,9 +12,11 @@ dependencies:
   - biobb_analysis>=5.0.1
   - biobb_io>=5.2.3
   - biobb_pdb_tools>=5.2.1
-  - biobb_vs>=5.0.0
+  - biobb_vs>=5.2.1
+  - biobb_chemistry>=5.2.1
   - propka==3.5.1
   - mdanalysis
+  - openbabel==3.1.1
   - biopython<=1.81
   - pip:
     - .                          # install biobb_vs_workflows itself
