@@ -16,6 +16,7 @@ import MDAnalysis as mda
 
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
+from biobb_vs_workflows.common import to_yaml
 from biobb_structure_utils.utils.str_check_add_hydrogens import str_check_add_hydrogens
 from biobb_structure_utils.utils.extract_residues import extract_residues
 from openbabel import pybel
@@ -395,11 +396,12 @@ def config_contents(
         structure_path: str,
         input_pockets_zip: Optional[str],
         pocket_num: Optional[int],
-        pocket_selection: Optional[str],
+        pocket_residues: List[Dict],
         box_offset: float,
         vina_bin: str,
         cpus: int,
-        exhaustiveness: int
+        exhaustiveness: int,
+        restart: bool = False
     ) -> str:
     """
     Returns the contents of the YAML configuration file as a string.
@@ -414,27 +416,16 @@ def config_contents(
     
     if structure_path:
         structure_path = os.path.abspath(structure_path)
-    
+
     if input_pockets_zip:
         input_pockets_zip = os.path.abspath(input_pockets_zip)
-    
-    pocket_residues = []
-    if pocket_selection is not None:
-        # Create an MDAnalysis universe with the input structure
-        u = mda.Universe(structure_path)
 
-        # Find the list of unique residue ids from atoms in the pocket selection given by the user
-        unique_residues = set(atom.resid for atom in u.select_atoms(pocket_selection))
-
-        # Construct a dict to extract the residues from the PDB
-        pocket_residues = [{'res_id': str(res_id), 'model':'1'} for res_id in unique_residues]
-
-    return f""" 
+    return f"""
 # Global properties (common for all steps)
 global_properties:
   working_dir_path: output
   can_write_console_log: False
-  restart: True 
+  restart: {to_yaml(restart)}
   remove_tmp: True
 
 # Section 1: Pocket selection and receptor preparation
@@ -442,11 +433,11 @@ global_properties:
 step1_fpocket_select:
   tool: fpocket_select
   paths:
-    input_pockets_zip: {input_pockets_zip}
+    input_pockets_zip: {to_yaml(input_pockets_zip)}
     output_pocket_pdb: fpocket_cavity.pdb
     output_pocket_pqr: fpocket_pocket.pqr
   properties:
-    pocket: {pocket_num}
+    pocket: {to_yaml(pocket_num)}
 
 step1b_extract_residues:
   tool: extract_residues
@@ -454,7 +445,7 @@ step1b_extract_residues:
     input_structure_path: {structure_path}
     output_residues_path: pocket_residues.pdb
   properties:
-    residues: {pocket_residues}
+    residues: {to_yaml(pocket_residues)}
 
 step2_box:
   tool: box
@@ -462,7 +453,7 @@ step2_box:
     input_pdb_path: dependency/step1_fpocket_select/output_pocket_pqr
     output_pdb_path: box.pdb 
   properties:
-    offset: {box_offset}
+    offset: {to_yaml(box_offset)}
     box_coordinates: True
 
 step3_str_check_add_hydrogens:
@@ -501,8 +492,8 @@ step5_autodock_vina_run:
     output_pdbqt_path: output_vina.pdbqt
     output_log_path: output_vina.log
   properties:
-    exhaustiveness: {int(exhaustiveness)}
-    cpu: {int(cpus)}
+    exhaustiveness: {to_yaml(int(exhaustiveness))}
+    cpu: {to_yaml(int(cpus))}
     binary_path: {vina_bin}
 
 step6_babel_prepare_pose:
@@ -610,7 +601,7 @@ def vs_autodock(ligand_lib_path: str,
     # Initializing a global log file
     global_log, _ = fu.get_logs(path=output_path, light_format=True)
     
-    # Check input files TODO: review input checking
+    # Check input files
     check_arguments(global_log, 
                     ligand_lib_path, 
                     structure_path, 
@@ -619,16 +610,25 @@ def vs_autodock(ligand_lib_path: str,
                     pocket_selection,
                     box_offset)  
     
+    # Resolve the residue selection into the list of residues to extract (baked into the config).
+    # Done here (not in config_contents) to keep the config builder a pure template.
+    pocket_residues = []
+    if pocket_selection is not None:
+        u = mda.Universe(structure_path)
+        unique_residues = set(atom.resid for atom in u.select_atoms(pocket_selection))
+        pocket_residues = [{'res_id': str(res_id), 'model': '1'} for res_id in unique_residues]
+
     # Create and load the configuration
     config_args = {
         'structure_path': structure_path,
         'input_pockets_zip': input_pockets_zip,
         'pocket_num': pocket_num,
-        'pocket_selection' : pocket_selection,
+        'pocket_residues' : pocket_residues,
         'box_offset' : box_offset,
         'vina_bin': vina_bin,
         'cpus' : cpus,
-        'exhaustiveness' : exhaustiveness}
+        'exhaustiveness' : exhaustiveness,
+        'restart' : restart}
     configuration_path = create_config_file(output_path, **config_args)
     
     conf = settings.ConfReader(configuration_path)
@@ -655,10 +655,7 @@ def vs_autodock(ligand_lib_path: str,
         global_paths['step2_box']['input_pdb_path'] = output_residues_path
     else:
 
-        global_paths['step1_fpocket_select']['input_pockets_zip'] = input_pockets_zip
-        global_prop['step1_fpocket_select']['pocket'] = pocket_num
-        
-        # Pocket selection from filtered list 
+        # Pocket selection from filtered list (input_pockets_zip / pocket already set in the config)
         global_log.info("step1_fpocket_select: Extract pocket cavity")
         fpocket_select(**global_paths["step1_fpocket_select"], properties=global_prop["step1_fpocket_select"])
 
@@ -943,7 +940,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-# TODO: include all CLI options in config
-# TODO: test
-# TODO: check target hydrogens are respected - 

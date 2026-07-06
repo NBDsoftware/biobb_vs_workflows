@@ -22,6 +22,8 @@ import MDAnalysis as mda
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 
+from biobb_vs_workflows.common import to_yaml
+
 from biobb_gromacs.gromacs.make_ndx import make_ndx
 from biobb_analysis.gromacs.gmx_cluster import gmx_cluster
 from biobb_analysis.ambertools.cpptraj_convert import cpptraj_convert
@@ -551,7 +553,8 @@ def config_contents(
                                         'gromos']],
     clustering_cutoff: Optional[float],
     filtering_selection: Optional[str],
-    distance_threshold: Optional[float]
+    distance_threshold: Optional[float],
+    restart: bool = False
 
     ) -> str:
     """
@@ -590,13 +593,19 @@ def config_contents(
         
     if gmx_bin == None:
         gmx_bin = "gmx"
-    
-    return f""" 
+
+    # Quoted MDAnalysis selection string when given, null otherwise (avoids emitting "None")
+    if filtering_selection is not None:
+        residue_selection_property = f'residue_selection: "{filtering_selection}"'
+    else:
+        residue_selection_property = "residue_selection: null"
+
+    return f"""
 # Global properties (common for all steps)
 global_properties:                                # Wether to use GPU support or not
   working_dir_path: output                        # Workflow default output directory
   can_write_console_log: False                    # Verbose writing of log information
-  restart: True                                   # Skip steps already performed
+  restart: {to_yaml(restart)}                     # Skip steps already performed
   remove_tmp: True                                # Do not execute steps if output files are already created
 
 # Step 0: Convert from Amber to Gromacs compatible format
@@ -635,8 +644,8 @@ step4_gmx_cluster:
     fit_selection: Protein       
     output_selection: Protein        
     dista: False
-    method: {clustering_method}                      
-    cutoff: {clustering_cutoff}
+    method: {to_yaml(clustering_method)}
+    cutoff: {to_yaml(clustering_cutoff)}
     nofit: False
     binary_path: {gmx_bin} 
 
@@ -677,8 +686,8 @@ step8_filter_residue_com:
     input_pdb_path: dependency/step5_extract_models/output_structure_path
     output_filter_pockets_zip: filtered_pockets.zip
   properties:
-    residue_selection: "{filtering_selection}"      # MDAnalysis selection string
-    distance_threshold: {distance_threshold}     # Distance threshold in Angstroms (6-8 are reasonable values if the residue/s are part of the pocket)
+    {residue_selection_property}      # MDAnalysis selection string
+    distance_threshold: {to_yaml(distance_threshold)}     # Distance threshold in Angstroms (6-8 are reasonable values if the residue/s are part of the pocket)
     run_step: False                              # Run step or not
 """
 
@@ -789,7 +798,8 @@ def cavity_analysis(traj_path: Optional[str],
         'clustering_method': clustering_method,
         'clustering_cutoff': clustering_cutoff,
         'filtering_selection': filtering_selection,
-        'distance_threshold': distance_threshold
+        'distance_threshold': distance_threshold,
+        'restart': restart
     }
     configuration_path = create_config_file(output_path, **config_args)
 
@@ -935,11 +945,7 @@ def cavity_analysis(traj_path: Optional[str],
         global_log.info("step7_filter_cavities: Filter found cavities")
         fpocket_filter(**cluster_paths['step7_filter_cavities'], properties=cluster_prop["step7_filter_cavities"])
         
-        # Enforce distance threshold
-        if distance_threshold:
-            cluster_prop['step8_filter_residue_com']['distance_threshold'] = distance_threshold
-
-        # STEP 8: Filter by pocket center of mass 
+        # STEP 8: Filter by pocket center of mass
         global_log.info("step8_filter_residue_com: Filter cavities by center of mass distance to a group of residues") 
         filtered_pockets_IDs = filter_residue_com(**cluster_paths['step8_filter_residue_com'], properties=cluster_prop["step8_filter_residue_com"], global_log=global_log)
 
