@@ -13,7 +13,7 @@ dependencies = [
     "biobb_pdb_tools>=5.2.1",
     "biobb_vs>=5.0.0",
     "biobb_gromacs>=5.2.0",
-    "biobb_chemistry>=5.2.1"
+    "biobb_chemistry>=5.2.1",
     "biobb_analysis>=5.0.1",
     "propka>=3.5.1",
     "mdanalysis",
