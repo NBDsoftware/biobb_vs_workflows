@@ -1,38 +1,12 @@
-# Bioexcel Building Block workflows — virtual screening
+# BioBB workflows for virtual screening
 
-BioBB workflows are ready-to-use pipelines built using BioExcel Building Blocks (BioBB) to perform common tasks in biomolecular simulations and modeling. This software has been developed for the [European BioExcel](http://bioexcel.eu/), funded by the European Commission (EU Horizon Europe [101093290](https://cordis.europa.eu/project/id/101093290)).
+These workflows use BioExcel Building Blocks (BioBB) to integrate different popular biomolecular simulation tools. This software has been developed for the [European BioExcel](http://bioexcel.eu/), funded by the European Commission (EU Horizon Europe [101093290](https://cordis.europa.eu/project/id/101093290)).
 
-This repo covers the virtual-screening workflows. MD/preparation workflows (`md_gromacs`, `ligand_parameterization`, `protein_preparation`, `traj_postprocessing`) live in [biobb_md_workflows](https://github.com/NBDsoftware/biobb_md_workflows).
+This repo covers the cavity analysis and virtual-screening workflows. MD/preparation workflows live in [biobb_md_workflows](https://github.com/NBDsoftware/biobb_md_workflows).
 
-## Workflows
+## Documentation
 
-**cavity_analysis**: clusters an MD trajectory and runs a cavity analysis using Fpocket on the representative structures.
-
-**vs_autodock**: high-throughput virtual screening of a selected pocket using a ligand library (SMILES/SDF) and AutoDock Vina.
-
-## Installation
-
-Requirements: `git`, `conda`
-
-```bash
-git clone https://github.com/NBDsoftware/biobb_vs_workflows.git
-cd biobb_vs_workflows
-conda env create -f environment.yml
-conda activate biobb_vs
-```
-
-## Usage
-
-Once installed, each workflow is available as a CLI command:
-
-| Command | Workflow |
-|---------|----------|
-| `cavity_analysis` | cavity_analysis |
-| `vs_autodock` | vs_autodock |
-
-```bash
-cavity_analysis --help
-```
+You can find workflow descriptions, installation, usage, and known limitations in the [Documentation](**https://nbdsoftware.github.io/biobb_vs_workflows/**).
 
 ## Licensing
 
