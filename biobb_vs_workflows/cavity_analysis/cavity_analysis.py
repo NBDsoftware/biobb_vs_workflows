@@ -31,7 +31,7 @@ from biobb_structure_utils.utils.extract_model import extract_model
 from biobb_vs.fpocket.fpocket_run import fpocket_run
 from biobb_vs.fpocket.fpocket_filter import fpocket_filter
 
-# Cluster count limit and retry policy for step4_gmx_cluster
+# Cluster count limit and retry policy for step3_gmx_cluster
 # (too many clusters -> combined centroid PDB can exceed step5's atom limit, and extraction gets slow)
 MAX_CLUSTER_ATOMS = 1000000
 MAX_CLUSTERS = 100
@@ -173,7 +173,7 @@ def create_summary(cluster_names, cluster_populations, cluster_filtered_pockets,
     '''
 
     # Find step names
-    cavity_analysis_folder = 'step6_cavity_analysis'
+    cavity_analysis_folder = 'step5_cavity_analysis'
 
     # Find unfiltered summary file name
     pockets_summary_filename = Path(global_paths[cavity_analysis_folder]['output_summary']).name
@@ -613,7 +613,7 @@ global_properties:                                # Wether to use GPU support or
 
 # Step 0: Convert from Amber to Gromacs compatible format
 # Optional step (will be executed if the trajectory is not in a Gromacs-compatible format)
-step0_convert_amber_traj:
+step1_convert_amber_traj:
   tool: cpptraj_convert
   paths:
     input_traj_path: {traj_path}                                        # Amber compatible trajectory file
@@ -623,7 +623,7 @@ step0_convert_amber_traj:
     mask: "all-atoms"
 
 # Step 3: Create index file to select the atoms for the RMSD calculation
-step3A_rmsd_calculation_ndx:
+step2_rmsd_calculation_ndx:
   tool: make_ndx 
   paths:
     input_structure_path: {top_path}
@@ -633,12 +633,12 @@ step3A_rmsd_calculation_ndx:
     binary_path: {gmx_bin}      
 
 # Steps 4-5: Cluster trajectory and extract centroids pdb
-step4_gmx_cluster:
+step3_gmx_cluster:
   tool: gmx_cluster
   paths:
     input_traj_path: {traj_path}
     input_structure_path: {top_path}
-    input_index_path: dependency/step3A_rmsd_calculation_ndx/output_ndx_path
+    input_index_path: dependency/step2_rmsd_calculation_ndx/output_ndx_path
     output_pdb_path: output.cluster.pdb
     output_cluster_log_path: output.cluster.log
     output_rmsd_cluster_xpm_path: output.rmsd-clust.xpm
@@ -652,18 +652,18 @@ step4_gmx_cluster:
     nofit: False
     binary_path: {gmx_bin} 
 
-step5_extract_models:
+step4_extract_models:
   tool: extract_model
   paths:
-    input_structure_path: dependency/step4_gmx_cluster/output_pdb_path
+    input_structure_path: dependency/step3_gmx_cluster/output_pdb_path
     output_structure_path: cluster.pdb     
   properties:
 
 # Step 6-8: Cavity analysis with fpocket on centroids + filtering
-step6_cavity_analysis:
+step5_cavity_analysis:
   tool: fpocket_run
   paths:
-    input_pdb_path: dependency/step5_extract_models/output_structure_path
+    input_pdb_path: dependency/step4_extract_models/output_structure_path
     output_pockets_zip: all_pockets.zip
     output_summary: summary.json
   properties:
@@ -672,21 +672,21 @@ step6_cavity_analysis:
     num_spheres: 35
     sort_by: druggability_score
 
-step7_filter_cavities:
+step6_filter_cavities:
   tool: fpocket_filter
   paths:
-    input_pockets_zip: dependency/step6_cavity_analysis/output_pockets_zip
-    input_summary: dependency/step6_cavity_analysis/output_summary
+    input_pockets_zip: dependency/step5_cavity_analysis/output_pockets_zip
+    input_summary: dependency/step5_cavity_analysis/output_summary
     output_filter_pockets_zip: filtered_pockets.zip
   properties:
     score: [0.4, 1]
     druggability_score: [0.4, 1]
     volume: [200, 5000]
 
-step8_filter_residue_com:
+step7_filter_residue_com:
   paths: 
-    input_pockets_zip: dependency/step7_filter_cavities/output_filter_pockets_zip
-    input_pdb_path: dependency/step5_extract_models/output_structure_path
+    input_pockets_zip: dependency/step6_filter_cavities/output_filter_pockets_zip
+    input_pdb_path: dependency/step4_extract_models/output_structure_path
     output_filter_pockets_zip: filtered_pockets.zip
   properties:
     {residue_selection_property}      # MDAnalysis selection string
@@ -821,64 +821,60 @@ def cavity_analysis(traj_path: Optional[str],
         if not is_gromacs_format(traj_path):
 
             # STEP 0: Convert the trajectory to xtc format
-            global_log.info("step0_convert_amber_traj: Converting AMBER trajectory to xtc format")
-            cpptraj_convert(**global_paths['step0_convert_amber_traj'], properties=global_prop['step0_convert_amber_traj'])
+            global_log.info("step1_convert_amber_traj: Converting AMBER trajectory to xtc format")
+            cpptraj_convert(**global_paths['step1_convert_amber_traj'], properties=global_prop['step1_convert_amber_traj'])
 
             # Change subsequent traj path 
-            global_paths['step4_gmx_cluster']['input_traj_path'] = global_paths['step0_convert_amber_traj']['output_cpptraj_path']
+            global_paths['step3_gmx_cluster']['input_traj_path'] = global_paths['step1_convert_amber_traj']['output_cpptraj_path']
 
         # STEP 3A: Create index file for rmsd calculation
-        global_log.info(f"Paths: {global_paths['step3A_rmsd_calculation_ndx']}")
-        global_log.info("step3A_rmsd_calculation_ndx: Creation of index file")
-        make_ndx(**global_paths['step3A_rmsd_calculation_ndx'], properties=global_prop['step3A_rmsd_calculation_ndx'])
+        global_log.info(f"Paths: {global_paths['step2_rmsd_calculation_ndx']}")
+        global_log.info("step2_rmsd_calculation_ndx: Creation of index file")
+        make_ndx(**global_paths['step2_rmsd_calculation_ndx'], properties=global_prop['step2_rmsd_calculation_ndx'])
 
         # STEP 4: Cluster trajectory with gmx_cluster
-        global_log.info("step4_gmx_cluster: Clustering structures from the trajectory")
-        gmx_cluster(**global_paths["step4_gmx_cluster"], properties=global_prop["step4_gmx_cluster"])
+        global_log.info("step3_gmx_cluster: Clustering structures from the trajectory")
+        gmx_cluster(**global_paths["step3_gmx_cluster"], properties=global_prop["step3_gmx_cluster"])
 
         # Save centroid IDs and populations in JSON file
-        global_log.info( "step4_gmx_cluster: Reading clustering outcome, generating clusters JSON file")
-        cluster_populations = get_clusters_population(log_path = global_paths["step4_gmx_cluster"]['output_cluster_log_path'],
-                                                      output_path = global_prop["step4_gmx_cluster"]['path'],
+        global_log.info( "step3_gmx_cluster: Reading clustering outcome, generating clusters JSON file")
+        cluster_populations = get_clusters_population(log_path = global_paths["step3_gmx_cluster"]['output_cluster_log_path'],
+                                                      output_path = global_prop["step3_gmx_cluster"]['path'],
                                                       global_log = global_log)
         
         # Find the number of atoms in the combined centroid PDB file
-        combined_centroid_universe = mda.Universe(global_paths["step4_gmx_cluster"]['output_pdb_path'])
-        num_atoms = len(combined_centroid_universe.atoms)
+        combined_centroid_universe = mda.Universe(global_paths["step3_gmx_cluster"]['output_pdb_path'])
+        num_atoms = len(combined_centroid_universe.atoms) # type: ignore
 
         # If too many clusters were found, the combined centroid PDB from step4 can exceed step5's atom
         # limit and extraction becomes very slow. Increase the cutoff and re-cluster, up to a retry limit.
         retry = 0
         while num_atoms > MAX_CLUSTER_ATOMS and retry < MAX_CLUSTER_RETRIES:
             retry += 1
-            old_cutoff = global_prop["step4_gmx_cluster"]["cutoff"]
+            old_cutoff = global_prop["step3_gmx_cluster"]["cutoff"]
             new_cutoff = old_cutoff * CUTOFF_INCREASE_FACTOR
 
             global_log.warning(
-                f"step4_gmx_cluster: {num_atoms} atoms found between all cluster (> {MAX_CLUSTER_ATOMS} limit). "
-                f"Too many clusters can make step5_extract_models fail (atom count limit on the combined "
+                f"step3_gmx_cluster: {num_atoms} atoms found between all cluster (> {MAX_CLUSTER_ATOMS} limit). "
+                f"Too many clusters can make step4_extract_models fail (atom count limit on the combined "
                 f"centroid PDB) or become very slow. Increasing clustering cutoff {old_cutoff} -> {new_cutoff} "
                 f"and re-clustering (attempt {retry}/{MAX_CLUSTER_RETRIES})."
             )
 
-            global_prop["step4_gmx_cluster"]["cutoff"] = new_cutoff
+            global_prop["step3_gmx_cluster"]["cutoff"] = new_cutoff
             # Force re-run: outputs already exist from the previous attempt, bypass the restart-skip
-            global_prop["step4_gmx_cluster"]["restart"] = False
+            global_prop["step3_gmx_cluster"]["restart"] = False
 
-            gmx_cluster(**global_paths["step4_gmx_cluster"], properties=global_prop["step4_gmx_cluster"])
-            cluster_populations = get_clusters_population(log_path = global_paths["step4_gmx_cluster"]['output_cluster_log_path'],
-                                                          output_path = global_prop["step4_gmx_cluster"]['path'],
+            gmx_cluster(**global_paths["step3_gmx_cluster"], properties=global_prop["step3_gmx_cluster"])
+            cluster_populations = get_clusters_population(log_path = global_paths["step3_gmx_cluster"]['output_cluster_log_path'],
+                                                          output_path = global_prop["step3_gmx_cluster"]['path'],
                                                           global_log = global_log)
-
-            # Find the number of atoms in the combined centroid PDB file
-            combined_centroid_universe = mda.Universe(global_paths["step4_gmx_cluster"]['output_pdb_path'])
-            num_atoms = len(combined_centroid_universe.atoms)
 
         if num_atoms > MAX_CLUSTER_ATOMS:
             global_log.warning(
-                f"step4_gmx_cluster: still {len(cluster_populations)} clusters after {retry} retries "
-                f"(final cutoff={global_prop['step4_gmx_cluster']['cutoff']}). Proceeding anyway - "
-                f"step5_extract_models may fail or be slow."
+                f"step3_gmx_cluster: still {len(cluster_populations)} clusters after {retry} retries "
+                f"(final cutoff={global_prop['step3_gmx_cluster']['cutoff']}). Proceeding anyway - "
+                f"step4_extract_models may fail or be slow."
             )
 
         if num_clusters:
@@ -927,37 +923,37 @@ def cavity_analysis(traj_path: Optional[str],
         if structures_path is None:
 
             # Update input structures path and model index
-            cluster_paths['step5_extract_models']['input_structure_path'] = global_paths['step4_gmx_cluster']['output_pdb_path']
+            cluster_paths['step4_extract_models']['input_structure_path'] = global_paths['step3_gmx_cluster']['output_pdb_path']
             if cluster_populations is not None:
-                cluster_prop['step5_extract_models']['models'] = [cluster_populations[cluster_index][1]]
+                cluster_prop['step4_extract_models']['models'] = [cluster_populations[cluster_index][1]]
 
             # STEP 5: Extract one model from the input structures path
-            extract_model(**cluster_paths['step5_extract_models'], properties=cluster_prop['step5_extract_models'])
+            extract_model(**cluster_paths['step4_extract_models'], properties=cluster_prop['step4_extract_models'])
 
         # If clustering was done externally, just update the input pdb path
         else:
 
-            cluster_paths['step6_cavity_analysis']['input_pdb_path'] = pdb_paths[cluster_index]
-            cluster_paths['step8_filter_residue_com']['input_pdb_path'] = pdb_paths[cluster_index]
+            cluster_paths['step5_cavity_analysis']['input_pdb_path'] = pdb_paths[cluster_index]
+            cluster_paths['step7_filter_residue_com']['input_pdb_path'] = pdb_paths[cluster_index]
         
         # STEP 6: Cavity analysis
-        global_log.info("step6_cavity_analysis: Compute protein cavities using fpocket")
-        fpocket_run(**cluster_paths['step6_cavity_analysis'], properties=cluster_prop["step6_cavity_analysis"])
+        global_log.info("step5_cavity_analysis: Compute protein cavities using fpocket")
+        fpocket_run(**cluster_paths['step5_cavity_analysis'], properties=cluster_prop["step5_cavity_analysis"])
 
         # STEP 7: Filtering cavities
-        global_log.info("step7_filter_cavities: Filter found cavities")
-        fpocket_filter(**cluster_paths['step7_filter_cavities'], properties=cluster_prop["step7_filter_cavities"])
+        global_log.info("step6_filter_cavities: Filter found cavities")
+        fpocket_filter(**cluster_paths['step6_filter_cavities'], properties=cluster_prop["step6_filter_cavities"])
         
         # STEP 8: Filter by pocket center of mass
-        global_log.info("step8_filter_residue_com: Filter cavities by center of mass distance to a group of residues") 
-        filtered_pockets_IDs = filter_residue_com(**cluster_paths['step8_filter_residue_com'], properties=cluster_prop["step8_filter_residue_com"], global_log=global_log)
+        global_log.info("step7_filter_residue_com: Filter cavities by center of mass distance to a group of residues") 
+        filtered_pockets_IDs = filter_residue_com(**cluster_paths['step7_filter_residue_com'], properties=cluster_prop["step7_filter_residue_com"], global_log=global_log)
 
         # Update dictionary with filtered pockets
         cluster_filtered_pockets.update({cluster_name : filtered_pockets_IDs})
 
         # Save model pdb file in sub folder
         model_subfolder = os.path.join(output_path, cluster_name)
-        shutil.copyfile(cluster_paths['step6_cavity_analysis']['input_pdb_path'], os.path.join(model_subfolder, 'model.pdb'))
+        shutil.copyfile(cluster_paths['step5_cavity_analysis']['input_pdb_path'], os.path.join(model_subfolder, 'model.pdb'))
 
     # Create summary with available pockets per cluster 
     global_log.info("    Creating YAML summary file...")
