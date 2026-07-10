@@ -611,7 +611,7 @@ global_properties:                                # Wether to use GPU support or
   restart: {to_yaml(restart)}                     # Skip steps already performed
   remove_tmp: True                                # Do not execute steps if output files are already created
 
-# Step 0: Convert from Amber to Gromacs compatible format
+# Step 1: Convert from Amber to Gromacs compatible format
 # Optional step (will be executed if the trajectory is not in a Gromacs-compatible format)
 step1_convert_amber_traj:
   tool: cpptraj_convert
@@ -622,7 +622,7 @@ step1_convert_amber_traj:
   properties:
     mask: "all-atoms"
 
-# Step 3: Create index file to select the atoms for the RMSD calculation
+# Step 2: Create index file to select the atoms for the RMSD calculation
 step2_rmsd_calculation_ndx:
   tool: make_ndx 
   paths:
@@ -632,7 +632,7 @@ step2_rmsd_calculation_ndx:
     selection: "System"
     binary_path: {gmx_bin}      
 
-# Steps 4-5: Cluster trajectory and extract centroids pdb
+# Steps 3-4: Cluster trajectory and extract centroids pdb
 step3_gmx_cluster:
   tool: gmx_cluster
   paths:
