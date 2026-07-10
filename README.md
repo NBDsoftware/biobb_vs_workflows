@@ -6,7 +6,7 @@ This repo covers the cavity analysis and virtual-screening workflows. MD/prepara
 
 ## Documentation
 
-You can find workflow descriptions, installation, usage, and known limitations in the [Documentation](**https://nbdsoftware.github.io/biobb_vs_workflows/**).
+You can find workflow descriptions, installation, usage, and known limitations in the [Documentation](https://nbdsoftware.github.io/biobb_vs_workflows/).
 
 ## Licensing
 
