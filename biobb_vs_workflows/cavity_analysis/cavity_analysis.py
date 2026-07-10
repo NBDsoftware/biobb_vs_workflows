@@ -28,6 +28,7 @@ from biobb_gromacs.gromacs.make_ndx import make_ndx
 from biobb_analysis.gromacs.gmx_cluster import gmx_cluster
 from biobb_analysis.ambertools.cpptraj_convert import cpptraj_convert
 from biobb_structure_utils.utils.extract_model import extract_model
+from biobb_structure_utils.utils.extract_molecule import extract_molecule
 from biobb_vs.fpocket.fpocket_run import fpocket_run
 from biobb_vs.fpocket.fpocket_filter import fpocket_filter
 
@@ -659,7 +660,16 @@ step4_extract_models:
     output_structure_path: cluster.pdb     
   properties:
 
-# Step 6-8: Cavity analysis with fpocket on centroids + filtering
+# Extract only the protein from each externally-provided structure (structures_path branch only)
+step0_extract_protein:
+  tool: extract_molecule
+  paths:
+    input_structure_path: input.pdb        # overridden at runtime per structure
+    output_molecule_path: protein.pdb
+  properties:
+    molecule_type: protein                 # keep only protein (drops water/ligand/ion/na/dna/rna)
+
+# Step 5-7: Cavity analysis with fpocket on centroids + filtering
 step5_cavity_analysis:
   tool: fpocket_run
   paths:
@@ -739,6 +749,7 @@ def cavity_analysis(traj_path: Optional[str],
                     clustering_cutoff: Optional[float],
                     gmx_bin: Optional[str],
                     restart: bool,
+                    skip_extraction: bool,
                     output_path: Optional[str]
                     ) -> Tuple[str, Dict[str, Any]]:
     '''
@@ -768,9 +779,11 @@ def cavity_analysis(traj_path: Optional[str],
         gmx_bin:
             path to GROMACS binary
         restart:
-            whether to restart the workflow from the last completed 
+            whether to restart the workflow from the last completed
             step or start from the beginning.
-        output_path:  
+        skip_extraction:
+            skip protein extraction from input structures (only applies to structures_path)
+        output_path:
             path to output folder
 
     Outputs
@@ -930,11 +943,20 @@ def cavity_analysis(traj_path: Optional[str],
             # STEP 5: Extract one model from the input structures path
             extract_model(**cluster_paths['step4_extract_models'], properties=cluster_prop['step4_extract_models'])
 
-        # If clustering was done externally, just update the input pdb path
+        # If clustering was done externally, optionally extract the protein and update the input pdb path
         else:
 
-            cluster_paths['step5_cavity_analysis']['input_pdb_path'] = pdb_paths[cluster_index]
-            cluster_paths['step7_filter_residue_com']['input_pdb_path'] = pdb_paths[cluster_index]
+            input_pdb = pdb_paths[cluster_index]
+
+            # Strip waters/ligands/ions so fpocket only sees the protein (unless disabled)
+            if not skip_extraction:
+                cluster_paths['step0_extract_protein']['input_structure_path'] = input_pdb
+                global_log.info("step0_extract_protein: Extract protein from input structure")
+                extract_molecule(**cluster_paths['step0_extract_protein'], properties=cluster_prop['step0_extract_protein'])
+                input_pdb = cluster_paths['step0_extract_protein']['output_molecule_path']
+
+            cluster_paths['step5_cavity_analysis']['input_pdb_path'] = input_pdb
+            cluster_paths['step7_filter_residue_com']['input_pdb_path'] = input_pdb
         
         # STEP 6: Cavity analysis
         global_log.info("step5_cavity_analysis: Compute protein cavities using fpocket")
@@ -1018,6 +1040,10 @@ def main():
                         help="Restart the workflow from the last completed step. Default: False",
                         required=False, default=False)
 
+    parser.add_argument('--skip_extraction', action='store_true', default=False,
+                        help="Skip protein extraction from input structures (only applies with --structures_path). Default: False",
+                        required=False)
+
     parser.add_argument('--output', dest='output_path',
                         help="Output path (default: working_dir_path in YAML config file)",
                         required=False)
@@ -1034,6 +1060,7 @@ def main():
                     clustering_cutoff = args.clustering_cutoff,
                     gmx_bin = args.gmx_bin,
                     restart = args.restart,
+                    skip_extraction = args.skip_extraction,
                     output_path = args.output_path)
 
 
