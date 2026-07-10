@@ -4,18 +4,18 @@ High-throughput virtual screening: dock a ligand library (SMILES or SDF) against
 
 ## Description
 
-<!-- TODO: refine content -->
+The input is a ligand library (SMILES `.smi` or SDF `.sdf`), a target structure (PDB) and a pocket. The pocket is given either as an Fpocket result (see `cavity_analysis`) or as a residue selection. The workflow builds a docking box around the pocket, prepares the receptor, then docks every ligand and ranks them by binding affinity.
 
-The input is a ligand library (SMILES `.smi` or SDF `.sdf`), a target structure (PDB) and either a pocket from an Fpocket analysis or a residue selection. The workflow docks each ligand to the target and ranks them by affinity, writing the top scorers to `scores.csv` (rank, name, identifier, affinity). Poses of the top ligands can optionally be kept.
-
-**Pipeline steps:**
+AutoDock Vina predicts a binding affinity for each ligand (in kcal/mol). The workflow keeps the best affinity per ligand and writes the ranking to `scores.csv`. Docking poses of the top ligands can optionally be saved.
 
 - **Step 1**: Selection of the cavity used to build the docking box — a pocket from an input zip (`--input_pockets_zip`, see `cavity_analysis`) or a residue selection (`--pocket_selection`).
-- **Step 2**: Creation of the box surrounding the selected cavity or residues.
-- **Step 3**: Addition of H atoms to the receptor (`.pdb` → `.pdbqt`). Vina ignores the pdbqt charges, but correct receptor protonation matters.
-- **Step 4**: Ligand preparation with OpenBabel. `.smi` → protonated 3D conformer `.pdbqt` (`--gen3d -p <ph>`); `.sdf` → `.pdbqt` keeping the input protonation/conformer.
-- **Step 5**: Docking with AutoDock Vina (rigid receptor, partial ligand flexibility).
+- **Step 2**: Creation of the box surrounding the selected cavity or residues. `--box_offset` sets the padding between the outermost atom and the box edge.
+- **Step 3**: Addition of H atoms and partial charges to the receptor (`.pdb` → `.pdbqt`). Vina ignores the partial charges, but correct receptor protonation still matters because it decides which atoms are H-bond donors/acceptors.
+- **Step 4**: Ligand preparation with OpenBabel. If the library is SMILES, ligands are protonated and given a 3D conformer (`.smi` → `.pdbqt`, generated at pH 7.4). If the library is SDF, ligands are only converted, keeping the input protonation and conformer (`.sdf` → `.pdbqt`).
+- **Step 5**: Docking with AutoDock Vina (rigid receptor, flexible ligand).
 - **Step 6**: Save poses of the top-scoring ligands (only with `--keep_poses`).
+
+Ligands are docked one at a time. A ligand that fails to convert or dock is skipped and left out of the ranking (a success rate is reported in the log).
 
 ## Usage
 
@@ -31,7 +31,6 @@ The `config.yml` is auto-generated from the CLI arguments into `--output`. `--re
 
 ## Options
 
-Command-line arguments take priority over the auto-generated `config.yml`.
 
 ### Inputs
 
@@ -61,14 +60,27 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 
 ## Recommendations
 
-<!-- TODO: refine content -->
+- **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is.
+- **Tune exhaustiveness to the library size.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value.
+- **Clean the receptor first.** Remove ligands, ions, and cofactors you do not need. Hydrogens are added automatically at pH 7. The receptor is treated as rigid.
+- **Keep the box small.** A smaller box makes the search easier and faster; Vina cannot place the ligand outside the box. `--box_offset` adds padding around the pocket residues (default 5 Å); a warning is printed above 5 Å.
+- **Validate before screening.** Dock a known binder or the native ligand first and check the pose before running the full library.
+- **Use the scores to rank, not to measure.** Vina affinities are approximate. Docking is non-deterministic, so scores and poses change slightly between runs.
 
 ## Output
 
-<!-- TODO: refine content -->
+Unless `--debug`, per-ligand subfolders are deleted after scoring. Surviving outputs:
 
-Unless `--debug`, per-ligand subfolders are deleted after scoring. Surviving outputs: `scores.csv`, `receptor.pdb`, `ligand_library.txt`, and (with `--keep_poses`) a `poses/` folder.
+- `scores.csv` — ranking of successfully docked ligands. Columns: `Rank, Affinity, Index, Identifier`. Ranked by affinity (most negative first). Limited to `--num_top_ligands` when given.
+- `receptor.pdb` — copy of the input receptor.
+- `ligand_library.txt` — absolute path to the ligand library used.
+- `poses/` (only with `--keep_poses`) — one PDB per top ligand (`<name>_poses.pdb`) with its docking poses.
+
+With `--debug`, every per-ligand subfolder is kept with all intermediate files (prepared ligand, box, docking output).
 
 ## Limitations
 
-<!-- TODO: refine content -->
+- **No parallelization between ligands.** Ligands are docked one after another; `--cpus` only parallelizes a single docking.
+- **Rigid receptor.** Only the ligand is flexible. Side chains cannot move and flexible side chains are not supported.
+- **Approximate scoring.** Predicted affinity is not the experimental binding energy. Accuracy varies by target; evaluate against known actives.
+- **Fixed protonation.** Receptor H are added at pH 7 (auto mode) and SMILES ligands are protonated at pH 7.4. Neither is configurable from the command line, and no tautomer/stereoisomer enumeration is done.

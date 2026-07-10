@@ -993,13 +993,13 @@ def main():
                         help="Atom selection to filter pockets by distance to center of mass (MDAnalysis syntax)",
                         required=False)
     
-    parser.add_argument('--distance_threshold', dest='distance_threshold', type=float,
-                        help="Distance threshold to filter pockets by distance to center of mass",
+    parser.add_argument('--distance_threshold', dest='distance_threshold', type=float, default = 10.0,
+                        help="Distance threshold to filter pockets by distance to center of mass. Default: 10",
                         required=False)
     
     parser.add_argument('--num_clusters', dest='num_clusters', type=int, default=20,
-                        help="""Number of most populated clusters to extract from the trajectory and analyze with fpocket (default: 20).
-                        if representative structures are given instead of a traj, this number is ignored""",
+                        help="""Number of most populated clusters to extract from the trajectory and analyze with fpocket.
+                        If representative structures are given instead of a traj, this number is ignored. Default: 20""",
                         required=False)
 
     parser.add_argument('--clustering_method', dest='clustering_method', type=str, default='linkage',
