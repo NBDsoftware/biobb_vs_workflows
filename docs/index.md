@@ -23,6 +23,7 @@ pipelines live in separate repositories: MD and preparation workflows in
 :target: https://bioexcel.eu/
 :align: center
 :class: only-dark
+```
 
 ## Workflows
 
