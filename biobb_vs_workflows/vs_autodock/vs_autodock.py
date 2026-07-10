@@ -709,10 +709,10 @@ def vs_autodock(ligand_lib_path: str,
             if not os.path.exists(ligand_prop['step4b_babel_convert']['path']):
                 os.makedirs(ligand_prop['step4b_babel_convert']['path'])
 
-            # Write ligand to sdf file # NOTE: writing the pdbqt file directly with pybel discards hydrogens
+            # Write ligand to sdf file - writing the pdbqt file directly with pybel discards hydrogens
             ligand.write(format='sdf', filename=ligand_paths['step4b_babel_convert']['input_path'])
 
-            # STEP 4: Convert ligand from sdf to pdbqt without adding hydrogens # NOTE format output option -xh is needed
+            # STEP 4: Convert ligand from sdf to pdbqt without adding hydrogens
             global_log.info("step4b_babel_convert: Convert ligand to pdbqt format")
             try:
                 babel_convert(**ligand_paths['step4b_babel_convert'], properties = ligand_prop["step4b_babel_convert"])
