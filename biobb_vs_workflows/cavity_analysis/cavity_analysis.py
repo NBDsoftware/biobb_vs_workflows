@@ -595,10 +595,13 @@ def config_contents(
         gmx_bin = "gmx"
 
     # Quoted MDAnalysis selection string when given, null otherwise (avoids emitting "None")
+    # Only run the residue center-of-mass filter when a selection is provided.
     if filtering_selection is not None:
         residue_selection_property = f'residue_selection: "{filtering_selection}"'
+        filter_residue_com_run_step = True
     else:
         residue_selection_property = "residue_selection: null"
+        filter_residue_com_run_step = False
 
     return f"""
 # Global properties (common for all steps)
@@ -688,7 +691,7 @@ step8_filter_residue_com:
   properties:
     {residue_selection_property}      # MDAnalysis selection string
     distance_threshold: {to_yaml(distance_threshold)}     # Distance threshold in Angstroms (6-8 are reasonable values if the residue/s are part of the pocket)
-    run_step: False                              # Run step or not
+    run_step: {to_yaml(filter_residue_com_run_step)}      # Run only when a filtering_selection is given
 """
 
 def create_config_file(output_path: str, 
