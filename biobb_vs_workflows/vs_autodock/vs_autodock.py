@@ -19,6 +19,7 @@ from biobb_common.tools import file_utils as fu
 from biobb_vs_workflows.common import to_yaml
 from biobb_structure_utils.utils.str_check_add_hydrogens import str_check_add_hydrogens
 from biobb_structure_utils.utils.extract_residues import extract_residues
+from biobb_structure_utils.utils.extract_molecule import extract_molecule
 from openbabel import pybel
 from biobb_vs.utils.box import box
 from biobb_vs.fpocket.fpocket_select import fpocket_select
@@ -430,6 +431,15 @@ global_properties:
 
 # Section 1: Pocket selection and receptor preparation
 
+# Step 0: Extract only the protein from the receptor (drops water/ligand/ion) - skippable
+step0_extract_protein:
+  tool: extract_molecule
+  paths:
+    input_structure_path: {structure_path}
+    output_molecule_path: protein.pdb
+  properties:
+    molecule_type: protein                 # keep only protein (drops water/ligand/ion/na/dna/rna)
+
 step1_fpocket_select:
   tool: fpocket_select
   paths:
@@ -543,9 +553,10 @@ def vs_autodock(ligand_lib_path: str,
                 pocket_selection: Optional[str] = None, 
                 box_offset: float = 5.0,
                 vina_bin: str = "vina",
-                cpus: int = 1, 
-                exhaustiveness: int = 8, 
+                cpus: int = 1,
+                exhaustiveness: int = 8,
                 debug: bool = False,
+                skip_extraction: bool = False,
                 restart: bool = True,
                 output_path: str = "output"
                 ) -> Tuple[Dict, Dict]:
@@ -578,8 +589,10 @@ def vs_autodock(ligand_lib_path: str,
             number of cpus to use for each docking
         exhaustiveness: 
             exhaustiveness of the docking
-        debug: 
+        debug:
             keep intermediate files for debugging
+        skip_extraction:
+            skip protein extraction from the receptor structure (keep cofactors/ligands/ions)
         restart:
             whether to restart the workflow from the last completed 
             step or start from the beginning.
@@ -638,6 +651,16 @@ def vs_autodock(ligand_lib_path: str,
     # Dividing it in global properties and global paths
     global_prop  = conf.get_prop_dic(global_log=global_log)
     global_paths = conf.get_paths_dic()
+
+    # STEP 0: Extract protein from receptor (unless skipped) so downstream steps only see the protein
+    receptor_path = structure_path
+    if not skip_extraction:
+        global_log.info("step0_extract_protein: Extracting protein from receptor structure")
+        extract_molecule(**global_paths["step0_extract_protein"], properties=global_prop["step0_extract_protein"])
+        receptor_path = global_paths["step0_extract_protein"]["output_molecule_path"]
+        # Point downstream receptor consumers at the cleaned protein
+        global_paths["step1b_extract_residues"]["input_structure_path"] = receptor_path
+        global_paths["step3_str_check_add_hydrogens"]["input_structure_path"] = receptor_path
 
     # STEP 1: Select pocket or extract residues
     if pocket_selection is not None:
@@ -832,8 +855,8 @@ def vs_autodock(ligand_lib_path: str,
         # Clean up the output folder 
         clean_output(ligand_names, output_path)
 
-    # Save structure path in output_path
-    shutil.copy(structure_path, os.path.join(output_path, 'receptor.pdb'))
+    # Save receptor used for docking in output_path (cleaned protein when extraction ran)
+    shutil.copy(receptor_path, os.path.join(output_path, 'receptor.pdb'))
 
     # Save absolute path to ligand library in a text file
     with open(os.path.join(output_path, 'ligand_library.txt'), 'w') as file:
@@ -866,8 +889,9 @@ def main():
                         required=True)
     
     parser.add_argument('--structure_path', dest='structure_path', type=str,
-                        help="""Path to file with target structure (PDB format). Make sure to remove ligands, ions or cofactors that are not needed first.
-                                Beware that hydrogens will be added to the target structure using biobb_structure_checking tool and a pH of 7""",
+                        help="""Path to file with target structure (PDB format). By default only the protein is kept (waters/ligands/ions are stripped);
+                                use --skip_extraction to keep cofactors/ligands/ions. Beware that hydrogens will be added to the target structure
+                                using biobb_structure_checking tool and a pH of 7""",
                         required=True)
     
     parser.add_argument('--input_pockets_zip', dest='input_pockets_zip', type=str,
@@ -911,6 +935,10 @@ def main():
     parser.add_argument('-d', '--debug', dest='debug', action='store_true',
                         help="Keep intermediate files for debugging. Default: False",
                         required=False)
+
+    parser.add_argument('--skip_extraction', dest='skip_extraction', action='store_true', default=False,
+                        help="Skip protein extraction from the receptor structure (keep cofactors/ligands/ions). Default: False",
+                        required=False)
     
     parser.add_argument('--restart', action='store_true',
                         help="Restart the workflow from the last completed step. Default: False",
@@ -934,6 +962,7 @@ def main():
                 cpus = args.cpus,
                 exhaustiveness = args.exhaustiveness,
                 debug = args.debug,
+                skip_extraction = args.skip_extraction,
                 restart = args.restart,
                 output_path = args.output_path)
 

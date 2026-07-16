@@ -8,6 +8,7 @@ The input is a ligand library (SMILES `.smi` or SDF `.sdf`), a target structure 
 
 AutoDock Vina predicts a binding affinity for each ligand (in kcal/mol). The workflow keeps the best affinity per ligand and writes the ranking to `scores.csv`. Docking poses of the top ligands can optionally be saved.
 
+- **Step 0**: Extraction of the protein from the receptor structure (drops waters/ligands/ions) with `extract_molecule`. Runs by default; disable with `--skip_extraction` to keep a bound cofactor/ligand/ion.
 - **Step 1**: Selection of the cavity used to build the docking box — a pocket from an input zip (`--input_pockets_zip`, see `cavity_analysis`) or a residue selection (`--pocket_selection`).
 - **Step 2**: Creation of the box surrounding the selected cavity or residues. `--box_offset` sets the padding between the outermost atom and the box edge.
 - **Step 3**: Addition of H atoms and partial charges to the receptor (`.pdb` → `.pdbqt`). Vina ignores the partial charges, but correct receptor protonation still matters because it decides which atoms are H-bond donors/acceptors.
@@ -39,7 +40,7 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--ligand_lib` | *required* | Ligand library: SMILES (`.smi`, one `smiles name` per line) or SDF (`.sdf`, one or more ligands). |
-| `--structure_path` | *required* | Target structure (PDB); remove unneeded ligands/ions/cofactors first (H added at pH 7). |
+| `--structure_path` | *required* | Target structure (PDB). Protein is auto-extracted (waters/ligands/ions dropped) unless `--skip_extraction`; H added at pH 7. |
 | `--input_pockets_zip` | `None` | Fpocket pockets zip file. |
 | `--pocket_selection` | `None` | Residue selection (MDAnalysis syntax, e.g. `resid 37 49 112`) defining the pocket. |
 
@@ -51,6 +52,7 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 | `--box_offset` | `5.0` | Extra distance (Å) between the outermost residue atom and the box boundary. |
 | `--num_top_ligands` | all | Number of top ligands to save in the ranking. |
 | `--keep_poses` | `False` | Save docking poses for the top ligands. |
+| `--skip_extraction` | `False` | Skip protein extraction from the receptor (keep cofactors/ligands/ions). |
 | `--vina_bin` | `vina` | AutoDock Vina binary. |
 | `--cpus` | `1` | CPUs per docking. |
 | `--exhaustiveness` | `8` | Vina sampling runs (`4` faster, `8` more accurate). |
@@ -62,7 +64,7 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 
 - **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is.
 - **Tune exhaustiveness to the library size.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value.
-- **Clean the receptor first.** Remove ligands, ions, and cofactors you do not need. Hydrogens are added automatically at pH 7. The receptor is treated as rigid.
+- **Receptor cleaning is automatic.** By default only the protein is kept (waters, ligands, and ions are stripped with `extract_molecule`). Pass `--skip_extraction` to keep a bound cofactor/ligand/ion you need. Hydrogens are added automatically at pH 7. The receptor is treated as rigid.
 - **Keep the box small.** A smaller box makes the search easier and faster; Vina cannot place the ligand outside the box. `--box_offset` adds padding around the pocket residues (default 5 Å); a warning is printed above 5 Å.
 - **Validate before screening.** Dock a known binder or the native ligand first and check the pose before running the full library.
 - **Use the scores to rank, not to measure.** Vina affinities are approximate. Docking is non-deterministic, so scores and poses change slightly between runs.
