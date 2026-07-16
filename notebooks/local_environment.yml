@@ -1,0 +1,32 @@
+# Conda environment for running the biobb_vs_workflows tutorial on a LOCAL Jupyter.
+# For Google Colab use colab_environment.yml instead.
+name: biobb_vs_tutorial
+channels:
+  - conda-forge
+  - bioconda
+  - salilab
+dependencies:
+  - python=3.11            # vina (pulled by biobb_vs) has no py3.12 build -> 3.12 won't solve
+  - pip
+  # --- BioBB packages (same set the production env uses) ---
+  - biobb_common>=5.2.2
+  - biobb_structure_utils>=5.2.1
+  - biobb_gromacs>=5.2.0
+  - biobb_analysis>=5.2.1
+  - biobb_io>=5.2.3
+  - biobb_vs>=5.2.1        # pulls in vina + fpocket automatically
+  - biobb_chemistry>=5.2.1
+  # --- Science libs used directly by the workflows ---
+  - mdanalysis
+  - openbabel==3.1.1
+  - biopython
+  # --- Notebook kernel + visualization (host + run the notebook from this env) ---
+  - jupyter
+  - ipykernel
+  - ipywidgets
+  - nglview
+  - plotly
+  - numpy
+  - pandas
+  - pip:
+    - biobb_vs_workflows @ git+https://github.com/NBDsoftware/biobb_vs_workflows.git
