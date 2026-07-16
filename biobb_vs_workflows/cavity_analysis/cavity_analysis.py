@@ -555,7 +555,8 @@ def config_contents(
     clustering_cutoff: Optional[float],
     filtering_selection: Optional[str],
     distance_threshold: Optional[float],
-    restart: bool = False
+    restart: bool = False,
+    debug: bool = False
 
     ) -> str:
     """
@@ -580,6 +581,8 @@ def config_contents(
         Clustering method to use (linkage, jarvis-patrick, monte-carlo, diagonalization, gromos)
     clustering_cutoff: float
         Clustering cutoff to use for the clustering method
+    debug: bool
+        Keep temporary files for debugging purposes
     Returns
     -------
     str
@@ -610,7 +613,7 @@ global_properties:                                # Wether to use GPU support or
   working_dir_path: output                        # Workflow default output directory
   can_write_console_log: False                    # Verbose writing of log information
   restart: {to_yaml(restart)}                     # Skip steps already performed
-  remove_tmp: True                                # Do not execute steps if output files are already created
+  remove_tmp: {to_yaml(not debug)}                # Remove temporal files
 
 # Step 1: Convert from Amber to Gromacs compatible format
 # Optional step (will be executed if the trajectory is not in a Gromacs-compatible format)
@@ -750,7 +753,8 @@ def cavity_analysis(traj_path: Optional[str],
                     gmx_bin: Optional[str],
                     restart: bool,
                     skip_extraction: bool,
-                    output_path: Optional[str]
+                    output_path: Optional[str],
+                    debug: bool = False
                     ) -> Tuple[str, Dict[str, Any]]:
     '''
     Main clustering and cavity analysis workflow. This workflow clusters a given trajectory and 
@@ -785,6 +789,8 @@ def cavity_analysis(traj_path: Optional[str],
             skip protein extraction from input structures (only applies to structures_path)
         output_path:
             path to output folder
+        debug:
+            keep temporary files for debugging
 
     Outputs
     -------
@@ -815,7 +821,8 @@ def cavity_analysis(traj_path: Optional[str],
         'clustering_cutoff': clustering_cutoff,
         'filtering_selection': filtering_selection,
         'distance_threshold': distance_threshold,
-        'restart': restart
+        'restart': restart,
+        'debug': debug
     }
     configuration_path = create_config_file(output_path, **config_args)
 
@@ -1047,7 +1054,11 @@ def main():
     parser.add_argument('--output', dest='output_path',
                         help="Output path (default: working_dir_path in YAML config file)",
                         required=False)
-    
+
+    parser.add_argument('--debug', action='store_true',
+                        help="Keep temporary files for debugging. Default: False",
+                        required=False, default=False)
+
     args = parser.parse_args()
 
     cavity_analysis(traj_path = args.traj_path,
@@ -1061,7 +1072,8 @@ def main():
                     gmx_bin = args.gmx_bin,
                     restart = args.restart,
                     skip_extraction = args.skip_extraction,
-                    output_path = args.output_path)
+                    output_path = args.output_path,
+                    debug = args.debug)
 
 
 if __name__ == '__main__':

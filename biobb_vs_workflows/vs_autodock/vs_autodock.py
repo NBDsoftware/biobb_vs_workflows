@@ -402,13 +402,19 @@ def config_contents(
         vina_bin: str,
         cpus: int,
         exhaustiveness: int,
-        restart: bool = False
+        restart: bool = False,
+        debug: bool = False
     ) -> str:
     """
     Returns the contents of the YAML configuration file as a string.
-    
+
     The YAML file contains the configuration for the protein preparation workflow.
-    
+
+    Parameters
+    ----------
+    debug: bool
+        Keep temporary files for debugging purposes
+
     Returns
     -------
     str
@@ -427,7 +433,7 @@ global_properties:
   working_dir_path: output
   can_write_console_log: False
   restart: {to_yaml(restart)}
-  remove_tmp: True
+  remove_tmp: {to_yaml(not debug)}
 
 # Section 1: Pocket selection and receptor preparation
 
@@ -641,7 +647,8 @@ def vs_autodock(ligand_lib_path: str,
         'vina_bin': vina_bin,
         'cpus' : cpus,
         'exhaustiveness' : exhaustiveness,
-        'restart' : restart}
+        'restart' : restart,
+        'debug' : debug}
     configuration_path = create_config_file(output_path, **config_args)
     
     conf = settings.ConfReader(configuration_path)
