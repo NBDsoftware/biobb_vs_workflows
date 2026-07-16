@@ -21,7 +21,7 @@ dependencies:
   - openbabel==3.1.1
   - biopython
   # --- Visualization (Colab provides the notebook kernel + ipywidgets) ---
-  - nglview
+  - nglview<=4
   - plotly
   - numpy
   - pandas

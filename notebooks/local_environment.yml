@@ -24,7 +24,7 @@ dependencies:
   - jupyter
   - ipykernel
   - ipywidgets
-  - nglview
+  - nglview<=4
   - plotly
   - numpy
   - pandas
