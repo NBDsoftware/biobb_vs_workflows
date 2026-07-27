@@ -559,6 +559,9 @@ def config_contents(
     score_range: Optional[List[float]] = None,
     druggability_range: Optional[List[float]] = None,
     volume_range: Optional[List[float]] = None,
+    min_radius: Optional[float] = None,
+    max_radius: Optional[float] = None,
+    num_spheres: Optional[int] = None,
     restart: bool = False,
     debug: bool = False
 
@@ -593,6 +596,12 @@ def config_contents(
         [min, max] fpocket druggability score to keep a pocket
     volume_range: list
         [min, max] pocket volume in cubic Angstroms to keep a pocket
+    min_radius: float
+        Fpocket -m: minimum alpha sphere radius (Å) kept in a pocket, None for the default 3
+    max_radius: float
+        Fpocket -M: maximum alpha sphere radius (Å) kept in a pocket, None for the default 6
+    num_spheres: int
+        Fpocket -i: minimum number of alpha spheres a pocket must contain, None for the default 35
     debug: bool
         Keep temporary files for debugging purposes
     Returns
@@ -632,6 +641,14 @@ def config_contents(
         druggability_range = [0.4, 1]
     if volume_range is None:
         volume_range = [200, 5000]
+
+    # fpocket_run alpha sphere parameters, defaults kept in sync with fpocket's own defaults
+    if min_radius is None:
+        min_radius = 3
+    if max_radius is None:
+        max_radius = 6
+    if num_spheres is None:
+        num_spheres = 35
 
     return f"""
 # Global properties (common for all steps)
@@ -717,9 +734,9 @@ step5_cavity_analysis:
     output_pockets_zip: all_pockets.zip
     output_summary: summary.json
   properties:
-    min_radius: 3
-    max_radius: 6
-    num_spheres: 35
+    min_radius: {min_radius}
+    max_radius: {max_radius}
+    num_spheres: {num_spheres}
     sort_by: druggability_score
 
 step6_filter_cavities:
@@ -795,6 +812,9 @@ def cavity_analysis(traj_path: Optional[str],
                     score_range: Optional[List[float]] = None,
                     druggability_range: Optional[List[float]] = None,
                     volume_range: Optional[List[float]] = None,
+                    min_radius: Optional[float] = None,
+                    max_radius: Optional[float] = None,
+                    num_spheres: Optional[int] = None,
                     debug: bool = False
                     ) -> Tuple[str, Dict[str, Any]]:
     '''
@@ -839,6 +859,12 @@ def cavity_analysis(traj_path: Optional[str],
             [min, max] fpocket druggability score to keep a pocket, None for the default [0.4, 1]
         volume_range:
             [min, max] pocket volume in cubic Angstroms to keep a pocket, None for the default [200, 5000]
+        min_radius:
+            fpocket -m: minimum alpha sphere radius (Å) kept in a pocket, None for the default 3
+        max_radius:
+            fpocket -M: maximum alpha sphere radius (Å) kept in a pocket, None for the default 6
+        num_spheres:
+            fpocket -i: minimum number of alpha spheres a pocket must contain, None for the default 35
         debug:
             keep temporary files for debugging
 
@@ -875,6 +901,9 @@ def cavity_analysis(traj_path: Optional[str],
         'score_range': score_range,
         'druggability_range': druggability_range,
         'volume_range': volume_range,
+        'min_radius': min_radius,
+        'max_radius': max_radius,
+        'num_spheres': num_spheres,
         'restart': restart,
         'debug': debug
     }
@@ -1137,6 +1166,25 @@ def main():
                         help="Keep only pockets with a volume in this range (cubic Angstroms). Default: 200 5000",
                         required=False)
 
+    parser.add_argument('--min_radius', dest='min_radius', type=float, default=None,
+                        help="""Fpocket -m: minimum alpha sphere radius (Angstroms) kept in a pocket. Default: 3.
+                        Raise to focus on solvent-exposed/surface pockets (filters out buried internal
+                        cavities); lower to analyze buried internal interstices.""",
+                        required=False)
+
+    parser.add_argument('--max_radius', dest='max_radius', type=float, default=None,
+                        help="""Fpocket -M: maximum alpha sphere radius (Angstroms) kept in a pocket. Default: 6.
+                        Raise to include large, flat, solvent-exposed surface depressions (e.g. protein-protein
+                        or polysaccharide binding sites); lower to restrict to small, buried pockets fit for
+                        drug-sized ligands.""",
+                        required=False)
+
+    parser.add_argument('--num_spheres', dest='num_spheres', type=int, default=None,
+                        help="""Fpocket -i: minimum number of alpha spheres a pocket must contain to be
+                        reported. Default: 35. Lower to detect smaller pockets; raise to keep only large
+                        pockets (e.g. hundreds of spheres for a NADP-binding site).""",
+                        required=False)
+
     parser.add_argument('--output', dest='output_path',
                         help="Output path (default: working_dir_path in YAML config file)",
                         required=False)
@@ -1163,6 +1211,9 @@ def main():
                     score_range = args.score_range,
                     druggability_range = args.druggability_range,
                     volume_range = args.volume_range,
+                    min_radius = args.min_radius,
+                    max_radius = args.max_radius,
+                    num_spheres = args.num_spheres,
                     debug = args.debug)
 
 
