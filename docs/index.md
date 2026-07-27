@@ -36,6 +36,7 @@ pipelines live in separate repositories: MD and preparation workflows in
 :maxdepth: 2
 :hidden:
 
+tutorial
 installation
 workflows/cavity_analysis
 workflows/vs_autodock

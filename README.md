@@ -4,6 +4,21 @@ These workflows use BioExcel Building Blocks (BioBB) to integrate different popu
 
 This repo covers the cavity analysis and virtual-screening workflows. MD/preparation workflows live in [biobb_md_workflows](https://github.com/NBDsoftware/biobb_md_workflows).
 
+## Tutorial
+
+New here? The [tutorial notebook](notebooks/notebook_tutorial.ipynb) runs a cavity analysis and virtual screening end to end using the workflow commands. Run it **on Google Colab** (no local install) or **on a local Jupyter**:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/NBDsoftware/biobb_vs_workflows/blob/master/notebooks/notebook_tutorial.ipynb)
+
+- **Colab** — click the badge; the first cell builds the environment for you.
+- **Local** — create the env and launch Jupyter, then skip the Colab setup cell:
+
+  ```bash
+  conda env create -f notebooks/local_environment.yml
+  conda activate biobb_vs_tutorial
+  jupyter notebook notebooks/notebook_tutorial.ipynb
+  ```
+
 ## Documentation
 
 You can find workflow descriptions, installation, usage, and known limitations in the [Documentation](https://nbdsoftware.github.io/biobb_vs_workflows/).
