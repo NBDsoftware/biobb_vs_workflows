@@ -556,6 +556,9 @@ def config_contents(
     filtering_selection: Optional[str],
     distance_threshold: Optional[float],
     chains: Optional[List[str]] = None,
+    score_range: Optional[List[float]] = None,
+    druggability_range: Optional[List[float]] = None,
+    volume_range: Optional[List[float]] = None,
     restart: bool = False,
     debug: bool = False
 
@@ -584,6 +587,12 @@ def config_contents(
         Clustering cutoff to use for the clustering method
     chains: list
         Chain IDs to keep before cavity detection, None to keep all chains
+    score_range: list
+        [min, max] fpocket score to keep a pocket
+    druggability_range: list
+        [min, max] fpocket druggability score to keep a pocket
+    volume_range: list
+        [min, max] pocket volume in cubic Angstroms to keep a pocket
     debug: bool
         Keep temporary files for debugging purposes
     Returns
@@ -615,6 +624,14 @@ def config_contents(
         chains_property = "chains: [" + ", ".join(f'"{chain}"' for chain in chains) + "]"
     else:
         chains_property = "chains: null"
+
+    # fpocket_filter ranges, defaults kept in sync with the previous hardcoded values
+    if score_range is None:
+        score_range = [0.4, 1]
+    if druggability_range is None:
+        druggability_range = [0.4, 1]
+    if volume_range is None:
+        volume_range = [200, 5000]
 
     return f"""
 # Global properties (common for all steps)
@@ -712,9 +729,9 @@ step6_filter_cavities:
     input_summary: dependency/step5_cavity_analysis/output_summary
     output_filter_pockets_zip: filtered_pockets.zip
   properties:
-    score: [0.4, 1]
-    druggability_score: [0.4, 1]
-    volume: [200, 5000]
+    score: {to_yaml(score_range)}
+    druggability_score: {to_yaml(druggability_range)}
+    volume: {to_yaml(volume_range)}
 
 step7_filter_residue_com:
   paths: 
@@ -775,6 +792,9 @@ def cavity_analysis(traj_path: Optional[str],
                     skip_extraction: bool,
                     output_path: Optional[str],
                     chains: Optional[List[str]] = None,
+                    score_range: Optional[List[float]] = None,
+                    druggability_range: Optional[List[float]] = None,
+                    volume_range: Optional[List[float]] = None,
                     debug: bool = False
                     ) -> Tuple[str, Dict[str, Any]]:
     '''
@@ -813,6 +833,12 @@ def cavity_analysis(traj_path: Optional[str],
         chains:
             chain IDs to keep before cavity detection (e.g. one monomer of a crystal dimer),
             None to keep all chains. Also removes ligands and waters
+        score_range:
+            [min, max] fpocket score to keep a pocket, None for the default [0.4, 1]
+        druggability_range:
+            [min, max] fpocket druggability score to keep a pocket, None for the default [0.4, 1]
+        volume_range:
+            [min, max] pocket volume in cubic Angstroms to keep a pocket, None for the default [200, 5000]
         debug:
             keep temporary files for debugging
 
@@ -846,6 +872,9 @@ def cavity_analysis(traj_path: Optional[str],
         'filtering_selection': filtering_selection,
         'distance_threshold': distance_threshold,
         'chains': chains,
+        'score_range': score_range,
+        'druggability_range': druggability_range,
+        'volume_range': volume_range,
         'restart': restart,
         'debug': debug
     }
@@ -1093,6 +1122,21 @@ def main():
                         Default: keep all chains""",
                         required=False)
 
+    parser.add_argument('--score_range', dest='score_range', nargs=2, type=float, default=None,
+                        metavar=('MIN', 'MAX'),
+                        help="Keep only pockets with an fpocket score in this range. Default: 0.4 1",
+                        required=False)
+
+    parser.add_argument('--druggability_range', dest='druggability_range', nargs=2, type=float, default=None,
+                        metavar=('MIN', 'MAX'),
+                        help="Keep only pockets with an fpocket druggability score in this range. Default: 0.4 1",
+                        required=False)
+
+    parser.add_argument('--volume_range', dest='volume_range', nargs=2, type=float, default=None,
+                        metavar=('MIN', 'MAX'),
+                        help="Keep only pockets with a volume in this range (cubic Angstroms). Default: 200 5000",
+                        required=False)
+
     parser.add_argument('--output', dest='output_path',
                         help="Output path (default: working_dir_path in YAML config file)",
                         required=False)
@@ -1116,6 +1160,9 @@ def main():
                     skip_extraction = args.skip_extraction,
                     output_path = args.output_path,
                     chains = args.chains,
+                    score_range = args.score_range,
+                    druggability_range = args.druggability_range,
+                    volume_range = args.volume_range,
                     debug = args.debug)
 
 
