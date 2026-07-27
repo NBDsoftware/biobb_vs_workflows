@@ -15,7 +15,7 @@ import shutil
 import logging
 import numpy as np
 from pathlib import Path
-from typing import Dict, Tuple, Any, Optional, Literal
+from typing import Dict, List, Tuple, Any, Optional, Literal
 
 import MDAnalysis as mda
 
@@ -555,6 +555,7 @@ def config_contents(
     clustering_cutoff: Optional[float],
     filtering_selection: Optional[str],
     distance_threshold: Optional[float],
+    chains: Optional[List[str]] = None,
     restart: bool = False,
     debug: bool = False
 
@@ -581,6 +582,8 @@ def config_contents(
         Clustering method to use (linkage, jarvis-patrick, monte-carlo, diagonalization, gromos)
     clustering_cutoff: float
         Clustering cutoff to use for the clustering method
+    chains: list
+        Chain IDs to keep before cavity detection, None to keep all chains
     debug: bool
         Keep temporary files for debugging purposes
     Returns
@@ -606,6 +609,12 @@ def config_contents(
     else:
         residue_selection_property = "residue_selection: null"
         filter_residue_com_run_step = False
+
+    # Chain IDs are quoted: YAML 1.1 reads a bare N/Y chain as a boolean
+    if chains:
+        chains_property = "chains: [" + ", ".join(f'"{chain}"' for chain in chains) + "]"
+    else:
+        chains_property = "chains: null"
 
     return f"""
 # Global properties (common for all steps)
@@ -671,6 +680,17 @@ step0_extract_protein:
     output_molecule_path: protein.pdb
   properties:
     molecule_type: protein                 # keep only protein (drops water/ligand/ion/na/dna/rna)
+
+# Optional: keep only the requested chains, e.g. one monomer of a crystal dimer (--chains)
+# NOTE: extract_molecule always removes ligands and waters as well, whatever molecule_type is
+step0b_extract_chains:
+  tool: extract_molecule
+  paths:
+    input_structure_path: input.pdb        # overridden at runtime per structure
+    output_molecule_path: chains.pdb
+  properties:
+    molecule_type: chains
+    {chains_property}
 
 # Step 5-7: Cavity analysis with fpocket on centroids + filtering
 step5_cavity_analysis:
@@ -754,6 +774,7 @@ def cavity_analysis(traj_path: Optional[str],
                     restart: bool,
                     skip_extraction: bool,
                     output_path: Optional[str],
+                    chains: Optional[List[str]] = None,
                     debug: bool = False
                     ) -> Tuple[str, Dict[str, Any]]:
     '''
@@ -789,6 +810,9 @@ def cavity_analysis(traj_path: Optional[str],
             skip protein extraction from input structures (only applies to structures_path)
         output_path:
             path to output folder
+        chains:
+            chain IDs to keep before cavity detection (e.g. one monomer of a crystal dimer),
+            None to keep all chains. Also removes ligands and waters
         debug:
             keep temporary files for debugging
 
@@ -821,6 +845,7 @@ def cavity_analysis(traj_path: Optional[str],
         'clustering_cutoff': clustering_cutoff,
         'filtering_selection': filtering_selection,
         'distance_threshold': distance_threshold,
+        'chains': chains,
         'restart': restart,
         'debug': debug
     }
@@ -950,6 +975,8 @@ def cavity_analysis(traj_path: Optional[str],
             # STEP 5: Extract one model from the input structures path
             extract_model(**cluster_paths['step4_extract_models'], properties=cluster_prop['step4_extract_models'])
 
+            input_pdb = cluster_paths['step4_extract_models']['output_structure_path']
+
         # If clustering was done externally, optionally extract the protein and update the input pdb path
         else:
 
@@ -962,9 +989,18 @@ def cavity_analysis(traj_path: Optional[str],
                 extract_molecule(**cluster_paths['step0_extract_protein'], properties=cluster_prop['step0_extract_protein'])
                 input_pdb = cluster_paths['step0_extract_protein']['output_molecule_path']
 
-            cluster_paths['step5_cavity_analysis']['input_pdb_path'] = input_pdb
-            cluster_paths['step7_filter_residue_com']['input_pdb_path'] = input_pdb
-        
+        # Keep only the requested chains, e.g. one monomer of a crystal dimer. Runs for both
+        # branches and even with skip_extraction (extract_molecule also drops ligands/waters)
+        if chains:
+            cluster_paths['step0b_extract_chains']['input_structure_path'] = input_pdb
+            global_log.info(f"step0b_extract_chains: Keeping chains {chains} (ligands/waters also removed)")
+            extract_molecule(**cluster_paths['step0b_extract_chains'], properties=cluster_prop['step0b_extract_chains'])
+            input_pdb = cluster_paths['step0b_extract_chains']['output_molecule_path']
+
+        cluster_paths['step5_cavity_analysis']['input_pdb_path'] = input_pdb
+        cluster_paths['step7_filter_residue_com']['input_pdb_path'] = input_pdb
+
+
         # STEP 6: Cavity analysis
         global_log.info("step5_cavity_analysis: Compute protein cavities using fpocket")
         fpocket_run(**cluster_paths['step5_cavity_analysis'], properties=cluster_prop["step5_cavity_analysis"])
@@ -1051,6 +1087,12 @@ def main():
                         help="Skip protein extraction from input structures (only applies with --structures_path). Default: False",
                         required=False)
 
+    parser.add_argument('--chains', dest='chains', nargs='+', default=None,
+                        help="""Keep only these chain IDs before cavity detection, e.g. --chains A. Useful for
+                        crystal dimers.
+                        Default: keep all chains""",
+                        required=False)
+
     parser.add_argument('--output', dest='output_path',
                         help="Output path (default: working_dir_path in YAML config file)",
                         required=False)
@@ -1073,6 +1115,7 @@ def main():
                     restart = args.restart,
                     skip_extraction = args.skip_extraction,
                     output_path = args.output_path,
+                    chains = args.chains,
                     debug = args.debug)
 
 
