@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "biobb_vs_workflows"
 version = "0.0.1"
-requires-python = "==3.11"
+requires-python = ">=3.11,<3.12"   # vina (pulled by biobb_vs) has no py3.12 build
 dependencies = [
     "biobb_common>=5.2.2",
     "biobb_structure_utils>=5.2.1",
@@ -15,7 +15,6 @@ dependencies = [
     "biobb_chemistry>=5.2.1",
     "biobb_analysis>=5.2.1",
     "mdanalysis",
-    "openbabel==3.1.1",
     "biopython",
 ]
 
