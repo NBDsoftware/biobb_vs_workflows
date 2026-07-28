@@ -9,6 +9,8 @@ dependencies:
   - rdkit
   - pandas
   - requests
+  - ipywidgets
+  - nglview<=4
   - pip
   - pip:
     - chembl_webresource_client
