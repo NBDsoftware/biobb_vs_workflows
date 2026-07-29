@@ -40,6 +40,7 @@ tutorial
 installation
 workflows/cavity_analysis
 workflows/vs_autodock
+fair4rs_assessment
 ```
 
 ## Licensing
