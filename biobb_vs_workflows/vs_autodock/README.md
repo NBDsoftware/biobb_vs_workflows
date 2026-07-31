@@ -63,7 +63,7 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 ## Recommendations
 
 - **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is.
-- **Tune exhaustiveness to the library size.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value.
+- **Tune exhaustiveness.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value. **Match the number of cpu cores used with the exhaustiveness value** as each Monte Carlo chain will run on a different core (e.g. optimal run would be 4 cpu cores with exhaustiveness value 4, suboptimal run would be running on 4 cpu cores with exhaustiveness 6).
 - **Receptor cleaning is automatic.** By default only the protein is kept (waters, ligands, and ions are stripped with `extract_molecule`). Pass `--skip_extraction` to keep a bound cofactor/ligand/ion you need. Hydrogens are added automatically at pH 7. The receptor is treated as rigid.
 - **Keep the box small.** A smaller box makes the search easier and faster; Vina cannot place the ligand outside the box. `--box_offset` adds padding around the pocket residues (default 5 Å); a warning is printed above 5 Å.
 - **Validate before screening.** Dock a known binder or the native ligand first and check the pose before running the full library.
