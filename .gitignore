@@ -13,3 +13,4 @@ __pycache__/
 build/
 _build/
 vs_out/
+*-checkpoint.ipynb
