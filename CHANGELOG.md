@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased ##
+
+### 📦 Dependencies
+- Bumped the whole BioBB stack to 5.3.x (`biobb_vs` 5.3.0, `biobb_common` 5.3.1,
+  `biobb_structure_utils` 5.3.0, `biobb_gromacs` 5.3.1, `biobb_io` 5.3.0,
+  `biobb_chemistry` 5.3.0, `biobb_analysis` 5.3.0). BioBB recipes pin `biobb_common`
+  exactly, so the set has to move together. Recreate your environment.
+- **`biobb_analysis` is now installed via pip, not conda — do not move it back.** Its
+  conda recipe requires `gromacs>=2026`, which pulls `libhwloc` → `libxml2>=2.14`, while
+  `openbabel 3.1.1` (hard-pinned by `biobb_chemistry` 5.3.0, and used directly by
+  `vs_autodock`) caps `libxml2<2.14` on every available build. The two are mutually
+  exclusive, so an all-conda 5.3.x stack does not solve. The PyPI package declares only
+  `biobb-common==5.3.1` and runs fine against gromacs 2025.x — the 5.2.1→5.3.0 changes in
+  `gmx_cluster`/`cpptraj_convert` are container-path fixes, nothing needing GROMACS 2026.
+- Added `ambertools` explicitly to all three env files; it used to arrive transitively via
+  conda `biobb_analysis` and is still needed for the `cpptraj_convert` (AMBER trajectory)
+  path in `cavity_analysis`.
+- Corrected the stale `python=3.11` comment — vina 1.2.7 does ship py3.12+ builds now. The
+  pin stays because 3.11 is the verified configuration, not because 3.12 is unavailable.
+
 ## Release Version 0.0.2 ##
 
 This release adds full docs + an end-to-end tutorial, makes both workflows extract a clean
