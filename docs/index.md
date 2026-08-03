@@ -30,7 +30,7 @@ pipelines live in separate repositories: MD and preparation workflows in
 | Command | Purpose |
 |---------|---------|
 | [`cavity_analysis`](workflows/cavity_analysis.md) | Cluster an MD trajectory and detect + filter cavities with Fpocket on the representative structures. |
-| [`vs_autodock`](workflows/vs_autodock.md) | High-throughput virtual screening of a ligand library against a pocket with AutoDock Vina. |
+| [`virtual_screening`](workflows/virtual_screening.md) | High-throughput virtual screening of a ligand library against a pocket with AutoDock Vina or gnina. |
 
 ```{toctree}
 :maxdepth: 2
@@ -39,7 +39,7 @@ pipelines live in separate repositories: MD and preparation workflows in
 tutorial
 installation
 workflows/cavity_analysis
-workflows/vs_autodock
+workflows/virtual_screening
 fair4rs_assessment
 ```
 

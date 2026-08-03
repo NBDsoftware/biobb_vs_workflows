@@ -24,12 +24,12 @@ Legend: 🟢 settled · 🟡 partial · 🔴 missing
 | **Provenance** | Each run writes `config.yml` (resolved paths baked in) and `log.out` + per-step logs — each BioBB step logs its own module version. No run manifest, input checksums, git commit hash, CLI argv, or `biobb_vs_workflows` package version are not recorded. | 🟡 |
 | **Environment portability** | Conda `environment.yml` exists. No container image yet. | 🟡 |
 | **Modularity** | Genuinely modular at the BioBB-step level. The only shared code between the two workflows is `common.to_yaml()`; `create_config_file()` and the config-scaffolding pattern are byte-identical copy-paste between workflows. | 🟡 |
-| **Validation** | Step outputs are validated **internally by the biobbs**. Each workflow has its own ad-hoc `check_arguments()` (existence checks, mutual exclusivity, `box_offset` bounds), but no shared validation module and no argparse `choices=` anywhere. Two spots log an error then silently `return`: the unsupported-ligand-library-extension check in `vs_autodock.py` and `get_clusters_population()` in `cavity_analysis.py`. | 🟡 |
+| **Validation** | Step outputs are validated **internally by the biobbs**. Each workflow has its own ad-hoc `check_arguments()` (existence checks, mutual exclusivity, `box_offset` bounds), but no shared validation module, and argparse `choices=` only on the `virtual_screening` engine flags. Two spots log an error then silently `return`: the unsupported-ligand-library-extension check in `virtual_screening.py` and `get_clusters_population()` in `cavity_analysis.py`. | 🟡 |
 
 ## Roadmap
 
 ### 1. Improve clarity of errors
-- Turn the two silent `log.error(...); return` exits into `raise`/`sys.exit`: the unsupported-library-extension branch in `vs_autodock.py` and `get_clusters_population()` in `cavity_analysis.py`.
+- Turn the two silent `log.error(...); return` exits into `raise`/`sys.exit`: the unsupported-library-extension branch in `virtual_screening.py` and `get_clusters_population()` in `cavity_analysis.py`.
 
 ### 2. Version exposure & provenance
 - Expose `__version__` (via `importlib.metadata`) and log it at the start of every run.

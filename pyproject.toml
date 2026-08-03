@@ -19,8 +19,8 @@ dependencies = [
 ]
 
 [project.scripts]
-cavity_analysis = "biobb_vs_workflows.cavity_analysis.cavity_analysis:main"
-vs_autodock      = "biobb_vs_workflows.vs_autodock.vs_autodock:main"
+cavity_analysis   = "biobb_vs_workflows.cavity_analysis.cavity_analysis:main"
+virtual_screening = "biobb_vs_workflows.virtual_screening.virtual_screening:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

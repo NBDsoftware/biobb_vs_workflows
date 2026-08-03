@@ -4,6 +4,7 @@
 import os
 import re
 import sys
+import json
 import time
 import shutil
 import argparse
@@ -22,9 +23,22 @@ from biobb_structure_utils.utils.extract_residues import extract_residues
 from biobb_structure_utils.utils.extract_molecule import extract_molecule
 from openbabel import pybel
 from biobb_vs.utils.box import box
+from biobb_vs.gnina.gnina_run import gnina_run
 from biobb_vs.fpocket.fpocket_select import fpocket_select
 from biobb_vs.vina.autodock_vina_run import autodock_vina_run
 from biobb_chemistry.babelm.babel_convert import babel_convert
+
+# Docking step and biobb path keys of each engine
+DOCKING_ENGINES = {
+    'vina': {'step': 'step5_autodock_vina_run',
+             'receptor': 'input_receptor_pdbqt_path',
+             'outputs': ('output_pdbqt_path', 'output_log_path')},
+    'gnina': {'step': 'step5b_gnina_run',
+              'receptor': 'input_receptor_path',
+              'outputs': ('output_sdf_path', 'output_summary_path')}}
+
+# gnina score to rank by, mapped to whether the highest value is the best one
+GNINA_SORT_ORDERS = {'CNNaffinity': True, 'CNNscore': True, 'minimizedAffinity': False}
 
 
 def find_matching_str(pattern: Union[str, Pattern[str]], 
@@ -89,9 +103,72 @@ def get_affinity(pdbqt_path: str) -> Optional[float]:
     else:
         return None
 
-def save_ranking(ranking: List[Tuple], 
-                 num_top_ligands: Union[int, None], 
-                 ranking_path: str
+def get_gnina_score(summary_path: str, rank_by: str) -> Optional[Dict]:
+    '''
+    Find the best scoring pose in the summary json file written by gnina.
+
+    The file holds one entry per pose:
+
+    "pose1": {"ligand_name": "CHEMBL1642", "ligand_index": 1, "pose": 1,
+              "minimizedAffinity": -8.751, "CNNscore": 0.83, "CNNaffinity": 6.42}
+
+    Best is the highest CNNaffinity/CNNscore or the lowest minimizedAffinity. Which scores
+    are present depends on the cnn_scoring property. The poses are not sorted by rank_by,
+    gnina orders them by its own pose_sort_order, so all of them are looked at.
+
+    Inputs
+    ------
+
+        summary_path : path to gnina summary json file
+        rank_by      : score to rank the poses by
+
+    Outputs
+    -------
+
+        pose: entry of the best scoring pose, or None if there is no usable score
+    '''
+
+    try:
+        with open(summary_path) as file:
+            poses = json.load(file)
+    except (OSError, ValueError):
+        return None
+
+    # a pose may be missing the score, gnina only writes some of them for some cnn_scoring values
+    scored = [pose for pose in poses.values() if isinstance(pose.get(rank_by), (int, float))]
+
+    if not scored:
+        return None
+
+    best = max if GNINA_SORT_ORDERS[rank_by] else min
+
+    return best(scored, key = lambda pose: pose[rank_by])
+
+def ligand_step_path(output_path: str, ligand_name: str, step_output_path: str) -> str:
+    '''
+    Path to a step output file inside a ligand subfolder, given the same path in the global paths dict
+
+    Inputs
+    ------
+
+        output_path      : path to output directory
+        ligand_name      : name of the ligand
+        step_output_path : path to the step output file in the global paths dict
+
+    Outputs
+    -------
+
+        path: path to the step output file inside the ligand subfolder
+    '''
+
+    step_name = os.path.basename(os.path.dirname(step_output_path))
+
+    return os.path.join(output_path, ligand_name, step_name, os.path.basename(step_output_path))
+
+def save_ranking(ranking: List[Tuple],
+                 num_top_ligands: Union[int, None],
+                 ranking_path: str,
+                 score_columns: Tuple = ("Affinity",)
     ) -> List[str]:
     '''
     Create file with ranking of ligands according to affinity
@@ -99,11 +176,12 @@ def save_ranking(ranking: List[Tuple],
     Inputs
     ------
 
-        ranking          : list with tuples -> (affinity, index, id) ordered by affinity
+        ranking          : list with tuples -> (score, index, id, scores), already ordered, best first
         num_top_ligands  : number of top ligands to save in the ranking, if None all ligands are saved
         ranking_path     : path to ranking file
-    
-    Output  
+        score_columns    : scores reported for each ligand, in the order they are written
+
+    Output
     ------
 
         top_ligand_indices : list with indices of top ligands
@@ -123,15 +201,15 @@ def save_ranking(ranking: List[Tuple],
     with open(ranking_path, 'w') as file:
 
         # Write header
-        file.write("Rank,Affinity,Index,Identifier \n")
+        file.write("Rank," + ",".join(score_columns) + ",Index,Identifier \n")
 
         # For each ligand
         for rank, affinity_tuple in enumerate(top_ligands):
 
-            affinity, ligand_index, ligand_id = affinity_tuple
+            _, ligand_index, ligand_id, scores = affinity_tuple
 
             # Write line
-            file.write(f"{rank+1},{affinity},{ligand_index},{ligand_id}\n")
+            file.write(f"{rank+1}," + ",".join(str(score) for score in scores) + f",{ligand_index},{ligand_id}\n")
 
             # Add ligand name to list
             top_ligand_indices.append(ligand_index)
@@ -241,10 +319,15 @@ def write_smiles(smiles: str, smiles_path: str):
     smiles_tmp_file.write(smiles)
     smiles_tmp_file.close()
 
-def get_ranking(ligand_ids: List, ligand_names: List, autodock_vina_paths: Dict, output_path: Dict) -> List[Tuple]:   
+def get_ranking(
+    ligand_ids: List, 
+    ligand_names: List, 
+    autodock_vina_paths: Dict, 
+    output_path: str
+    ) -> List[Tuple]:
     """
     Takes the name of each ligand and finds the best affinity given by AutoDock Vina from the output pdbqt file.
-    Returns a list of tuples ordered by affinity: (affinity, index, ligand_id) 
+    Returns a list of tuples ordered by affinity: (affinity, index, ligand_id, scores)
 
     Inputs
     ------
@@ -253,50 +336,111 @@ def get_ranking(ligand_ids: List, ligand_names: List, autodock_vina_paths: Dict,
         ligand_names        : list of ligand names
         autodock_vina_paths : paths dictionary for autodock vina step
         output_path         : path to output directory
-    
+
     Output
     ------
 
-        ranking         : list of tuples ordered by affinity: (affinity, index, ligand_id) 
+        ranking         : list of tuples ordered by affinity: (affinity, index, ligand_id, scores)
     """
-
-    # Generic path to pdbqt file with poses
-    output_pdbqt_path = autodock_vina_paths['output_pdbqt_path']
-
-    # Name of the pdbqt file
-    pdbqt_filename = os.path.basename(output_pdbqt_path)
-
-    # Name of the autodock vina step folder
-    autodock_step_name = os.path.basename(os.path.dirname(output_pdbqt_path))
 
     # List where best affinity for each ligand will be stored
     ranking = []
-    
+
     # Go through all ligands
     for ligand_index in range(len(ligand_ids)):
 
         ligand_id = ligand_ids[ligand_index]
         ligand_name = ligand_names[ligand_index]
 
-        # Find path to ligand subfolder
-        ligand_folder = os.path.join(output_path, ligand_name)
-
-        # Find path to autodock vina step
-        vina_folder = os.path.join(ligand_folder, autodock_step_name)
-
         # Find path to output pdbqt file with poses
-        pdbqt_path = os.path.join(vina_folder, pdbqt_filename)
+        pdbqt_path = ligand_step_path(output_path, ligand_name, autodock_vina_paths['output_pdbqt_path'])
 
         # Find best affinity among different poses
         affinity = get_affinity(pdbqt_path = pdbqt_path)
 
         if affinity:
-            ranking.append((affinity, ligand_index, ligand_id))
+            ranking.append((affinity, ligand_index, ligand_id, [affinity]))
 
-    # Sort list according to affinity (first element of tuple)
+    # Sort list according to affinity (first element of tuple), most negative first
     ranking = sorted(ranking)
 
     return ranking
+
+def get_ranking_gnina(
+    ligand_ids: List, 
+    ligand_names: List, 
+    gnina_paths: Dict, output_path: str,
+    rank_by: str, score_columns: Tuple
+    ) -> List[Tuple]:
+    """
+    Takes the name of each ligand and finds its best scoring pose in the summary json file from gnina.
+    Returns a list of tuples ordered by rank_by: (score, index, ligand_id, scores)
+
+    Inputs
+    ------
+
+        ligand_ids      : list of ligand ids
+        ligand_names    : list of ligand names
+        gnina_paths     : paths dictionary for gnina step
+        output_path     : path to output directory
+        rank_by         : score to rank the ligands by
+        score_columns   : scores reported for each ligand
+
+    Output
+    ------
+
+        ranking         : list of tuples ordered by rank_by: (score, index, ligand_id, scores)
+    """
+
+    ranking = []
+
+    for ligand_index in range(len(ligand_ids)):
+
+        summary_path = ligand_step_path(output_path, ligand_names[ligand_index],
+                                        gnina_paths['output_summary_path'])
+
+        pose = get_gnina_score(summary_path = summary_path, rank_by = rank_by)
+
+        if pose:
+            ranking.append((pose[rank_by], ligand_index, ligand_ids[ligand_index],
+                            [pose.get(column, '') for column in score_columns]))
+
+    # Sort by rank_by, highest first for the CNN scores and lowest first for minimizedAffinity
+    return sorted(ranking, reverse = GNINA_SORT_ORDERS[rank_by])
+
+def dock_ligand(docking_engine: str, ligand_name: str, ligand_paths: Dict, ligand_prop: Dict, global_log) -> bool:
+    '''
+    Dock one ligand with the selected engine. A failure is logged and swallowed so the
+    screening carries on with the next ligand.
+
+    Inputs
+    ------
+
+        docking_engine  : docking engine to use, vina or gnina
+        ligand_name     : name of the ligand, used for logging
+        ligand_paths    : paths dictionary for this ligand
+        ligand_prop     : properties dictionary for this ligand
+        global_log      : global log
+
+    Output
+    ------
+
+        success (bool): whether the docking produced its output files
+    '''
+
+    engine = DOCKING_ENGINES[docking_engine]
+    step = engine['step']
+    run_docking = gnina_run if docking_engine == 'gnina' else autodock_vina_run
+
+    global_log.info(f"{step}: Docking the ligand")
+
+    try:
+        run_docking(**ligand_paths[step], properties=ligand_prop[step])
+        return validate_step(*(ligand_paths[step][key] for key in engine['outputs']))
+    except (Exception, SystemExit) as err:
+        global_log.info(f"{step}: failed to dock ligand {ligand_name}")
+        global_log.exception(f"{step}: {type(err).__name__}: {err}")
+        return False
 
 def clean_output(ligand_names: List, output_path: str):
     """
@@ -322,7 +466,12 @@ def check_arguments(global_log,
                     input_pockets_zip,
                     pocket_num,
                     pocket_selection: Optional[str],
-                    box_offset
+                    box_offset,
+                    docking_engine: str,
+                    vina_bin: str,
+                    gnina_bin: str,
+                    gnina_cnn_scoring: Optional[str],
+                    gnina_rank_by: Optional[str]
     ) -> None:
     """
     Check the arguments provided by the user and values of configuration file
@@ -365,6 +514,12 @@ def check_arguments(global_log,
     elif box_offset > 5:
         global_log.warning(f"Box offset is {box_offset} angstroms. This may be unnecessarily large when docking to a selection of residues surrounding the binding site. Consider using a smaller value to improve performance.")
 
+    # Check the docking engine is usable before any step runs
+    if docking_engine == 'gnina':
+        if gnina_cnn_scoring == 'none' and gnina_rank_by in ('CNNaffinity', 'CNNscore'):
+            global_log.error(f"--gnina_rank_by {gnina_rank_by} needs CNN scores, not available with --gnina_cnn_scoring none")
+            sys.exit(1)
+
 def check_pdb(residues_path: str, global_log):
     """
     Checks the pdb is not empty and contains residues using biopython
@@ -399,7 +554,14 @@ def config_contents(
         pocket_num: Optional[int],
         pocket_residues: List[Dict],
         box_offset: float,
+        docking_engine: str,
         vina_bin: str,
+        gnina_bin: str,
+        gnina_scoring: Optional[str],
+        gnina_cnn_scoring: Optional[str],
+        gnina_cnn: Optional[str],
+        gnina_seed: Optional[int],
+        gnina_no_gpu: bool,
         cpus: int,
         exhaustiveness: int,
         restart: bool = False,
@@ -424,8 +586,12 @@ def config_contents(
     if structure_path:
         structure_path = os.path.abspath(structure_path)
 
-    if input_pockets_zip:
-        input_pockets_zip = os.path.abspath(input_pockets_zip)
+    # fpocket_select does not run in the residue selection branch, but ConfReader resolves
+    # every path in the config and it cannot resolve a null
+    input_pockets_zip = os.path.abspath(input_pockets_zip) if input_pockets_zip else 'pockets.zip'
+
+    # gnina docks the sdf directly, vina needs it converted to pdbqt
+    ligand_format = 'sdf' if docking_engine == 'gnina' else 'pdbqt'
 
     return f"""
 # Global properties (common for all steps)
@@ -487,7 +653,7 @@ step4_babel_protonate:
   tool: babel_convert
   paths:
     input_path: ligand.smi
-    output_path: ligand.pdbqt
+    output_path: ligand.{ligand_format}
   properties:
     coordinates: 3
     ph: 7.4
@@ -511,6 +677,28 @@ step5_autodock_vina_run:
     exhaustiveness: {to_yaml(int(exhaustiveness))}
     cpu: {to_yaml(int(cpus))}
     binary_path: {vina_bin}
+
+# Docked with the box from step2 and not with gnina's own autobox, so that both engines
+# search an identical box. The receptor is the step3 pdbqt, which gnina takes as given
+# instead of reprocessing it with Open Babel on every ligand.
+step5b_gnina_run:
+  tool: gnina_run
+  paths:
+    input_ligand_path: dependency/step4_babel_protonate/output_path
+    input_receptor_path: dependency/step3_str_check_add_hydrogens/output_structure_path
+    input_box_path: dependency/step2_box/output_pdb_path
+    output_sdf_path: output_gnina.sdf
+    output_summary_path: output_gnina.json
+    output_log_path: output_gnina.log
+  properties:
+    exhaustiveness: {to_yaml(int(exhaustiveness))}
+    cpu: {to_yaml(int(cpus))}
+    scoring: {to_yaml(gnina_scoring)}
+    cnn_scoring: {to_yaml(gnina_cnn_scoring)}
+    cnn: {to_yaml(gnina_cnn)}
+    seed: {to_yaml(gnina_seed)}
+    no_gpu: {to_yaml(gnina_no_gpu)}
+    binary_path: {gnina_bin}
 
 step6_babel_prepare_pose:
   tool: babel_convert
@@ -550,25 +738,33 @@ def create_config_file(output_path: str,
     
     return config_path
         
-def vs_autodock(ligand_lib_path: str, 
-                structure_path: str, 
-                input_pockets_zip: str,
-                pocket_num: int = 1, 
-                num_top_ligands: Optional[int] = None, 
-                keep_poses: bool = False, 
-                pocket_selection: Optional[str] = None, 
-                box_offset: float = 5.0,
-                vina_bin: str = "vina",
-                cpus: int = 1,
-                exhaustiveness: int = 8,
-                debug: bool = False,
-                skip_extraction: bool = False,
-                restart: bool = True,
-                output_path: str = "output"
-                ) -> Tuple[Dict, Dict]:
+def virtual_screening(ligand_lib_path: str,
+                      structure_path: str,
+                      input_pockets_zip: str,
+                      pocket_num: int = 1,
+                      num_top_ligands: Optional[int] = None,
+                      keep_poses: bool = False,
+                      pocket_selection: Optional[str] = None,
+                      box_offset: float = 5.0,
+                      docking_engine: str = "vina",
+                      vina_bin: str = "vina",
+                      gnina_bin: str = "gnina",
+                      gnina_scoring: Optional[str] = None,
+                      gnina_cnn_scoring: Optional[str] = None,
+                      gnina_cnn: Optional[str] = None,
+                      gnina_rank_by: Optional[str] = None,
+                      gnina_seed: Optional[int] = None,
+                      gnina_no_gpu: bool = False,
+                      cpus: int = 1,
+                      exhaustiveness: int = 8,
+                      debug: bool = False,
+                      skip_extraction: bool = False,
+                      restart: bool = True,
+                      output_path: str = "output"
+                      ) -> Tuple[Dict, Dict]:
     '''
-    Main VS workflow. This workflow takes a ligand library, a pocket (defined by the output of a cavity analysis or some residues) 
-    and a receptor to screen the cavity using the ligand library (with AutoDock).
+    Main VS workflow. This workflow takes a ligand library, a pocket (defined by the output of a cavity analysis or some residues)
+    and a receptor to screen the cavity using the ligand library (with AutoDock Vina or gnina).
 
     Inputs
     ------
@@ -589,11 +785,28 @@ def vs_autodock(ligand_lib_path: str,
             list of residues to dock to. If provided, the input_pockets_zip and pocket_num will be ignored
         box_offset:
             extra distance (Angstroms) between the last residue atom and the box boundary. Default: 5.0
+        docking_engine:
+            docking engine to use, vina or gnina. Default: vina
         vina_bin:
             path to AutoDock Vina binary
-        cpus: 
+        gnina_bin:
+            path to gnina binary
+        gnina_scoring:
+            empirical scoring function used by gnina. None leaves gnina's own default
+        gnina_cnn_scoring:
+            where gnina uses the CNN. None leaves gnina's own default (rescore)
+        gnina_cnn:
+            CNN model used by gnina. None leaves gnina's own default (a 3 model ensemble)
+        gnina_rank_by:
+            gnina score to rank the ligands by. None resolves to CNNaffinity, or to
+            minimizedAffinity when gnina_cnn_scoring is none
+        gnina_seed:
+            random seed for gnina, docking is stochastic
+        gnina_no_gpu:
+            force gnina to run on CPU even when a GPU is available
+        cpus:
             number of cpus to use for each docking
-        exhaustiveness: 
+        exhaustiveness:
             exhaustiveness of the docking
         debug:
             keep intermediate files for debugging
@@ -621,14 +834,19 @@ def vs_autodock(ligand_lib_path: str,
     global_log, _ = fu.get_logs(path=output_path, light_format=True)
     
     # Check input files
-    check_arguments(global_log, 
-                    ligand_lib_path, 
-                    structure_path, 
-                    input_pockets_zip, 
-                    pocket_num, 
+    check_arguments(global_log,
+                    ligand_lib_path,
+                    structure_path,
+                    input_pockets_zip,
+                    pocket_num,
                     pocket_selection,
-                    box_offset)  
-    
+                    box_offset,
+                    docking_engine,
+                    vina_bin,
+                    gnina_bin,
+                    gnina_cnn_scoring,
+                    gnina_rank_by)
+
     # Resolve the residue selection into the list of residues to extract (baked into the config).
     # Done here (not in config_contents) to keep the config builder a pure template.
     pocket_residues = []
@@ -637,6 +855,18 @@ def vs_autodock(ligand_lib_path: str,
         unique_residues = set(atom.resid for atom in u.select_atoms(pocket_selection))
         pocket_residues = [{'res_id': str(res_id), 'model': '1'} for res_id in unique_residues]
 
+    # Resolve the gnina ranking score, only minimizedAffinity exists without CNN scoring
+    if gnina_rank_by is None:
+        gnina_rank_by = 'minimizedAffinity' if gnina_cnn_scoring == 'none' else 'CNNaffinity'
+
+    # Scores reported in scores.csv. Affinity is vina's affinity or gnina's minimizedAffinity
+    if docking_engine == 'gnina' and gnina_cnn_scoring != 'none':
+        score_columns = ('minimizedAffinity', 'CNNaffinity', 'CNNscore')
+    elif docking_engine == 'gnina':
+        score_columns = ('minimizedAffinity',)
+    else:
+        score_columns = ('Affinity',)
+
     # Create and load the configuration
     config_args = {
         'structure_path': structure_path,
@@ -644,13 +874,20 @@ def vs_autodock(ligand_lib_path: str,
         'pocket_num': pocket_num,
         'pocket_residues' : pocket_residues,
         'box_offset' : box_offset,
+        'docking_engine': docking_engine,
         'vina_bin': vina_bin,
+        'gnina_bin': gnina_bin,
+        'gnina_scoring': gnina_scoring,
+        'gnina_cnn_scoring': gnina_cnn_scoring,
+        'gnina_cnn': gnina_cnn,
+        'gnina_seed': gnina_seed,
+        'gnina_no_gpu': gnina_no_gpu,
         'cpus' : cpus,
         'exhaustiveness' : exhaustiveness,
         'restart' : restart,
         'debug' : debug}
     configuration_path = create_config_file(output_path, **config_args)
-    
+
     conf = settings.ConfReader(configuration_path)
     conf.working_dir_path = output_path
 
@@ -658,6 +895,10 @@ def vs_autodock(ligand_lib_path: str,
     # Dividing it in global properties and global paths
     global_prop  = conf.get_prop_dic(global_log=global_log)
     global_paths = conf.get_paths_dic()
+
+    # Docking step and biobb path keys for the selected engine
+    engine = DOCKING_ENGINES[docking_engine]
+    step = engine['step']
 
     # STEP 0: Extract protein from receptor (unless skipped) so downstream steps only see the protein
     receptor_path = structure_path
@@ -699,7 +940,7 @@ def vs_autodock(ligand_lib_path: str,
 
     docking_start_time = time.time()
 
-    # STEP 4-5: Prepare ligand pdbqt and dock with AutoDock Vina
+    # STEP 4-5: Prepare each ligand and dock it with the selected engine
 
     # Option 1: SDF library with protonated ligands
     if ligand_lib_path.endswith('.sdf'):
@@ -723,9 +964,8 @@ def vs_autodock(ligand_lib_path: str,
             ligand_paths = conf.get_paths_dic(prefix=ligand_name)
             
             # Update common paths
-            ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
-            ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
-            ligand_paths['step5_autodock_vina_run']['input_ligand_pdbqt_path'] = ligand_paths['step4b_babel_convert']['output_path']
+            ligand_paths[step][engine['receptor']] = global_paths[step][engine['receptor']]
+            ligand_paths[step]['input_box_path'] = global_paths[step]['input_box_path']
 
             ligand_names.append(ligand_name)
             ligand_ids.append(ligand_id)
@@ -735,31 +975,38 @@ def vs_autodock(ligand_lib_path: str,
             if not os.path.exists(ligand_folder):
                 os.makedirs(ligand_folder)
 
+            # gnina docks the sdf as written, vina needs the pdbqt from step4b
+            if docking_engine == 'gnina':
+                ligand_paths[step]['input_ligand_path'] = os.path.join(ligand_prop[step]['path'], 'ligand.sdf')
+                ligand_sdf_path = ligand_paths[step]['input_ligand_path']
+                step_folder = ligand_prop[step]['path']
+            else:
+                ligand_paths[step]['input_ligand_pdbqt_path'] = ligand_paths['step4b_babel_convert']['output_path']
+                ligand_sdf_path = ligand_paths['step4b_babel_convert']['input_path']
+                step_folder = ligand_prop['step4b_babel_convert']['path']
+
             # Create step folder
-            if not os.path.exists(ligand_prop['step4b_babel_convert']['path']):
-                os.makedirs(ligand_prop['step4b_babel_convert']['path'])
+            if not os.path.exists(step_folder):
+                os.makedirs(step_folder)
 
-            # Write ligand to sdf file - writing the pdbqt file directly with pybel discards hydrogens
-            ligand.write(format='sdf', filename=ligand_paths['step4b_babel_convert']['input_path'])
+            # Write ligand to sdf file - writing the pdbqt file directly with pybel discards hydrogens.
+            # Overwritten so a --restart run does not trip over the file it wrote last time
+            ligand.write(format='sdf', filename=ligand_sdf_path, overwrite=True)
 
-            # STEP 4: Convert ligand from sdf to pdbqt without adding hydrogens
-            global_log.info("step4b_babel_convert: Convert ligand to pdbqt format")
-            try:
-                babel_convert(**ligand_paths['step4b_babel_convert'], properties = ligand_prop["step4b_babel_convert"])
-                lastStep_successful = validate_step(ligand_paths['step4b_babel_convert']['output_path'])
-            except Exception:
-                global_log.info(f"step4b_babel_convert: Open Babel failed to convert ligand {ligand_name} to pdbqt format")
-                lastStep_successful = False
-
-            # STEP 5: AutoDock vina
-            if lastStep_successful:
+            # STEP 4: Convert ligand from sdf to pdbqt without adding hydrogens - gnina reads the sdf as is
+            lastStep_successful = True
+            if docking_engine == 'vina':
+                global_log.info("step4b_babel_convert: Convert ligand to pdbqt format")
                 try:
-                    global_log.info("step5_autodock_vina_run: Docking the ligand")
-                    autodock_vina_run(**ligand_paths['step5_autodock_vina_run'], properties=ligand_prop["step5_autodock_vina_run"])
-                    lastStep_successful = validate_step(ligand_paths['step5_autodock_vina_run']['output_log_path'],
-                                                        ligand_paths['step5_autodock_vina_run']['output_pdbqt_path'])
+                    babel_convert(**ligand_paths['step4b_babel_convert'], properties = ligand_prop["step4b_babel_convert"])
+                    lastStep_successful = validate_step(ligand_paths['step4b_babel_convert']['output_path'])
                 except Exception:
-                    global_log.info(f"step5_autodock_vina_run: Autodock Vina failed to dock ligand {ligand_name}")
+                    global_log.info(f"step4b_babel_convert: Open Babel failed to convert ligand {ligand_name} to pdbqt format")
+                    lastStep_successful = False
+
+            # STEP 5: Docking
+            if lastStep_successful:
+                lastStep_successful = dock_ligand(docking_engine, ligand_name, ligand_paths, ligand_prop, global_log)
 
     # Option 2: SMILES library with ligands to be prepared
     elif ligand_lib_path.endswith('.smi'):
@@ -774,8 +1021,8 @@ def vs_autodock(ligand_lib_path: str,
             ligand_paths = conf.get_paths_dic(prefix=ligand_name)
             
             # Update common paths
-            ligand_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path'] = global_paths['step5_autodock_vina_run']['input_receptor_pdbqt_path']
-            ligand_paths['step5_autodock_vina_run']['input_box_path'] = global_paths['step5_autodock_vina_run']['input_box_path']
+            ligand_paths[step][engine['receptor']] = global_paths[step][engine['receptor']]
+            ligand_paths[step]['input_box_path'] = global_paths[step]['input_box_path']
 
             # Create ligand subfolder
             ligand_folder = os.path.join(output_path, ligand_name)
@@ -789,37 +1036,37 @@ def vs_autodock(ligand_lib_path: str,
             # Write smiles to file
             write_smiles(smiles = ligand_id, smiles_path = ligand_paths['step4_babel_protonate']['input_path'])
 
-            # STEP 4: Convert ligand from smiles to pdbqt adding hydrogens at a certain pH
+            # STEP 4: Convert ligand from smiles adding hydrogens at a certain pH - sdf for gnina, pdbqt for vina
             global_log.info("step4_babel_protonate: Prepare ligand for docking")
             try:
                 babel_convert(**ligand_paths['step4_babel_protonate'], properties = ligand_prop["step4_babel_protonate"])
                 lastStep_successful = validate_step(ligand_paths['step4_babel_protonate']['output_path'])
             except Exception:
-                global_log.info(f"step4_babel_protonate: Open Babel failed to convert ligand {ligand_name} to pdbqt format")
+                global_log.info(f"step4_babel_protonate: Open Babel failed to prepare ligand {ligand_name}")
                 lastStep_successful = False
-        
-            # STEP 5: AutoDock vina
+
+            # STEP 5: Docking
             if lastStep_successful:
-                try:
-                    global_log.info("step5_autodock_vina_run: Docking the ligand")            
-                    autodock_vina_run(**ligand_paths['step5_autodock_vina_run'], properties=ligand_prop["step5_autodock_vina_run"])
-                    lastStep_successful = validate_step(ligand_paths['step5_autodock_vina_run']['output_log_path'], 
-                                                        ligand_paths['step5_autodock_vina_run']['output_pdbqt_path'])
-                except Exception:
-                    global_log.info(f"step5_autodock_vina_run: Autodock Vina failed to dock ligand {ligand_name}")
+                lastStep_successful = dock_ligand(docking_engine, ligand_name, ligand_paths, ligand_prop, global_log)
 
     else:
 
         global_log.error(f"Ligand library file {ligand_lib_path} should be in SDF or SMILES format")
         return
 
-    # Rank ligands: find the best affinity for each ligand
-    ranking = get_ranking(ligand_ids, ligand_names, global_paths['step5_autodock_vina_run'], output_path)
+    # Rank ligands: find the best score for each ligand
+    if docking_engine == 'gnina':
+        global_log.info(f"Ranking ligands by {gnina_rank_by}, "
+                        f"{'highest' if GNINA_SORT_ORDERS[gnina_rank_by] else 'lowest'} first")
+        ranking = get_ranking_gnina(ligand_ids, ligand_names, global_paths[step], output_path,
+                                    gnina_rank_by, score_columns)
+    else:
+        ranking = get_ranking(ligand_ids, ligand_names, global_paths[step], output_path)
 
     # Find top ligands and create csv file with ranking
-    global_log.info("Create ranking and save poses for top ligands") 
-    ranking_path = os.path.join(output_path, "scores.csv") 
-    top_ligand_indices = save_ranking(ranking, num_top_ligands, ranking_path)
+    global_log.info("Create ranking and save poses for top ligands")
+    ranking_path = os.path.join(output_path, "scores.csv")
+    top_ligand_indices = save_ranking(ranking, num_top_ligands, ranking_path, score_columns)
 
     # STEP 6: extract poses for top ligands if requested
     if keep_poses:
@@ -839,8 +1086,15 @@ def vs_autodock(ligand_lib_path: str,
             top_ligand_paths = conf.get_paths_dic(prefix=ligand_name)
 
             try:
+                # gnina already writes sdf poses with their scores as SD data, a conversion
+                # to pdb would drop them. Copied and not moved, the sdf is the docking output
+                if docking_engine == 'gnina':
+                    shutil.copy(top_ligand_paths[step]['output_sdf_path'],
+                                os.path.join(poses_folder, f"{ligand_name}_poses.sdf"))
+                    continue
+
                 # Convert pose from pdbqt to pdb
-                global_log.info("step6_babel_prepare_pose: Converting ligand pose to PDB format")    
+                global_log.info("step6_babel_prepare_pose: Converting ligand pose to PDB format")
                 babel_convert(**top_ligand_paths['step6_babel_prepare_pose'], properties=top_ligand_prop["step6_babel_prepare_pose"])
 
                 # Move pose to final location
@@ -848,11 +1102,11 @@ def vs_autodock(ligand_lib_path: str,
                 pose_path = top_ligand_paths['step6_babel_prepare_pose']['output_path']
                 # New pose path in poses folder
                 new_pose_path = os.path.join(poses_folder, f"{ligand_name}_poses.pdb")
-                # Move pose to new location 
+                # Move pose to new location
                 shutil.move(pose_path, new_pose_path)
 
             except Exception:
-                global_log.info(f"step6_babel_prepare_pose: Open Babel failed to convert pose for ligand {ligand_name} to PDB format")
+                global_log.info(f"step6_babel_prepare_pose: failed to save pose for ligand {ligand_name}")
     
     # Show success rate of screening
     success_rate = round(len(ranking)/len(ligand_names)*100, 2)
@@ -876,6 +1130,7 @@ def vs_autodock(ligand_lib_path: str,
     global_log.info('')
     global_log.info('Execution successful: ')
     global_log.info('  Workflow name: Virtual Screening')
+    global_log.info('  Docking engine: %s' % docking_engine)
     global_log.info('  Output path: %s' % output_path)
     global_log.info('  Config File: %s' % configuration_path)
     global_log.info('  Ligand library: %s' % ligand_lib_path)
@@ -927,14 +1182,55 @@ def main():
                         help="Extra distance (Angstroms) between the last residue atom and the box boundary. Default: 12",
                         required=False, default=5.0)
 
+    parser.add_argument('--docking_engine', dest='docking_engine', type=str, choices=['vina', 'gnina'],
+                        help="""Docking engine. 'vina' scores with the AutoDock Vina empirical function. 'gnina' uses the same sampling
+                                but rescores the poses with a convolutional neural network, which needs a gnina binary and a biobb_vs
+                                built from source. Default: vina""",
+                        required=False, default='vina')
+
     parser.add_argument('--vina_bin', dest='vina_bin', type=str,
                         help="Path to AutoDock Vina binary. Default: vina",
                         required=False, default='vina')
-    
-    parser.add_argument('--cpus', dest='cpus', type=int, 
+
+    parser.add_argument('--gnina_bin', dest='gnina_bin', type=str,
+                        help="Path to the gnina binary. gnina is not conda installable, download a release binary. Default: gnina",
+                        required=False, default='gnina')
+
+    parser.add_argument('--gnina_cnn_scoring', dest='gnina_cnn_scoring', type=str,
+                        choices=['none', 'rescore', 'refinement', 'metrorescore', 'metrorefine', 'all'],
+                        help="""Where gnina uses the CNN. 'none' is by far the fastest and gives no CNN scores at all, 'rescore' only
+                                re-ranks the final poses, 'refinement' is around 10 times slower. Default: gnina's own default (rescore)""",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_cnn', dest='gnina_cnn', type=str,
+                        help="""CNN model used by gnina, or a PREFIX_ensemble name for an ensemble. 'fast' is a single model, around 4 times
+                                faster than the default ensemble, but it surfaces a different set of poses. Default: gnina's default 3 model ensemble""",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_scoring', dest='gnina_scoring', type=str,
+                        choices=['default', 'vina', 'vinardo', 'ad4_scoring', 'dkoes_fast', 'dkoes_scoring', 'dkoes_scoring_old'],
+                        help="Empirical scoring function used by gnina. vinardo often does better in virtual screening. Default: gnina's own default",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_rank_by', dest='gnina_rank_by', type=str,
+                        choices=['CNNaffinity', 'CNNscore', 'minimizedAffinity'],
+                        help="""gnina score to rank the ligands by. CNNaffinity (pK units, higher is better) is what ranks compounds,
+                                CNNscore answers whether a pose is right, minimizedAffinity is kcal/mol (lower is better).
+                                Default: CNNaffinity, or minimizedAffinity with --gnina_cnn_scoring none""",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_seed', dest='gnina_seed', type=int,
+                        help="Random seed for gnina, docking is stochastic. Default: none",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_no_gpu', dest='gnina_no_gpu', action='store_true',
+                        help="Force gnina to run on CPU even when a GPU is available. Default: False",
+                        required=False, default=False)
+
+    parser.add_argument('--cpus', dest='cpus', type=int,
                         help="Number of CPUs to use for each docking. Default: 1",
                         required=False, default=1)
-    
+
     parser.add_argument('--exhaustiveness', dest='exhaustiveness', type=int,
                         help="Exhaustiveness of the docking. Number of runs for the sampling algorithm. Choose 4 to optimize speed and 8 to optimize accuracy. Default: 8",
                         required=False, default=8)
@@ -957,21 +1253,29 @@ def main():
     
     args = parser.parse_args()
 
-    vs_autodock(ligand_lib_path = args.ligand_lib,
-                structure_path = args.structure_path,
-                input_pockets_zip = args.input_pockets_zip,
-                pocket_num = args.pocket_num,
-                num_top_ligands = args.num_top_ligands,
-                keep_poses = args.keep_poses,
-                pocket_selection = args.pocket_selection,
-                box_offset = args.box_offset, 
-                vina_bin = args.vina_bin,  
-                cpus = args.cpus,
-                exhaustiveness = args.exhaustiveness,
-                debug = args.debug,
-                skip_extraction = args.skip_extraction,
-                restart = args.restart,
-                output_path = args.output_path)
+    virtual_screening(ligand_lib_path = args.ligand_lib,
+                      structure_path = args.structure_path,
+                      input_pockets_zip = args.input_pockets_zip,
+                      pocket_num = args.pocket_num,
+                      num_top_ligands = args.num_top_ligands,
+                      keep_poses = args.keep_poses,
+                      pocket_selection = args.pocket_selection,
+                      box_offset = args.box_offset,
+                      docking_engine = args.docking_engine,
+                      vina_bin = args.vina_bin,
+                      gnina_bin = args.gnina_bin,
+                      gnina_scoring = args.gnina_scoring,
+                      gnina_cnn_scoring = args.gnina_cnn_scoring,
+                      gnina_cnn = args.gnina_cnn,
+                      gnina_rank_by = args.gnina_rank_by,
+                      gnina_seed = args.gnina_seed,
+                      gnina_no_gpu = args.gnina_no_gpu,
+                      cpus = args.cpus,
+                      exhaustiveness = args.exhaustiveness,
+                      debug = args.debug,
+                      skip_extraction = args.skip_extraction,
+                      restart = args.restart,
+                      output_path = args.output_path)
 
 
 if __name__ == '__main__':
