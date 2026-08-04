@@ -11,7 +11,7 @@ BioBB Workflows is a repository of bioinformatics pipelines built on top of the 
 
 Two workflows, each a CLI command (installed via `pyproject.toml` `[project.scripts]`):
 - `cavity_analysis` — clusters an MD trajectory (or accepts pre-computed representative structures) and runs Fpocket cavity detection + filtering on each representative structure.
-- `vs_autodock` — high-throughput virtual screening: docks a ligand library (SMILES or SDF) against a receptor pocket using AutoDock Vina, then ranks by binding affinity.
+- `virtual_screening` — high-throughput virtual screening: docks a ligand library (SMILES or SDF) against a receptor pocket using AutoDock Vina or gnina (`--docking_engine`), then ranks by score.
 
 ## Commands
 
@@ -24,7 +24,7 @@ conda activate biobb_vs
 Run a workflow:
 ```bash
 cavity_analysis --structures_path data/receptor/receptor.pdb --filtering_selection "resid 31 or resid 21"
-vs_autodock --ligand_lib data/ligands/zinc_200_425_001_reduced.sdf \
+virtual_screening --ligand_lib data/ligands/zinc_200_425_001_reduced.sdf \
 --structure_path data/receptor/receptor.pdb \
 --pocket_selection "resid 37 or resid 49 or resid 112" \ 
 --box_offset 5 \
@@ -33,7 +33,7 @@ vs_autodock --ligand_lib data/ligands/zinc_200_425_001_reduced.sdf \
 ```
 `--help` on either command lists all flags.
 
-There is no automated test suite (no pytest). `tests/{cavity_analysis,vs_autodock}/run.sl` are SLURM sbatch scripts that exercise each workflow end-to-end against fixtures in `data/`. To validate a change, run the workflow directly (or via `run.sl` after fixing the conda env path inside it) and inspect `output/log.out` and the generated summary/ranking files.
+There is no automated test suite (no pytest). `tests/{cavity_analysis,virtual_screening}/run.sl` are SLURM sbatch scripts that exercise each workflow end-to-end against fixtures in `data/`. To validate a change, run the workflow directly (or via `run.sl` after fixing the conda env path inside it) and inspect `output/log.out` and the generated summary/ranking files.
 
 ## Architecture
 
@@ -47,7 +47,13 @@ Each workflow lives in `biobb_vs_workflows/<workflow>/<workflow>.py` and follows
 6. `conf.get_prop_dic(prefix=name)` / `get_paths_dic(prefix=name)` re-derive the same step templates under a per-item subfolder (`output/<name>/stepN_.../...`) — this is how both workflows fan out over collections (one subfolder per ligand, or per cluster/model) while reusing a single YAML template.
 7. Global properties `restart` / `remove_tmp` (set in the YAML) make steps idempotent/skippable on re-run — the CLI's own `--restart` flag controls this.
 
-**`vs_autodock.py`**: branches on ligand library extension. `.sdf` path iterates ligands via `openbabel.pybel`; `.smi` path parses lines with `read_ligand_lib()`. Each ligand gets its own `output/<ligand_name>/` subfolder (protonation/conversion via `babel_convert` → dock via `autodock_vina_run`, wrapped in try/except so one failing ligand doesn't abort the run). Ranking is derived by regex-parsing `REMARK VINA RESULT` lines out of the output pdbqt (`get_affinity`/`get_ranking`), written to `scores.csv`. Unless `--debug`, per-ligand subfolders are deleted after scoring (`clean_output`) — only `scores.csv`, `receptor.pdb`, `ligand_library.txt`, and (if `--keep_poses`) a `poses/` folder survive.
+**`virtual_screening.py`**: branches on ligand library extension. `.sdf` path iterates ligands via `openbabel.pybel`; `.smi` path parses lines with `read_ligand_lib()`. Each ligand gets its own `output/<ligand_name>/` subfolder, docked one at a time by `dock_ligand()` — which dispatches on `--docking_engine` via the `DOCKING_ENGINES` table and catches `(Exception, SystemExit)` so one failing ligand doesn't abort the run (the biobbs raise `SystemExit`, which is *not* an `Exception`).
+
+Both engines share steps 0-3 and the `step2_box` docking box, so their results are comparable. They differ downstream:
+- **vina** (`step5_autodock_vina_run`): ligands are converted to pdbqt (`step4b_babel_convert`, or `step4_babel_protonate` for SMILES). Ranking regex-parses `REMARK VINA RESULT` out of the output pdbqt (`get_affinity`/`get_ranking`). Poses are converted pdbqt→pdb by `step6_babel_prepare_pose`.
+- **gnina** (`step5b_gnina_run`, from `biobb_vs.gnina.gnina_run` — **guarded import**, absent from the conda-forge `biobb_vs`): takes the sdf directly, so no pdbqt conversion happens at all. Ranking reads the summary JSON gnina writes (`get_gnina_score`/`get_ranking_gnina`), taking the best pose per ligand by `--gnina_rank_by` (default `CNNaffinity`, higher is better — note the sort direction is per-score, see `GNINA_SORT_ORDERS`). Poses are copied out as `.sdf` so the SD score fields survive.
+
+`scores.csv` columns are `Rank,<score_columns>,Index,Identifier`; `score_columns` is `Affinity` for vina and `minimizedAffinity,CNNaffinity,CNNscore` for gnina. `save_ranking()` never sorts — the `get_ranking*` functions own the order. Unless `--debug`, per-ligand subfolders are deleted after scoring (`clean_output`) — only `scores.csv`, `receptor.pdb`, `ligand_library.txt`, and (if `--keep_poses`) a `poses/` folder survive.
 
 **`cavity_analysis.py`**: if `--structures_path` is not given, clusters `--traj_path`/`--top_path` with `gmx_cluster` (AMBER trajectories are first converted via `cpptraj_convert`); otherwise treats each PDB under `structures_path` as an already-clustered representative model. Has a retry loop (`MAX_CLUSTER_RETRIES`, `CUTOFF_INCREASE_FACTOR`) that increases the clustering cutoff and re-clusters if the combined centroid PDB exceeds `MAX_CLUSTER_ATOMS`, since `extract_model` (step5) chokes/slows on very large atom counts. For every model: `fpocket_run` → `fpocket_filter` (score/druggability/volume thresholds) → `filter_residue_com` (repo-local filter, not a BioBB tool — uses MDAnalysis to keep only pockets whose center of mass is within `--distance_threshold` of `--filtering_selection`). Produces `summary_by_volume.yml`, `summary_by_drug_score.yml`, `summary_by_score.yml` sorted per-model rankings.
 

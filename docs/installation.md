@@ -10,4 +10,4 @@ conda activate biobb_vs
 ```
 
 This creates the `biobb_vs` conda environment and installs the package, exposing
-the two workflow commands (`cavity_analysis`, `vs_autodock`).
+the two workflow commands (`cavity_analysis`, `virtual_screening`).

@@ -6,7 +6,7 @@ the workflows in this repository.
 | Step | Command | What it does |
 |------|---------|--------------|
 | 1 | `cavity_analysis` | Extract a protein monomer of interest and perform a cavity analysis with Fpocket |
-| 2 | `vs_autodock` | Perform a virtual screening on a selected pocket |
+| 2 | `virtual_screening` | Perform a virtual screening on a selected pocket |
 
 The tutorial can be run **either on Google Colab (no local install) or on a local Jupyter**.
 
