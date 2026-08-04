@@ -38,7 +38,14 @@ DOCKING_ENGINES = {
               'outputs': ('output_sdf_path', 'output_summary_path')}}
 
 # gnina score to rank by, mapped to whether the highest value is the best one
-GNINA_SORT_ORDERS = {'CNNaffinity': True, 'CNNscore': True, 'minimizedAffinity': False}
+GNINA_SORT_ORDERS = {'CNNaffinity': True, 'CNNscore': True, 'CNN_VS': True,
+                     'minimizedAffinity': False}
+
+# --pose_sort_order that surfaces the poses scoring best under each ranking score. gnina sorts
+# its pose pool before the redundancy filter and the num_modes cutoff, this picks which poses
+# reach the output. 
+GNINA_POSE_SORT_ORDERS = {'CNNaffinity': 'CNNaffinity', 'CNNscore': 'CNNscore',
+                          'CNN_VS': 'CNNscore', 'minimizedAffinity': 'Energy'}
 
 
 def find_matching_str(pattern: Union[str, Pattern[str]], 
@@ -469,7 +476,8 @@ def check_arguments(global_log,
                     box_offset,
                     docking_engine: str,
                     gnina_cnn_scoring: Optional[str],
-                    gnina_rank_by: Optional[str]
+                    gnina_rank_by: Optional[str],
+                    gnina_pose_sort_order: Optional[str]
     ) -> None:
     """
     Check the arguments provided by the user and values of configuration file
@@ -514,9 +522,19 @@ def check_arguments(global_log,
 
     # Check the docking engine is usable before any step runs
     if docking_engine == 'gnina':
-        if gnina_cnn_scoring == 'none' and gnina_rank_by in ('CNNaffinity', 'CNNscore'):
+        if gnina_cnn_scoring == 'none' and gnina_rank_by in ('CNNaffinity', 'CNNscore', 'CNN_VS'):
             global_log.error(f"--gnina_rank_by {gnina_rank_by} needs CNN scores, not available with --gnina_cnn_scoring none")
             sys.exit(1)
+
+        if gnina_pose_sort_order is not None:
+            if gnina_cnn_scoring == 'none':
+                # gnina silently forces Energy regardless of what is passed
+                global_log.warning(f"--gnina_pose_sort_order {gnina_pose_sort_order} has no effect, gnina forces Energy when --gnina_cnn_scoring is none")
+            elif gnina_pose_sort_order != GNINA_POSE_SORT_ORDERS[gnina_rank_by]:
+                # legitimate (e.g. reproducing published numbers), but the poses ranked over
+                # were selected by a different criterion than the one used to rank them
+                global_log.warning(f"--gnina_pose_sort_order {gnina_pose_sort_order} does not match --gnina_rank_by {gnina_rank_by}: "
+                                   f"the poses gnina keeps are selected by {gnina_pose_sort_order}, not by what they are ranked by here")
 
 def check_pdb(residues_path: str, global_log):
     """
@@ -558,6 +576,7 @@ def config_contents(
         gnina_scoring: Optional[str],
         gnina_cnn_scoring: Optional[str],
         gnina_cnn: Optional[str],
+        gnina_pose_sort_order: Optional[str],
         gnina_seed: Optional[int],
         gnina_no_gpu: bool,
         cpus: int,
@@ -694,6 +713,7 @@ step5b_gnina_run:
     scoring: {to_yaml(gnina_scoring)}
     cnn_scoring: {to_yaml(gnina_cnn_scoring)}
     cnn: {to_yaml(gnina_cnn)}
+    pose_sort_order: {to_yaml(gnina_pose_sort_order)}
     seed: {to_yaml(gnina_seed)}
     no_gpu: {to_yaml(gnina_no_gpu)}
     binary_path: {gnina_bin}
@@ -751,6 +771,7 @@ def virtual_screening(ligand_lib_path: str,
                       gnina_cnn_scoring: Optional[str] = None,
                       gnina_cnn: Optional[str] = None,
                       gnina_rank_by: Optional[str] = None,
+                      gnina_pose_sort_order: Optional[str] = None,
                       gnina_seed: Optional[int] = None,
                       gnina_no_gpu: bool = False,
                       cpus: int = 1,
@@ -798,6 +819,10 @@ def virtual_screening(ligand_lib_path: str,
         gnina_rank_by:
             gnina score to rank the ligands by. None resolves to CNNaffinity, or to
             minimizedAffinity when gnina_cnn_scoring is none
+        gnina_pose_sort_order:
+            gnina property that selects which poses survive its own internal filtering, before
+            the ligands are ranked here. None resolves to whatever matches gnina_rank_by, so the
+            poses ranked over are the ones gnina itself would have picked by that same score
         gnina_seed:
             random seed for gnina, docking is stochastic
         gnina_no_gpu:
@@ -833,17 +858,16 @@ def virtual_screening(ligand_lib_path: str,
     
     # Check input files
     check_arguments(global_log,
-                    ligand_lib_path,
-                    structure_path,
-                    input_pockets_zip,
-                    pocket_num,
-                    pocket_selection,
-                    box_offset,
-                    docking_engine,
-                    vina_bin,
-                    gnina_bin,
-                    gnina_cnn_scoring,
-                    gnina_rank_by)
+                    ligand_lib_path=ligand_lib_path,
+                    structure_path=structure_path,
+                    input_pockets_zip=input_pockets_zip,
+                    pocket_num=pocket_num,
+                    pocket_selection=pocket_selection,
+                    box_offset=box_offset,
+                    docking_engine=docking_engine,
+                    gnina_cnn_scoring=gnina_cnn_scoring,
+                    gnina_rank_by=gnina_rank_by,
+                    gnina_pose_sort_order=gnina_pose_sort_order)
 
     # Resolve the residue selection into the list of residues to extract (baked into the config).
     # Done here (not in config_contents) to keep the config builder a pure template.
@@ -857,9 +881,14 @@ def virtual_screening(ligand_lib_path: str,
     if gnina_rank_by is None:
         gnina_rank_by = 'minimizedAffinity' if gnina_cnn_scoring == 'none' else 'CNNaffinity'
 
+    # Matched to gnina_rank_by so the poses that survive gnina's own filtering are the ones
+    # selected by the score we rank by here. gnina silently forces Energy when cnn_scoring is none.
+    if gnina_pose_sort_order is None:
+        gnina_pose_sort_order = GNINA_POSE_SORT_ORDERS[gnina_rank_by]
+
     # Scores reported in scores.csv. Affinity is vina's affinity or gnina's minimizedAffinity
     if docking_engine == 'gnina' and gnina_cnn_scoring != 'none':
-        score_columns = ('minimizedAffinity', 'CNNaffinity', 'CNNscore')
+        score_columns = ('minimizedAffinity', 'CNNaffinity', 'CNNscore', 'CNN_VS')
     elif docking_engine == 'gnina':
         score_columns = ('minimizedAffinity',)
     else:
@@ -878,6 +907,7 @@ def virtual_screening(ligand_lib_path: str,
         'gnina_scoring': gnina_scoring,
         'gnina_cnn_scoring': gnina_cnn_scoring,
         'gnina_cnn': gnina_cnn,
+        'gnina_pose_sort_order': gnina_pose_sort_order,
         'gnina_seed': gnina_seed,
         'gnina_no_gpu': gnina_no_gpu,
         'cpus' : cpus,
@@ -1055,7 +1085,8 @@ def virtual_screening(ligand_lib_path: str,
     # Rank ligands: find the best score for each ligand
     if docking_engine == 'gnina':
         global_log.info(f"Ranking ligands by {gnina_rank_by}, "
-                        f"{'highest' if GNINA_SORT_ORDERS[gnina_rank_by] else 'lowest'} first")
+                        f"{'highest' if GNINA_SORT_ORDERS[gnina_rank_by] else 'lowest'} first "
+                        f"(gnina poses sorted by {gnina_pose_sort_order})")
         ranking = get_ranking_gnina(ligand_ids, ligand_names, global_paths[step], output_path,
                                     gnina_rank_by, score_columns)
     else:
@@ -1211,10 +1242,20 @@ def main():
                         required=False, default=None)
 
     parser.add_argument('--gnina_rank_by', dest='gnina_rank_by', type=str,
-                        choices=['CNNaffinity', 'CNNscore', 'minimizedAffinity'],
+                        choices=['CNNaffinity', 'CNNscore', 'minimizedAffinity', 'CNN_VS'],
                         help="""gnina score to rank the ligands by. CNNaffinity (pK units, higher is better) is what ranks compounds,
-                                CNNscore answers whether a pose is right, minimizedAffinity is kcal/mol (lower is better).
+                                CNNscore answers whether a pose is right, minimizedAffinity is kcal/mol (lower is better),
+                                CNN_VS is CNNaffinity * CNNscore, the default of gnina's own screening pipeline (scripts/deepdock.py).
                                 Default: CNNaffinity, or minimizedAffinity with --gnina_cnn_scoring none""",
+                        required=False, default=None)
+
+    parser.add_argument('--gnina_pose_sort_order', dest='gnina_pose_sort_order', type=str,
+                        choices=['CNNscore', 'CNNaffinity', 'Energy'],
+                        help="""gnina property that selects which poses survive its own internal filtering, before ligands are
+                                ranked here by --gnina_rank_by. gnina sorts its whole pose pool by this value *before* the
+                                redundancy filter and the --num_modes cutoff, so it changes which poses are kept, not just their
+                                order. Default: whatever matches --gnina_rank_by, so the poses ranked over are the ones gnina
+                                itself would keep under that same score""",
                         required=False, default=None)
 
     parser.add_argument('--gnina_seed', dest='gnina_seed', type=int,
@@ -1266,6 +1307,7 @@ def main():
                       gnina_cnn_scoring = args.gnina_cnn_scoring,
                       gnina_cnn = args.gnina_cnn,
                       gnina_rank_by = args.gnina_rank_by,
+                      gnina_pose_sort_order = args.gnina_pose_sort_order,
                       gnina_seed = args.gnina_seed,
                       gnina_no_gpu = args.gnina_no_gpu,
                       cpus = args.cpus,

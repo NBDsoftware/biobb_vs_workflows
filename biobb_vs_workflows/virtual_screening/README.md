@@ -90,7 +90,8 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 | `--gnina_cnn_scoring` | gnina's own (`rescore`) | Where gnina uses the CNN: `none`, `rescore`, `refinement`, `metrorescore`, `metrorefine`, `all`. The dominant cost knob. |
 | `--gnina_cnn` | gnina's own (3-model ensemble) | CNN model, or a `PREFIX_ensemble` name. `fast` is a single model, ~4× faster. |
 | `--gnina_scoring` | gnina's own | Empirical scoring function: `vina`, `vinardo`, `ad4_scoring`, `dkoes_*`. |
-| `--gnina_rank_by` | `CNNaffinity` | Score to rank ligands by: `CNNaffinity`, `CNNscore` or `minimizedAffinity`. Falls back to `minimizedAffinity` with `--gnina_cnn_scoring none`. |
+| `--gnina_rank_by` | `CNNaffinity` | Score to rank ligands by: `CNNaffinity`, `CNNscore`, `minimizedAffinity` or `CNN_VS` (`CNNaffinity * CNNscore`, gnina's own screening pipeline default). Falls back to `minimizedAffinity` with `--gnina_cnn_scoring none`. |
+| `--gnina_pose_sort_order` | matches `--gnina_rank_by` | gnina property (`CNNscore`, `CNNaffinity` or `Energy`) that selects which poses gnina keeps, before this workflow ranks them. Defaults to whatever matches `--gnina_rank_by`, so the poses ranked over are the ones gnina itself would keep under that score. |
 | `--gnina_seed` | none | Random seed. Docking is stochastic, set it for reproducible runs. |
 | `--gnina_no_gpu` | `False` | Force gnina onto the CPU even when a GPU is available. |
 
@@ -100,6 +101,7 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 
 - **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is — this matters more with gnina (see its [limitations](../../docs/docking_engines/gnina.md)). Neither engine samples ring conformations or stereochemistry — whatever you provide is what gets docked.
 - **With gnina, rank by `CNNaffinity`, not `CNNscore`** (the default does this) — see the [gnina reference](../../docs/docking_engines/gnina.md) for why.
+- **Leave `--gnina_pose_sort_order` alone unless reproducing a benchmark.** It defaults to match `--gnina_rank_by`, so gnina keeps the poses that score best under the same metric this workflow ranks by — see the [gnina reference](../../docs/docking_engines/gnina.md) for why a mismatch quietly changes *which* poses are ranked, not just their order.
 - **Try more than one scoring function.** `--gnina_scoring vinardo` often does better than the default in virtual screening. Ranking the same library with two engines/functions and combining by *rank* (not by raw score, whose scales are not comparable) is a stronger signal than any single method's top hits.
 - **Set `--gnina_seed`.** Docking is a stochastic Monte Carlo search, so an unseeded run is not reproducible.
 - **Tune exhaustiveness.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value. **Match the number of cpu cores used with the exhaustiveness value** as each Monte Carlo chain will run on a different core (e.g. optimal run would be 4 cpu cores with exhaustiveness value 4, suboptimal run would be running on 4 cpu cores with exhaustiveness 6).
@@ -117,7 +119,7 @@ Unless `--debug`, per-ligand subfolders are deleted after scoring. Surviving out
   | Engine | Columns |
   |--------|---------|
   | `vina` | `Rank, Affinity, Index, Identifier` — ranked by affinity, most negative first |
-  | `gnina` | `Rank, minimizedAffinity, CNNaffinity, CNNscore, Index, Identifier` — ranked by `--gnina_rank_by` |
+  | `gnina` | `Rank, minimizedAffinity, CNNaffinity, CNNscore, CNN_VS, Index, Identifier` — ranked by `--gnina_rank_by` |
   | `gnina --gnina_cnn_scoring none` | `Rank, minimizedAffinity, Index, Identifier` |
 
   `Affinity` (vina) and `minimizedAffinity` (gnina) are the same quantity in the same units (kcal/mol, lower is better), so the two engines stay comparable. Note that with gnina the rows are ordered by `--gnina_rank_by`, which defaults to `CNNaffinity` — so **`minimizedAffinity` is not monotonic with `Rank`**, and a ligand with a poor empirical affinity can rank highly if the CNN likes it.

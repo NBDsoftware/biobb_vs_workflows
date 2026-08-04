@@ -16,12 +16,22 @@
   `--gnina_seed` and `--gnina_no_gpu`; `--cpus`/`--exhaustiveness` apply to both engines.
   **gnina is not installed by `environment.yml`**: it needs a working gnina release binary.
 - **virtual_screening**: `scores.csv` gains engine-dependent columns. Vina output is unchanged
-  (`Rank,Affinity,Index,Identifier`); gnina adds `CNNaffinity`/`CNNscore` next to
+  (`Rank,Affinity,Index,Identifier`); gnina adds `CNNaffinity`/`CNNscore`/`CNN_VS` next to
   `minimizedAffinity`. Since gnina rows are ordered by `--gnina_rank_by`, the empirical affinity
   is not monotonic with `Rank`. gnina poses are saved as `.sdf` (not `.pdb`) so their per-pose
   scores survive as SD data fields.
+- **virtual_screening**: new `--gnina_pose_sort_order {CNNscore,CNNaffinity,Energy}` wires
+  gnina's own `pose_sort_order` property. gnina sorts its whole pose
+  pool by this value *before* the redundancy filter and `--num_modes` cutoff, gnina defaulted to `CNNscore`
+  while this workflow ranked the survivors by `CNNaffinity`, a mismatch. Now defaults to
+  whatever matches `--gnina_rank_by`.
+- **virtual_screening**: `--gnina_rank_by` gains `CNN_VS` (`CNNaffinity * CNNscore`), the default
+  ranking metric of gnina's own screening pipeline (`scripts/deepdock.py`)..
 
 ### 🐛 Bug Fixes
+- **virtual_screening**: `check_arguments()` was called with 12 positional arguments against a
+  10-parameter signature (`vina_bin`/`gnina_bin` were added at the call site only), raising
+  `TypeError` on every run of either engine before any step executed.
 - **virtual_screening** (`--pocket_selection`): the residue-selection branch crashed with
   `AttributeError: 'NoneType' object has no attribute 'startswith'` before running any step.
   With no `--input_pockets_zip` the generated config held `input_pockets_zip: null`, and
