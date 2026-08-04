@@ -4,15 +4,14 @@ channels:
   - bioconda
   - salilab
 dependencies:
-  - python=3.11            # tested config; vina/openbabel also build on 3.12+ but 3.11 is what we verify
+  - python=3.11
   - pip
   - biobb_common>=5.3.1
   - biobb_structure_utils>=5.3.0
-  - biobb_gromacs>=5.3.0   # pulls gromacs (2025.4)
+  - biobb_gromacs>=5.3.0
   - biobb_io>=5.3.0
-  - biobb_vs>=5.3.0
   - biobb_chemistry>=5.3.0
-  - ambertools             # cpptraj binary for cpptraj_convert (was transitive via conda biobb_analysis)
+  - ambertools
   - mdanalysis
   - openbabel==3.1.1
   - biopython
@@ -21,4 +20,5 @@ dependencies:
     # libxml2>=2.14, while openbabel 3.1.1 (hard-pinned by biobb_chemistry) caps libxml2<2.14.
     # The PyPI package only pins biobb-common==5.3.1 and runs fine on gromacs 2025.x.
     - biobb_analysis>=5.3.0
+    - biobb_vs @ git+https://github.com/NBDsoftware/biobb_vs@nbd-5.3.0
     - .                          # install biobb_vs_workflows itself

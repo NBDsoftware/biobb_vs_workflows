@@ -6,10 +6,7 @@ High-throughput virtual screening: dock a ligand library (SMILES or SDF) against
 
 The input is a ligand library (SMILES `.smi` or SDF `.sdf`), a target structure (PDB) and a pocket. The pocket is given either as an Fpocket result (see `cavity_analysis`) or as a residue selection. The workflow builds a docking box around the pocket, prepares the receptor, then docks every ligand and ranks them.
 
-Two docking engines are available through `--docking_engine`. Both use the same sampling algorithm and the same docking box, so their results are comparable:
-
-- **`vina`** (default) — AutoDock Vina. Scores poses with an empirical function and predicts a binding affinity in kcal/mol (lower is better).
-- **`gnina`** — same sampling, but the final poses are rescored with a convolutional neural network. On top of the empirical affinity it gives `CNNaffinity` (predicted affinity in pK units, higher is better) and `CNNscore` (how likely the pose is correct, 0-1). Needs a gnina binary and a `biobb_vs` built from source, see the **Installing gnina** section below.
+Two docking engines are available through `--docking_engine`: **`vina`** (default, AutoDock Vina) and **`gnina`** (Vina + CNN rescoring, needs a gnina binary and a `biobb_vs` built from source — see **Installing gnina** below). See the [docking engines reference](../../docs/docking_engines/index.md) for how each one scores poses and how to choose between them.
 
 The workflow keeps the best pose per ligand and writes the ranking to `scores.csv`. Docking poses of the top ligands can optionally be saved.
 
@@ -97,21 +94,12 @@ Define the pocket with either `--input_pockets_zip` or `--pocket_selection` (mut
 | `--gnina_seed` | none | Random seed. Docking is stochastic, set it for reproducible runs. |
 | `--gnina_no_gpu` | `False` | Force gnina onto the CPU even when a GPU is available. |
 
-**gnina cost.** The CNN settings dominate runtime far more than `--exhaustiveness` does. Rough per-ligand cost on CPU (8 cores, `--exhaustiveness 8`), from gnina's own measurements:
-
-| Setting | Relative cost |
-|---------|---------------|
-| `--gnina_cnn_scoring none` | ~1× (no CNN scores at all) |
-| `--gnina_cnn fast` | ~3× |
-| default 3-model ensemble | ~10× |
-| `--gnina_cnn_scoring refinement` | ~100×, and gnina's own evaluation found it does **not** improve pose prediction over `rescore` |
-
-A GPU changes these numbers by roughly an order of magnitude. Screen a large library with `none` or `fast`, then re-dock the best hits with the default ensemble.
+**gnina cost.** The CNN settings dominate runtime far more than `--exhaustiveness` does — see the [gnina reference](../../docs/docking_engines/gnina.md) for relative costs and GPU vs CPU numbers.
 
 ## Recommendations
 
-- **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is. This matters **more** with gnina: its CNN scores the actual 3D atom positions, so a poor input conformer degrades the score in a way vina's empirical terms are less sensitive to. Neither engine samples ring conformations or stereochemistry — whatever you provide is what gets docked.
-- **With gnina, rank by `CNNaffinity`, not `CNNscore`** (the default does this). `CNNscore` answers "is this pose right", which is a different question from "is this a good binder".
+- **Prefer prepared SDF ligands over SMILES.** For SMILES, OpenBabel (`obabel`) perceives bonds from the generated 3D coordinates and protonates for **pH 7.4** using tabulated per-group pKa rules. This is heuristic. If you already have well-prepared 3D, protonated ligands, pass them as SDF so they are docked as-is — this matters more with gnina (see its [limitations](../../docs/docking_engines/gnina.md)). Neither engine samples ring conformations or stereochemistry — whatever you provide is what gets docked.
+- **With gnina, rank by `CNNaffinity`, not `CNNscore`** (the default does this) — see the [gnina reference](../../docs/docking_engines/gnina.md) for why.
 - **Try more than one scoring function.** `--gnina_scoring vinardo` often does better than the default in virtual screening. Ranking the same library with two engines/functions and combining by *rank* (not by raw score, whose scales are not comparable) is a stronger signal than any single method's top hits.
 - **Set `--gnina_seed`.** Docking is a stochastic Monte Carlo search, so an unseeded run is not reproducible.
 - **Tune exhaustiveness.** It trades accuracy for speed. For large libraries, start with a low value to screen fast, then re-dock the best-scoring ligands with a higher value. **Match the number of cpu cores used with the exhaustiveness value** as each Monte Carlo chain will run on a different core (e.g. optimal run would be 4 cpu cores with exhaustiveness value 4, suboptimal run would be running on 4 cpu cores with exhaustiveness 6).
@@ -146,5 +134,4 @@ With `--debug`, every per-ligand subfolder is kept with all intermediate files (
 - **Rigid receptor.** Only the ligand is flexible. Side chains cannot move and flexible side-chain docking is not exposed, even though gnina supports it.
 - **Approximate scoring.** Predicted affinity is not the experimental binding energy. Accuracy varies by target; evaluate against known actives.
 - **Fixed protonation.** Receptor H are added at pH 7 (auto mode) and SMILES ligands are protonated at pH 7.4. Neither is configurable from the command line, and no tautomer/stereoisomer enumeration is done.
-- **gnina's CNN grid spans 24 Å**, so ligands larger than roughly 20 Å across will start to see artifacts in their CNN scores.
-- **`--gnina_cnn` is not purely a speed knob.** gnina sorts its internal pose pool by CNN score *before* applying the redundancy filter and the output cutoff, so a different CNN model surfaces a genuinely different set of poses, not merely a different ordering. Results are not comparable across `--gnina_cnn` values.
+- **gnina has extra scoring limitations** (CNN grid size, `--gnina_cnn` affecting which poses survive, not just their order) — see the [gnina reference](../../docs/docking_engines/gnina.md).

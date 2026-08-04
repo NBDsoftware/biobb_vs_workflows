@@ -468,8 +468,6 @@ def check_arguments(global_log,
                     pocket_selection: Optional[str],
                     box_offset,
                     docking_engine: str,
-                    vina_bin: str,
-                    gnina_bin: str,
                     gnina_cnn_scoring: Optional[str],
                     gnina_rank_by: Optional[str]
     ) -> None:
@@ -1203,8 +1201,8 @@ def main():
                         required=False, default=None)
 
     parser.add_argument('--gnina_cnn', dest='gnina_cnn', type=str,
-                        help="""CNN model used by gnina, or a PREFIX_ensemble name for an ensemble. 'fast' is a single model, around 4 times
-                                faster than the default ensemble, but it surfaces a different set of poses. Default: gnina's default 3 model ensemble""",
+                        help="""Name of the CNN model used by gnina, or a NAME_ensemble to use an ensemble of such models. 'fast' is a single model, around 3 times
+                                faster than the default ensemble. Default: gnina's default 3 model ensemble""",
                         required=False, default=None)
 
     parser.add_argument('--gnina_scoring', dest='gnina_scoring', type=str,

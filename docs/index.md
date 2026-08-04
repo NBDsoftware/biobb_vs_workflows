@@ -40,6 +40,7 @@ tutorial
 installation
 workflows/cavity_analysis
 workflows/virtual_screening
+docking_engines/index
 fair4rs_assessment
 ```
 

@@ -2,6 +2,35 @@
 
 ## Unreleased ##
 
+### ⚠️ Breaking changes
+- **`vs_autodock` is now `virtual_screening`.** The workflow is no longer tied to AutoDock Vina,
+  so the command, the module (`biobb_vs_workflows/virtual_screening/`) and the workflow function
+  were all renamed.
+
+### 🚀 Features & Improvements
+- **virtual_screening**: new flag `--docking_engine {vina,gnina}` selecting the docking engine.
+  `gnina` uses the same sampling and the same docking box as vina, but rescores the final poses
+  with a convolutional neural network, adding `CNNaffinity` (pK units) and `CNNscore` alongside
+  the empirical affinity. Ligands are ranked by `CNNaffinity` by default (`--gnina_rank_by`).
+  Tuned with `--gnina_bin`, `--gnina_cnn_scoring`, `--gnina_cnn`, `--gnina_scoring`,
+  `--gnina_seed` and `--gnina_no_gpu`; `--cpus`/`--exhaustiveness` apply to both engines.
+  **gnina is not installed by `environment.yml`**: it needs a working gnina release binary.
+- **virtual_screening**: `scores.csv` gains engine-dependent columns. Vina output is unchanged
+  (`Rank,Affinity,Index,Identifier`); gnina adds `CNNaffinity`/`CNNscore` next to
+  `minimizedAffinity`. Since gnina rows are ordered by `--gnina_rank_by`, the empirical affinity
+  is not monotonic with `Rank`. gnina poses are saved as `.sdf` (not `.pdb`) so their per-pose
+  scores survive as SD data fields.
+
+### 🐛 Bug Fixes
+- **virtual_screening** (`--pocket_selection`): the residue-selection branch crashed with
+  `AttributeError: 'NoneType' object has no attribute 'startswith'` before running any step.
+  With no `--input_pockets_zip` the generated config held `input_pockets_zip: null`, and
+  `ConfReader.get_paths_dic()` resolves the paths of *every* step, `fpocket_select` included,
+  even though that step never runs in this branch. A placeholder path is now written instead.
+- **virtual_screening** (`--restart`): re-running an SDF library against an existing output
+  folder died with `OSError: ... ligand.sdf already exists` from Open Babel, because the
+  per-ligand SDF was written without `overwrite=True`. Restart works for SDF libraries now.
+
 ### 📦 Dependencies
 - Bumped the whole BioBB stack to 5.3.x (`biobb_vs` 5.3.0, `biobb_common` 5.3.1,
   `biobb_structure_utils` 5.3.0, `biobb_gromacs` 5.3.1, `biobb_io` 5.3.0,
