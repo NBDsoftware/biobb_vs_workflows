@@ -28,8 +28,26 @@ doesn't.
 
 The default is `CNNaffinity`
  (sort by predicted affinity, which is what ranks compounds in a screen). `CNNscore` answers a different question
-(sort by network pose score, which answers whether a pose is right). This workflow ranks by `CNNaffinity` by default
-(`--gnina_rank_by`), which is a reasonable default for screening.
+(sort by network pose score, which answers whether a pose is right). `CNN_VS` (= `CNNaffinity × CNNscore`, gnina's
+own screening pipeline default) is also available. This workflow ranks by `CNNaffinity` by default
+(`--gnina_rank_by`), which is a reasonable default for screening — three credible sources disagree on the best
+choice, see the [appendix](../appendix/Gnina/virtual-screening.md#which-metric-should-you-rank-by) for the full
+argument.
+
+**This ranking is computed over the poses gnina itself keeps, which are selected *before* the ranking runs.**
+gnina sorts its whole internal pose pool by its own `--pose_sort_order` (`CNNscore` by default), applies its
+redundancy filter and `--num_modes` cutoff, and only then does this workflow scan the survivors for the best
+`--gnina_rank_by` score. Sorting happens before filtering, so a different `--pose_sort_order` does not just
+reorder the same poses — it changes which ones survive to be ranked at all. Left at gnina's default, the
+`CNNaffinity` this workflow reports is a systematic underestimate of what the ligand could have scored, and
+by a per-ligand amount, which adds noise straight into the cross-ligand ranking.
+
+`--gnina_pose_sort_order` fixes this: it defaults to whatever matches `--gnina_rank_by` (`CNNaffinity` →
+`CNNaffinity`, `CNNscore` → `CNNscore`, `minimizedAffinity` → `Energy`, `CNN_VS` → `CNNscore`, since
+`--pose_sort_order` has no `CNN_VS` option), so the poses gnina keeps are the ones selected by the same score
+this workflow ranks by. It can be overridden, e.g. to reproduce a benchmark that ranked on a mismatched pair.
+See [output-and-ranking.md](../appendix/Gnina/output-and-ranking.md#ranking-then-filtering) for the full
+sort-then-filter mechanics.
 
 ## Cost
 
